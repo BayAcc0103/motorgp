@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Carousel from 'react-bootstrap/Carousel';
+import flag from './asset/raceflag.png'
 
 const Homepage = () => {
   const settings = {
@@ -28,31 +29,16 @@ const Homepage = () => {
           <div class="item active">
             <img src={logo} class="d-block " alt="Los Angeles"></img>
           </div>
-
-          <Carousel.Caption>
-            <h3>First slide label</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-          </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
           <div class="item">
             <img src={logo2} class="d-block" alt="Chicago"></img>
           </div>
-          <Carousel.Caption>
-            <h3>Second slide label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
           <div class="item">
             <img src={logo3} class="d-block" alt="New York"></img>
           </div>
-          <Carousel.Caption>
-            <h3>Third slide label</h3>
-            <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-            </p>
-          </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
       {/* <div class="carousel-container">
@@ -87,56 +73,65 @@ const Homepage = () => {
       </div> */}
 
       <>
-        <h2 class="mb-4">Latest News</h2>
-        <Slider {...settings}>
-          <div class="col">
-            <div class="card h-100">
-              <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp" class="card-img-top"
-                alt="Hollywood Sign on The Hill" />
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">
-                  This is a longer card with supporting text below as a natural lead-in to
-                  additional content. This content is a little bit longer.
-                </p>
-              </div>
+        <section className="container-fluid mt-3">
+          <header className="mb-0 d-flex align-items-center">
+            <div className="box d-flex align-items-center">
+              <img src={flag} alt="raceflag" className="me-1" ></img>
+              <h2 className="mt-0">Latest News</h2>
             </div>
-          </div>
-          <div class="col">
-            <div class="card h-100">
-              <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/042.webp" class="card-img-top"
-                alt="Palm Springs Road" />
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a short card.</p>
+          </header>
+          <div>
+            <Slider {...settings}>
+              <div class="col">
+                <div class="card h-100">
+                  <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp" class="card-img-top"
+                    alt="Hollywood Sign on The Hill" />
+                  <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">
+                      This is a longer card with supporting text below as a natural lead-in to
+                      additional content. This content is a little bit longer.
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-100">
-              <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/043.webp" class="card-img-top"
-                alt="Los Angeles Skyscrapers" />
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                  additional content.</p>
+              <div class="col">
+                <div class="card h-100">
+                  <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/042.webp" class="card-img-top"
+                    alt="Palm Springs Road" />
+                  <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a short card.</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-100">
-              <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/044.webp" class="card-img-top"
-                alt="Skyscrapers" />
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">
-                  This is a longer card with supporting text below as a natural lead-in to
-                  additional content. This content is a little bit longer.
-                </p>
+              <div class="col">
+                <div class="card h-100">
+                  <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/043.webp" class="card-img-top"
+                    alt="Los Angeles Skyscrapers" />
+                  <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                      additional content.</p>
+                  </div>
+                </div>
               </div>
-            </div>
+              <div class="col">
+                <div class="card h-100">
+                  <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/044.webp" class="card-img-top"
+                    alt="Skyscrapers" />
+                  <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">
+                      This is a longer card with supporting text below as a natural lead-in to
+                      additional content. This content is a little bit longer.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Slider>
           </div>
-        </Slider>
+        </section>
 
 
 

@@ -3,15 +3,14 @@
     flex-wrap: wrap;
 }
 .card{
-    margin: 10px;
+    margin-left: 5%;
     height: 400px;
     width: 350px;
 }
 .nav-item {
     position: relative; /* Để có thể sử dụng pseudo-element */
     cursor: pointer;
-  }
-
+}
 .carousel-container {
     width: 100%; /* Chiều rộng của carousel */
     margin: auto; /* Căn giữa carousel */
@@ -39,6 +38,15 @@
     bottom: -5px; /* Khoảng cách từ text đến gạch chân */
     left: 0;
     cursor: text;
+}
+.box{
+    margin-left: 2%;
+}
+.h2 {
+    font-family: monospace;
+    font-size: 2.4rem;
+    gap: .4rem;
+    text-transform: capitalize;
 }
 
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import "./Navbar.css"
 import { Link } from 'react-router-dom';
 import logo from './asset/motogp-logo.jpg'
+import logo1 from './asset/racing-helmet.png'
 
 const Navbar = () => {
   const [currentDate, setCurrentDate] = useState('');
@@ -51,23 +52,24 @@ const Navbar = () => {
                 <a className="nav-link text-white" href="#">Rider & Teams</a>
               </li>
             </ul>
-            <div className="d-flex align-items-center custom-gap me-auto">
+            <div className="d-flex align-items-center custom-gap ms-auto">
               <div className="d-flex flex-column me-3">
                 <span className="text-primary">{city}</span>
-                <span className="text-muted">{currentDate}</span>
+                <span className="text-white">{currentDate}</span>
               </div>
               <div className="d-flex align-items-center me-3">
                 <i className="bi bi-sun" style={{ fontSize: '24px', color: 'orange' }}></i>
                 <span className="text-danger fs-4 ms-2">{temperature}</span>
               </div>
-              <span className="text-secondary">{condition}</span>
+              <span className="text-white">{condition}</span>
             </div>
           </div>
-          <div class="d-flex gap-2 custom-gap">
+          <div class="d-flex gap-2 justify-content-center custom-gap">
             <Link to="/login">
-              <button class="btn btn-outline-info" type="login">
+              <button class="btn btn-outline-danger text-white" type="login">
                 <span class="bi-person-circle"></span>Login</button>
             </Link>
+            <img src={logo1} alt='racing-helmet'></img>
           </div>
           {/* thời tiết */}
         </div>
