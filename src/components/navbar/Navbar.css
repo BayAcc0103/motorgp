@@ -1,0 +1,20 @@
+.dark-mode-btns{
+    background-color: black;
+    color: #fff;
+    border: 1px solid #fff;
+    outline: none;
+}
+.dark-mode-btns:hover{
+    background-color: #fff;
+    color: black;
+}
+.custom-gap {
+    margin-left: 10px;
+}
+nav {
+    background: linear-gradient(to right, #000000, #a19b9ba0);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}

@@ -1,0 +1,69 @@
+.mainDiv{
+    display: flex;
+    flex-wrap: wrap;
+}
+.card{
+    margin: 10px;
+    height: 400px;
+    width: 350px;
+}
+.nav-item {
+    position: relative; /* Để có thể sử dụng pseudo-element */
+    cursor: pointer;
+  }
+
+.carousel-container {
+    width: 100%; /* Chiều rộng của carousel */
+    margin: auto; /* Căn giữa carousel */
+}
+.carousel img {
+    max-height: 700px; /* Chiều cao tối đa cho hình ảnh */
+    object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
+} 
+.nav-item:hover::after {
+    content: '';
+    display: block;
+    width: 100%; /* Chiều rộng bằng với menu item */
+    height: 2px; /* Độ dày của gạch chân */
+    background-color: #007bff; /* Màu gạch chân, có thể thay đổi */
+    position: absolute;
+    bottom: -5px; /* Khoảng cách từ text đến gạch chân */
+    left: 0;
+    cursor: text;
+}
+
+
+/* @media screen and (max-width:578px) {
+    .card{
+        margin-left: 5.2rem;
+        height: 400px;
+        width: 350px;
+    }
+}
+@media screen and (max-width:503px) {
+    .card{
+        margin-left: 4.2rem;
+    }
+}
+@media screen and (max-width:469px) {
+    .card{
+        margin-left: 3.2rem;
+    }
+}
+@media screen and (max-width:437px) {
+    .card{
+        margin-left: 2.2rem;
+    }
+}
+@media screen and (max-width:415px) {
+    .card{
+        margin-left: 1.2rem;
+    }
+}
+@media screen and (max-width:390px) {
+    .card{
+        margin-left: 1.2rem;
+        height: 420px;
+        width: 330px;
+    }
+} */
