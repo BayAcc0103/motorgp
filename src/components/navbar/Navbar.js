@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import "./Navbar.css"
 import { Link } from 'react-router-dom';
-import logo from './asset/36-1.png'
+import logo from './asset/motogp-logo.jpg'
 
 const Navbar = () => {
   const [currentDate, setCurrentDate] = useState('');
@@ -42,13 +42,13 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Calendar</a>
+                <a className="nav-link text-white" href="#">Calendar</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Results & Standings</a>
+                <a className="nav-link text-white" href="#">Results & Standings</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Rider & Teams</a>
+                <a className="nav-link text-white" href="#">Rider & Teams</a>
               </li>
             </ul>
             <div className="d-flex align-items-center custom-gap me-auto">

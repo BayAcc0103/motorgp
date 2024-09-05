@@ -16,16 +16,25 @@
     width: 100%; /* Chiều rộng của carousel */
     margin: auto; /* Căn giữa carousel */
 }
-.carousel img {
-    max-height: 700px; /* Chiều cao tối đa cho hình ảnh */
-    object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
+.carousel-item img {
+    display: block; /* Đảm bảo ảnh là block */
+    margin: 0 auto; /* Căn giữa */
+    width: 600px; /* Kích thước chiều rộng */
+    height: 400px; /* Kích thước chiều cao */
+    object-fit: cover; /* Cắt ảnh nếu cần */
 } 
+.carousel-control-next {
+    right: 400px; /* Width of the control */
+}
+.carousel-control-prev {
+    left: 400px; /* Width of the control */
+}
 .nav-item:hover::after {
     content: '';
     display: block;
     width: 100%; /* Chiều rộng bằng với menu item */
     height: 2px; /* Độ dày của gạch chân */
-    background-color: #007bff; /* Màu gạch chân, có thể thay đổi */
+    background-color: #ff0000; /* Màu gạch chân, có thể thay đổi */
     position: absolute;
     bottom: -5px; /* Khoảng cách từ text đến gạch chân */
     left: 0;

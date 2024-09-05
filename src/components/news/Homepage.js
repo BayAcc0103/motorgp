@@ -1,13 +1,12 @@
 import React from "react";
 import "./Homepage.css"
-import logo from './asset/1.jpg'
-import logo2 from './asset/2.png'
-import logo3 from './asset/3.png'
+import logo from './asset/motor (1).jpg'
+import logo2 from './asset/motor (2).jpg'
+import logo3 from './asset/motor (3).jpg'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import 'bootstrap/dist/css/bootstrap.min.css'; // Nhập CSS của Bootstrap
-import 'bootstrap/dist/js/bootstrap.min'; // Nhập JS của Bootstrap
+import Carousel from 'react-bootstrap/Carousel';
 
 const Homepage = () => {
   const settings = {
@@ -16,7 +15,7 @@ const Homepage = () => {
     centerPadding: "60px",
     slidesToShow: 4,
     swipeToSlide: true,
-    afterChange: function(index) {
+    afterChange: function (index) {
       console.log(
         `Slider Changed to: ${index + 1}, background: #222; color: #bada55`
       );
@@ -24,7 +23,39 @@ const Homepage = () => {
   };
   return (
     <>
-      <div class="carousel-container">
+      <Carousel>
+        <Carousel.Item>
+          <div class="item active">
+            <img src={logo} class="d-block " alt="Los Angeles"></img>
+          </div>
+
+          <Carousel.Caption>
+            <h3>First slide label</h3>
+            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div class="item">
+            <img src={logo2} class="d-block" alt="Chicago"></img>
+          </div>
+          <Carousel.Caption>
+            <h3>Second slide label</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div class="item">
+            <img src={logo3} class="d-block" alt="New York"></img>
+          </div>
+          <Carousel.Caption>
+            <h3>Third slide label</h3>
+            <p>
+              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+            </p>
+          </Carousel.Caption>
+        </Carousel.Item>
+      </Carousel>
+      {/* <div class="carousel-container">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
           <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -53,59 +84,59 @@ const Homepage = () => {
             <span class="sr-only">Next</span>
           </a>
         </div>
-      </div>
+      </div> */}
 
       <>
         <h2 class="mb-4">Latest News</h2>
         <Slider {...settings}>
-        <div class="col">
-    <div class="card h-100">
-      <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp" class="card-img-top"
-        alt="Hollywood Sign on The Hill" />
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">
-          This is a longer card with supporting text below as a natural lead-in to
-          additional content. This content is a little bit longer.
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="card h-100">
-      <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/042.webp" class="card-img-top"
-        alt="Palm Springs Road" />
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a short card.</p>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="card h-100">
-      <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/043.webp" class="card-img-top"
-        alt="Los Angeles Skyscrapers" />
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-          additional content.</p>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="card h-100">
-      <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/044.webp" class="card-img-top"
-        alt="Skyscrapers" />
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">
-          This is a longer card with supporting text below as a natural lead-in to
-          additional content. This content is a little bit longer.
-        </p>
-      </div>
-    </div>
-  </div>
-          </Slider>
+          <div class="col">
+            <div class="card h-100">
+              <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp" class="card-img-top"
+                alt="Hollywood Sign on The Hill" />
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">
+                  This is a longer card with supporting text below as a natural lead-in to
+                  additional content. This content is a little bit longer.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card h-100">
+              <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/042.webp" class="card-img-top"
+                alt="Palm Springs Road" />
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is a short card.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card h-100">
+              <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/043.webp" class="card-img-top"
+                alt="Los Angeles Skyscrapers" />
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                  additional content.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card h-100">
+              <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/044.webp" class="card-img-top"
+                alt="Skyscrapers" />
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">
+                  This is a longer card with supporting text below as a natural lead-in to
+                  additional content. This content is a little bit longer.
+                </p>
+              </div>
+            </div>
+          </div>
+        </Slider>
 
 
 
