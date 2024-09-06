@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import "./Navbar.css"
 import { Link } from 'react-router-dom';
 import logo from './asset/motogp-logo.jpg'
-import logo1 from './asset/racing-helmet.png'
+import logo1 from './asset/helmet.png'
 
 const Navbar = () => {
   const [currentDate, setCurrentDate] = useState('');
@@ -43,7 +43,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link text-white" href="#">Calendar</a>
+                <Link to="/calendar" className="nav-link text-white" aria-current="page">Calendar</Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link text-white" href="#">Results & Standings</a>

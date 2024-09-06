@@ -2,18 +2,30 @@
     display: flex;
     flex-wrap: wrap;
 }
+.nav-item:hover::after {
+    content: '';
+    display: block;
+    width: 100%; /* Chiều rộng bằng với menu item */
+    height: 2px; /* Độ dày của gạch chân */
+    background-color: #ff0000; /* Màu gạch chân, có thể thay đổi */
+    position: absolute;
+    bottom: -5px; /* Khoảng cách từ text đến gạch chân */
+    left: 0;
+    cursor: text;
+}
 .card{
     margin-left: 5%;
     height: 400px;
     width: 350px;
+    transition: transform 0.3s ease;
+}
+.card:hover {
+    transform: scale(1.05); /* Phóng to card lên 5% khi hover */
+    z-index: 1; /* Đưa card lên trên các card khác */
 }
 .nav-item {
     position: relative; /* Để có thể sử dụng pseudo-element */
     cursor: pointer;
-}
-.carousel-container {
-    width: 100%; /* Chiều rộng của carousel */
-    margin: auto; /* Căn giữa carousel */
 }
 .carousel-item img {
     display: block; /* Đảm bảo ảnh là block */
@@ -28,17 +40,6 @@
 .carousel-control-prev {
     left: 400px; /* Width of the control */
 }
-.nav-item:hover::after {
-    content: '';
-    display: block;
-    width: 100%; /* Chiều rộng bằng với menu item */
-    height: 2px; /* Độ dày của gạch chân */
-    background-color: #ff0000; /* Màu gạch chân, có thể thay đổi */
-    position: absolute;
-    bottom: -5px; /* Khoảng cách từ text đến gạch chân */
-    left: 0;
-    cursor: text;
-}
 .box{
     margin-left: 2%;
 }
@@ -48,7 +49,10 @@
     gap: .4rem;
     text-transform: capitalize;
 }
-
+.slick-track{
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
 
 /* @media screen and (max-width:578px) {
     .card{

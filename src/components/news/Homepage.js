@@ -1,13 +1,20 @@
 import React from "react";
 import "./Homepage.css"
-import logo from './asset/motor (1).jpg'
-import logo2 from './asset/motor (2).jpg'
-import logo3 from './asset/motor (3).jpg'
+import motor1 from './asset/motor (1).jpg'
+import motor2 from './asset/motor (2).jpg'
+import motor3 from './asset/motor (3).jpg'
+import motor4 from './asset/motor (4).jpg'
+import motor5 from './asset/motor (5).jpg'
+import motor6 from './asset/motor (6).jpg'
+import motor7 from './asset/motor (7).jpg'
+import motor8 from './asset/motor (8).jpg'
+import motor9 from './asset/motor (9).jpg'
+import motor10 from './asset/motor (10).jpg'
+import flag from './asset/raceflag.png'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Carousel from 'react-bootstrap/Carousel';
-import flag from './asset/raceflag.png'
 
 const Homepage = () => {
   const settings = {
@@ -24,56 +31,62 @@ const Homepage = () => {
   };
   return (
     <>
+    {/* slide ảnh */}
       <Carousel>
         <Carousel.Item>
           <div class="item active">
-            <img src={logo} class="d-block " alt="Los Angeles"></img>
+            <img src={motor1} class="d-block " alt="motor1"></img>
           </div>
         </Carousel.Item>
         <Carousel.Item>
           <div class="item">
-            <img src={logo2} class="d-block" alt="Chicago"></img>
+            <img src={motor2} class="d-block" alt="motor2"></img>
           </div>
         </Carousel.Item>
         <Carousel.Item>
           <div class="item">
-            <img src={logo3} class="d-block" alt="New York"></img>
+            <img src={motor3} class="d-block" alt="motor3"></img>
+          </div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div class="item">
+            <img src={motor4} class="d-block" alt="motor4"></img>
+          </div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div class="item">
+            <img src={motor5} class="d-block" alt="motor5"></img>
+          </div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div class="item">
+            <img src={motor6} class="d-block" alt="motor6"></img>
+          </div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div class="item">
+            <img src={motor7} class="d-block" alt="motor7"></img>
+          </div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div class="item">
+            <img src={motor8} class="d-block" alt="motor8"></img>
+          </div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div class="item">
+            <img src={motor9} class="d-block" alt="motor9"></img>
+          </div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div class="item">
+            <img src={motor10} class="d-block" alt="motor10"></img>
           </div>
         </Carousel.Item>
       </Carousel>
-      {/* <div class="carousel-container">
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
-          <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" dat a-slide-to="2"></li>
-          </ol>
-          <div class="carousel-inner">
-            <div class="item active">
-              <img src={logo} class="d-block w-100" alt="Los Angeles"></img>
-            </div>
-
-            <div class="item">
-              <img src={logo2} class="d-block w-100" alt="Chicago"></img>
-            </div>
-
-            <div class="item">
-              <img src={logo3} class="d-block w-100" alt="New York"></img>
-            </div>
-          </div>
-          <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="right carousel-control" href="#myCarousel" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </div>
-      </div> */}
-
       <>
-        <section className="container-fluid mt-3">
+      {/* tin tức */}
+        <section className="container-fluid mt-5">
           <header className="mb-0 d-flex align-items-center">
             <div className="box d-flex align-items-center">
               <img src={flag} alt="raceflag" className="me-1" ></img>
@@ -132,11 +145,6 @@ const Homepage = () => {
             </Slider>
           </div>
         </section>
-
-
-
-
-
 
         {/* <div className="mainDiv">
           {mynews.map((ele) => {

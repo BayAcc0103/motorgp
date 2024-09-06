@@ -1,0 +1,95 @@
+.calendar__container {
+    background-color: #f9f9f9;
+
+}
+
+.calendar__header-container {
+    background-color: #000000e8;
+    background-image: radial-gradient(96.8% 493.26% at 100% 93.41%, rgba(201, 3, 0, 0.23) 0, rgba(148, 4, 1, 0) 100%);
+    padding: 1.2rem 1.6rem 2.2rem;
+    box-shadow: 0 .4rem .8rem 0 rgba(0, 0, 0, .15);
+}
+
+.calendar__title {
+    color: #fff;
+    font-size: 3.2rem;
+    text-transform: capitalize;
+}
+
+.row-striped:nth-of-type(odd) {
+    background-color: #f6f6f6;
+    border-left: 4px #000000 solid;
+}
+
+.row-striped:nth-of-type(even) {
+    background-color: #ffffff;
+    border-left: 4px #000000 solid;
+}
+
+.row-striped {
+    padding: 15px 0;
+}
+
+.day {
+    background-image: url(https://www.motogp.com/resources/v7.6.8/i/svg-files/elements/event-desktop-grid.svg);
+}
+
+.fade-effect {
+    position: relative;
+    display: inline-block;
+    /* or use block if you want it to be a block-level element */
+}
+
+.fade-effect::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+    pointer-events: none;
+    /* Allows clicks to pass through the overlay */
+}
+
+.calendar-listing__layout {
+    position: absolute;
+    top: 10%;
+    /* Adjust position as needed */
+    left: 10%;
+    /* Adjust position as needed */
+    width: 100px;
+    /* Set a specific width for the overlay image */
+    height: 100px;
+    /* Maintain aspect ratio */
+    z-index: 2;
+}
+
+.date-component {
+    font-weight: bold;
+}
+
+.month {
+    display: block;
+    font-size: 1.5rem;
+    color: gray;
+}
+
+.separator {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.location_flag {
+    width: 2.7rem;
+    height: 1.8rem;
+    margin: 0;
+    margin-right: 10px;
+}
+.calendar-listing_flag{
+    border-radius: .4rem;
+    border: .1rem solid #c5c5c5;
+}
+.box{
+    margin-left: 5%;
+}
