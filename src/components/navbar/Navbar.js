@@ -54,14 +54,8 @@ const Navbar = () => {
             </ul>
             <div className="d-flex align-items-center custom-gap ms-auto">
               <div className="d-flex flex-column me-3">
-                <span className="text-primary">{city}</span>
                 <span className="text-white">{currentDate}</span>
               </div>
-              <div className="d-flex align-items-center me-3">
-                <i className="bi bi-sun" style={{ fontSize: '24px', color: 'orange' }}></i>
-                <span className="text-danger fs-4 ms-2">{temperature}</span>
-              </div>
-              <span className="text-white">{condition}</span>
             </div>
           </div>
           <div class="d-flex gap-2 justify-content-center custom-gap">

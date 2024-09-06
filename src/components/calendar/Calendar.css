@@ -47,23 +47,18 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.9),rgba(0, 0, 0, 0)10%, rgba(0, 0, 0, 0.9) );
     pointer-events: none;
     /* Allows clicks to pass through the overlay */
 }
 
-.calendar-listing__layout {
-    position: absolute;
-    top: 10%;
-    /* Adjust position as needed */
-    left: 10%;
-    /* Adjust position as needed */
-    width: 100px;
-    /* Set a specific width for the overlay image */
-    height: 100px;
-    /* Maintain aspect ratio */
+/* .calendar-listing__layout {
+    top: 230px;
+    right: 50px;
+    width: 100%;
+    height: 250px;
     z-index: 2;
-}
+} */
 
 .date-component {
     font-weight: bold;
@@ -92,4 +87,7 @@
 }
 .box{
     margin-left: 5%;
+}
+.race_road{
+    background-color: #000000;
 }

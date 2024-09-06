@@ -12,14 +12,14 @@ const Calendar = () => {
                     <h1 class="calendar__title">2024 Calendar</h1>
                 </div>
             </div>
-            <header className="mb-0 d-flex align-items-center">
+            <header className="mt-3 d-flex align-items-center">
                 <div className="box d-flex align-items-center">
                     <img src={flag} alt="raceflag" className="me-1" ></img>
-                    <h2 className="mt-0">Latest News</h2>
+                    <h1 className="mt-0">November</h1>
                 </div>
             </header>
             <div class="container">
-                <div class="row row-striped">
+                <div class="row row-striped mb-5 mt-3">
                     <div class="day col-2">
                         <div class="row justify-content-center">
                             <div class="col text-center">
@@ -41,7 +41,7 @@ const Calendar = () => {
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 ">
+                    <div class="col-5">
                         <h3 class="text-uppercase"><strong>Qatar Airways Grand Prix of Qatar</strong></h3>
                         <div class="mt-2 d-flex justify-content-left">
                             <div class="location_flag d-flex">
@@ -50,14 +50,23 @@ const Calendar = () => {
                             <div class="calendar-listing__location-track-name mt-1">Lusail International Circuit</div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-2 d-flex justify-content-center align-items-center bg-dark">
+                        {/* <img class="calendar-listing__layout" src="https://photos.motogp.com/events-admin/b/1/b1cd25b2-1658-4c3b-bd3f-1a7796f7cd27/simple/qat2.svg" alt="Lusail International Circuit track" loading="lazy"></img> */}
+                    </div>
+
+                    <div class="col-3">
                         <div class="fade-effect">
                             <img src={motor1} alt="Event Image" class=" ms-2 shadow-image"></img>
-                            <img class="calendar-listing__layout" src="https://photos.motogp.com/events-admin/b/1/b1cd25b2-1658-4c3b-bd3f-1a7796f7cd27/simple/qat2.svg" alt="Lusail International Circuit track" loading="lazy"></img>
                         </div>
                     </div>
                 </div>
-                <div class="row row-striped">
+                
+                
+
+
+               
+
+                <div class="row row-striped mb-5 mt-3">
                     <div class="col-2 text-right">
                         <h1 class="display-4"><span class="badge badge-secondary text-dark">27</span></h1>
                         <h2>OCT</h2>
