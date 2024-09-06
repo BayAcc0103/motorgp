@@ -19,6 +19,7 @@ const Calendar = () => {
                 </div>
             </header>
             <div class="container">
+                {/* hang 1 */}
                 <div class="row row-striped mb-5 mt-3">
                     <div class="day col-2">
                         <div class="row justify-content-center">
@@ -59,10 +60,12 @@ const Calendar = () => {
                             <img class="calendar-listing__layout" src="https://photos.motogp.com/events-admin/b/1/b1cd25b2-1658-4c3b-bd3f-1a7796f7cd27/simple/qat2.svg" alt="Lusail International Circuit track" loading="lazy"></img>
                         </div>
                         <div class="fade-effect">
-                            <img src={motor1} alt="Event Image" class="ms-3 shadow-image"></img>
+                            <img src={motor1} alt="" class="ms-3 shadow-image"></img>
                         </div>
                     </div>
                 </div>
+
+                {/* hang2 */}
                 <div class="row row-striped mb-5 mt-3">
                     <div class="day col-2">
                         <div class="row justify-content-center">
@@ -103,39 +106,14 @@ const Calendar = () => {
                             <img class="calendar-listing__layout" src="https://photos.motogp.com/events-admin/b/1/b1cd25b2-1658-4c3b-bd3f-1a7796f7cd27/simple/qat2.svg" alt="Lusail International Circuit track" loading="lazy"></img>
                         </div>
                         <div class="fade-effect">
-                            <img src={motor1} alt="Event Image" class="ms-3 shadow-image"></img>
+                            <img src={motor1} alt="" class="ms-3 shadow-image"></img>
                         </div>
                     </div>
                 </div>
+
                 
-                    <div class="col-3">
-                        <div class="fade-effect">
-                            <img src={motor1} alt="Event Image" class=" ms-2 shadow-image"></img>
-                        </div>
-                    </div>
-                </div>
+            </div>
 
-
-
-
-
-
-
-                <div class="row row-striped mb-5 mt-3">
-                    <div class="col-2 text-right">
-                        <h1 class="display-4"><span class="badge badge-secondary text-dark">27</span></h1>
-                        <h2>OCT</h2>
-                    </div>
-                    <div class="col-10">
-                        <h3 class="text-uppercase"><strong>Operations Meeting</strong></h3>
-                        <ul class="list-inline">
-                            <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Friday</li>
-                            <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
-                            <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
-                        </ul>
-                    </div>
-                </div>
-            
         </>
     );
 };
