@@ -2,7 +2,7 @@
     background-color: black;
 }
 .bg-fullscreen {
-    background: url('C:\Users\lehuy\Documents\GitHub\news-app\src\components\loginform\asset\Background.jpg') no-repeat center center; /* Thay thế với đường dẫn hình ảnh của bạn */
+    background: url('./asset/Background.jpg') no-repeat center center; /* Thay thế với đường dẫn hình ảnh của bạn */
     background-size: cover; /* Để hình ảnh phủ toàn bộ phần tử */
     height: 100vh; /* Chiều cao toàn màn hình */
 }
