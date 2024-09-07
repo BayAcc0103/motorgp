@@ -3,6 +3,8 @@ import "./Navbar.css"
 import { Link } from 'react-router-dom';
 import logo from './asset/motogp-logo.jpg'
 import logo1 from './asset/helmet.png'
+import Nav from 'react-bootstrap/Nav';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 const Navbar = () => {
   const [currentDate, setCurrentDate] = useState('');
@@ -45,14 +47,22 @@ const Navbar = () => {
               <li className="nav-item">
                 <Link to="/calendar" className="nav-link text-white" aria-current="page">Calendar</Link>
               </li>
+              <Nav>
+                <NavDropdown
+                  id="nav-dropdown"
+                  title="Results & Standings"
+                  menuVariant="dark"
+                >
+                <Link to="./result"><NavDropdown.Item href="#action/3.1">Results</NavDropdown.Item></Link>
+                <Link to="./standing"><NavDropdown.Item href="#action/3.2">Standings</NavDropdown.Item></Link>
+                </NavDropdown>
+              </Nav>
 
-              <li className="nav-item">
-                <a className="nav-link text-white" href="#">Results & Standings</a>
-              </li>
               <li className="nav-item">
                 <a className="nav-link text-white" href="#">Rider & Teams</a>
               </li>
             </ul>
+
             <div className="d-flex align-items-center custom-gap ms-auto">
               <div className="d-flex flex-column me-3">
                 <span className="text-white">{currentDate}</span>
