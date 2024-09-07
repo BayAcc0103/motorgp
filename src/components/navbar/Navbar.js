@@ -31,7 +31,7 @@ const Navbar = () => {
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div className="container-fluid">
-          <img src={logo} alt="Logo" style={{ width: '100px', height: '50px', marginRight: '5px'}} ></img>
+          <img src={logo} alt="Logo" style={{ width: '100px', height: '50px', marginRight: '5px' }} ></img>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -39,12 +39,13 @@ const Navbar = () => {
             <ul className="navbar-nav mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link to="/" style={{ color: 'white' }} className="nav-link active" aria-current="page">
-                <i className="bi bi-house-door" style={{ fontSize: '24px' }}></i>
+                  <i className="bi bi-house-door" style={{ fontSize: '24px' }}></i>
                 </Link>
               </li>
               <li className="nav-item">
                 <Link to="/calendar" className="nav-link text-white" aria-current="page">Calendar</Link>
               </li>
+
               <li className="nav-item">
                 <a className="nav-link text-white" href="#">Results & Standings</a>
               </li>
