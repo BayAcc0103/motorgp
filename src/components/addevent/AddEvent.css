@@ -1,45 +1,59 @@
 .add-event-container {
-    max-width: 400px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .add-event-container h2 {
-    margin-top: 0;
-  }
-  
-  .add-event-container form {
-    margin-top: 20px;
-  }
-  
-  .add-event-container label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .add-event-container input[type="text"],
-  .add-event-container input[type="date"] {
-    width: 100%;
-    height: 40px;
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-  }
-  
-  .add-event-container button[type="submit"] {
-    width: 100%;
-    height: 40px;
-    background-color: #4CAF50;
-    color: #fff;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .add-event-container button[type="submit"]:hover {
-    background-color: #3e8e41;
-  }
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-event-container h2 {
+  margin-top: 0;
+}
+
+.add-event-container form {
+  margin-top: 20px;
+}
+
+.add-event-container label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.add-event-container input[type="text"],
+.add-event-container input[type="date"] {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.add-event-container input[type="file"] {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.add-event-container img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
+}
+
+.add-event-container button[type="submit"] {
+  width: 100%;
+  height: 40px;
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-event-container button[type="submit"]:hover {
+  background-color: #3e8e41;
+}

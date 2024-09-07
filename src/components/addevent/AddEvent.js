@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
-import "./AddEvent.css"
+
 const AddEvent = () => {
   const [eventTitle, setEventTitle] = useState('');
   const [eventDate, setEventDate] = useState('');
   const [eventLocation, setEventLocation] = useState('');
+  const [sponsorPicture, setSponsorPicture] = useState(null);
+  const [sponsorPicturePreview, setSponsorPicturePreview] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add event to calendar logic goes here
     console.log('Event added:', eventTitle, eventDate, eventLocation);
+    console.log('Sponsor picture:', sponsorPicture);
+  };
+
+  const handleSponsorPictureChange = (e) => {
+    const file = e.target.files[0];
+    setSponsorPicture(file);
+    setSponsorPicturePreview(URL.createObjectURL(file));
   };
 
   return (
@@ -28,6 +37,14 @@ const AddEvent = () => {
         <label>
           Event Location:
           <input type="text" value={eventLocation} onChange={(e) => setEventLocation(e.target.value)} />
+        </label>
+        <br />
+        <label>
+          Sponsor Picture:
+          <input type="file" accept="image/*" onChange={handleSponsorPictureChange} />
+          {sponsorPicturePreview && (
+            <img src={sponsorPicturePreview} alt="Sponsor picture" style={{ width: '100px', height: '100px' }} />
+          )}
         </label>
         <br />
         <button type="submit">Add Event</button>
