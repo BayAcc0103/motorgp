@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './AddEvent.css';
 
 const AddEvent = () => {
   const [eventTitle, setEventTitle] = useState('');

@@ -60,7 +60,7 @@ const Calendar = () => {
                    
                     <div class="col-3">
                         <div class="d-flex justify-content-start align-items-center">
-                            <img class="" src="https://resources.motogp.pulselive.com/photo-resources/2024/06/06/dac9c483-db57-413d-89c5-e37097f7a381/QAT.jpg?height=125&width=412" loading="lazy"></img>
+                            <img class="" src="https://resources.motogp.pulselive.com/photo-resources/2024/06/06/dac9c483-db57-413d-89c5-e37097f7a381/QAT.jpg?height=125&width=412" alt="" loading="lazy"></img>
                         </div>
                     </div>
                 </div>
