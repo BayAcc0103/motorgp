@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+<<<<<<< Updated upstream
 import './AddEvent.css';
 
+=======
+import "./AddEvent.css"
+>>>>>>> Stashed changes
 const AddEvent = () => {
   const [eventTitle, setEventTitle] = useState('');
   const [eventDate, setEventDate] = useState('');
