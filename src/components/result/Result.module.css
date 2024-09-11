@@ -1,3 +1,4 @@
+/* filter */
 .primary_filter {
   background-color: #000;
   background-image: radial-gradient(96.8% 493.26% at 100% 93.41%, rgba(148, 4, 1, .23) 0, rgba(148, 4, 1, 0) 100%);
@@ -46,7 +47,7 @@
   background-size: 1.2rem;
 }
 
-
+/* hero */
 .results__hero_container {
   display: flex;
   flex-flow: column;
@@ -112,8 +113,7 @@
   align-items: center;
 }
 
-
-
+/* table */
 * {
   box-sizing: border-box;
 }

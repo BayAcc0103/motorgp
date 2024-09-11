@@ -40,16 +40,18 @@ const Standing = () => {
                         </div>
                     </div>
                 </div>
-                <div class="results__hero-container">
-                    <div class="results__hero-image">
-                        <img alt="Misano MotoGP™ Official Test" src="https://photos.motogp.com/2024/events/background/13 RSM3.jpg" class="results__hero-image-img js-hero-image active"></img>
+                
+                <div class={`${styles.results__hero_container}`}>
+                    <div class={`${styles.results__hero_image}`}>
+                        <img alt="Misano MotoGP™ Official Test" src="https://photos.motogp.com/2024/events/background/RSM.png" class={`${styles.results__hero_image_img}`}></img>
                     </div>
-                    <div class="results__hero-text">Misano MotoGP™ Official Test 2024</div>
-                    <div class="results__hero-details-container">
-                        <img src="https://static-files.motogp.pulselive.com/assets/flags/it.svg" alt="IT flag" class="results__hero-details-flag"></img>
-                            <div class="results__hero-details-location">Misano World Circuit Marco Simoncelli</div><div class="results__hero-details-dates">09 Sep</div>
+                    <div class={`${styles.results__hero_text}`}>Misano MotoGP™ Official Test 2024</div>
+                    <div class={`${styles.results__hero_details_container}`}>
+                        <img src="https://static-files.motogp.pulselive.com/assets/flags/it.svg" alt="IT flag" class={`${styles.results__hero_details_flag}`}></img>
+                        <div class={`${styles.results__hero_details_location}`}>Misano World Circuit Marco Simoncelli</div>
                     </div>
                 </div>
+
 
                 <section class={`${styles.results_table}`}>
                     <table class={`${styles.results_table__table}`}>
