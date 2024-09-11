@@ -41,7 +41,6 @@
 .custom_select {
   padding: 0 5rem 0 2rem;
   line-height: 2.6;
-  /* background-image: url(../i/elements/select-chevron-down.svg); */
   background-position: right 2rem center;
   background-repeat: no-repeat;
   background-size: 1.2rem;

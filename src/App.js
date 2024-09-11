@@ -7,6 +7,8 @@ import Calendar from './components/calendar/Calendar';
 import AddEvent from './components/addevent/AddEvent';
 import Result from './components/result/Result';
 import Standing from './components/standing/Standing';
+import Rider from './components/rider/Rider';
+import Team from './components/team/Team';
 const App = () => {
   return (
     <Router>
@@ -18,6 +20,8 @@ const App = () => {
           <Route path="/addevent" element={<AddEvent/>}/>
           <Route path="/result" element={<Result/>}/>
           <Route path="/standing" element={<Standing/>}/>
+          <Route path="/rider" element={<Rider/>}/>
+          <Route path="/team" element={<Team/>}/>
         </Routes>
     </Router>
   )
