@@ -58,9 +58,16 @@ const Navbar = () => {
                 </NavDropdown>
               </Nav>
 
-              <li className="nav-item">
-                <a className="nav-link text-white" href="#">Rider & Teams</a>
-              </li>
+              <Nav>
+                <NavDropdown
+                  id="nav-dropdown"
+                  title="Riders & Teams"
+                  menuVariant="dark"
+                >
+                <Link to="./rider"><NavDropdown.Item href="#action/3.1">Riders</NavDropdown.Item></Link>
+                <Link to="./team"><NavDropdown.Item href="#action/3.2">Teams</NavDropdown.Item></Link>
+                </NavDropdown>
+              </Nav>
             </ul>
 
             <div className="d-flex align-items-center custom-gap ms-auto">

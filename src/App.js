@@ -7,10 +7,6 @@ import Calendar from './components/calendar/Calendar';
 import AddEvent from './components/addevent/AddEvent';
 import Result from './components/result/Result';
 import Standing from './components/standing/Standing';
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 const App = () => {
   return (
     <Router>
