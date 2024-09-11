@@ -1,4 +1,4 @@
-/* filter */
+/* CSS cho FILTER */
 .primary_filter {
   background-color: #000;
   background-image: radial-gradient(96.8% 493.26% at 100% 93.41%, rgba(148, 4, 1, .23) 0, rgba(148, 4, 1, 0) 100%);
@@ -13,40 +13,33 @@
   padding: 0 1.6rem;
 }
 
+/* sửa font family */
 .filter_label {
   font-family: var(--g-typography-copy-light);
   font-size: 1.2rem;
   line-height: 1.2rem;
-  letter-spacing: -.02em;
   color: #9fa0a4;
-  pointer-events: none;
-  position: absolute;
   top: .8rem;
 }
 
 .filter_select {
-  color: #fff;
-  background-color: transparent;
-  border: none;
-  width: 100%;
-  margin: 0;
   padding: .8rem 1.8rem 0 0;
   background-position: 100%;
   background-size: auto;
-  white-space: nowrap;
+  white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 800;
 }
-.custom_select {
+/* .custom_select {
   padding: 0 5rem 0 2rem;
   line-height: 2.6;
   background-position: right 2rem center;
   background-repeat: no-repeat;
   background-size: 1.2rem;
-}
+} */
 
-/* hero */
+/* css cho ảnh bên dưới filter */
 .results__hero_container {
   display: flex;
   flex-flow: column;

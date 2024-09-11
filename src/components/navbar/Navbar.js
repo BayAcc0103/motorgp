@@ -25,10 +25,7 @@ const Navbar = () => {
     const interval = setInterval(updateDate, 1000 * 60); // Cập nhật mỗi phút
     return () => clearInterval(interval); // Dọn dẹp interval khi component unmount
   }, []);
-
-  const city = 'TP. Hồ Chí Minh';
-  const temperature = '31°C';
-  const condition = 'Nắng';
+  
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">

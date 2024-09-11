@@ -1,41 +1,33 @@
 import React from 'react';
 import styles from "./Standing.module.css";
+import banner from "./asset/racingflag.jpg"
 const Standing = () => {
     return (
         <>
             <div>
+                {/* HTML for FILTERS */}
                 <div class={`z-1 position-relative`}>
                     <div class={`d-flex position-relative ${styles.primary_filter}`}>
+                        {/* HTML for YEAR */}
                         <div class={`d-flex position-relative align-items-center ${styles.filter_container}`}>
-                            <div class={`${styles.filter_label}`}>Year</div>
-                            <select class={`${styles.filter_select} ${styles.custom_select}`}>
+                            <div class={`position-absolute pe-none ${styles.filter_label}`}>Year</div>
+                            <select class={`text-white bg-transparent border-0 w-100 m-0 ${styles.filter_select} ${styles.custom_select}`}>
                                 <option class={`text-dark ${styles.custom_option}`} value="2024">2024</option>
                                 <option class={`text-dark ${styles.custom_option}`} value="2023">2023</option>
-                                <option class={`text-dark ${styles.custom_option}`} value="2022">2022</option>
                             </select>
                         </div>
+                        {/* HTML for CHAMPIONSHIP */}
                         <div class={`d-flex position-relative align-items-center ${styles.filter_container}`}>
-                            <div class={`${styles.filter_label}`}>Year</div>
-                            <select class={`${styles.filter_select} ${styles.custom_select}`}>
-                                <option class={`text-dark ${styles.custom_option}`} value="2024">2024</option>
-                                <option class={`text-dark ${styles.custom_option}`} value="2023">2023</option>
-                                <option class={`text-dark ${styles.custom_option}`} value="2022">2022</option>
+                            <div class={`position-absolute pe-none ${styles.filter_label}`}>Championship</div>
+                            <select class={`text-white bg-transparent border-0 w-100 m-0 ${styles.filter_select} ${styles.custom_select}`}>
+                                <option class={`text-dark ${styles.custom_option}`} value="">Rider's Championship</option>
                             </select>
                         </div>
+                        {/* HTML for CATEGORY */}
                         <div class={`d-flex position-relative align-items-center ${styles.filter_container}`}>
-                            <div class={`${styles.filter_label}`}>Year</div>
-                            <select class={`${styles.filter_select} ${styles.custom_select}`}>
-                                <option class={`text-dark ${styles.custom_option}`} value="2024">2024</option>
-                                <option class={`text-dark ${styles.custom_option}`} value="2023">2023</option>
-                                <option class={`text-dark ${styles.custom_option}`} value="2022">2022</option>
-                            </select>
-                        </div>
-                        <div class={`d-flex position-relative align-items-center ${styles.filter_container}`}>
-                            <div class={`${styles.filter_label}`}>Year</div>
-                            <select class={`${styles.filter_select} ${styles.custom_select}`}>
-                                <option class={`text-dark ${styles.custom_option}`} value="2024">2024</option>
-                                <option class={`text-dark ${styles.custom_option}`} value="2023">2023</option>
-                                <option class={`text-dark ${styles.custom_option}`} value="2022">2022</option>
+                            <div class={`position-absolute pe-none ${styles.filter_label}`}>Category</div>
+                            <select class={`text-white bg-transparent border-0 w-100 m-0 ${styles.filter_select} ${styles.custom_select}`}>
+                                <option class={`text-dark ${styles.custom_option}`} value="">MotoGP™</option>
                             </select>
                         </div>
                     </div>
@@ -43,13 +35,10 @@ const Standing = () => {
                 
                 <div class={`${styles.results__hero_container}`}>
                     <div class={`${styles.results__hero_image}`}>
-                        <img alt="Misano MotoGP™ Official Test" src="https://photos.motogp.com/2024/events/background/RSM.png" class={`${styles.results__hero_image_img}`}></img>
+                        <img alt="Misano MotoGP™ Official Test" src={banner} class={`${styles.results__hero_image_img}`}></img>
                     </div>
-                    <div class={`${styles.results__hero_text}`}>Misano MotoGP™ Official Test 2024</div>
-                    <div class={`${styles.results__hero_details_container}`}>
-                        <img src="https://static-files.motogp.pulselive.com/assets/flags/it.svg" alt="IT flag" class={`${styles.results__hero_details_flag}`}></img>
-                        <div class={`${styles.results__hero_details_location}`}>Misano World Circuit Marco Simoncelli</div>
-                    </div>
+                    <div class={`${styles.results__hero_text}`}>Championship Standings</div>
+                    <div class={`${styles.results__hero_text}`}>2024</div>
                 </div>
 
 
