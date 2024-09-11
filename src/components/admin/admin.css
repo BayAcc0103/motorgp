@@ -1,0 +1,24 @@
+.list-group a:hover{
+    background-color: rgba(255, 255, 255, 0.31);
+    color: white;
+    cursor: pointer;
+}
+
+/* Tùy chỉnh màu nền và màu chữ cho sidebar */
+.custom-sidebar {
+    background-color: rgb(180, 41, 55); /* Màu nền tối cho sidebar */
+    color: #fff; /* Màu chữ trắng */
+  }
+  
+  /* Tùy chỉnh các mục trong sidebar */
+  .custom-sidebar-item {
+    background-color: rgb(180, 41, 55); /* Màu nền các mục sidebar */
+    color: #ffffff; /* Màu chữ trắng */
+    border: none; /* Bỏ viền mặc định */
+  }
+  
+  /* Tùy chỉnh màu viền giữa các mục */
+  hr {
+    border-color: #ffffff; /* Màu viền sáng hơn */
+  }
+  
