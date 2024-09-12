@@ -19,7 +19,7 @@ import RacersAndTeam from './pages/RacersAndTeam';
 import Calendar from './pages/Calendar';
 import Ranking from './pages/Ranking';
 
-function Admin() {
+const Admin = () => {
   return (
     <Router>
       <div className="container-fluid min-vh-100">
