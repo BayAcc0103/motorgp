@@ -25,15 +25,20 @@ const Navbar = () => {
     const interval = setInterval(updateDate, 1000 * 60); // Cập nhật mỗi phút
     return () => clearInterval(interval); // Dọn dẹp interval khi component unmount
   }, []);
-  
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div className="container-fluid">
           <img src={logo} alt="Logo" style={{ width: '100px', height: '50px', marginRight: '5px' }} ></img>
+
+          {/* sửa đoạn này */}
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon">
+            </span>
           </button>
+
+        
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mb-2 mb-lg-0">
               <li className="nav-item">
@@ -50,8 +55,8 @@ const Navbar = () => {
                   title="Results & Standings"
                   menuVariant="dark"
                 >
-                <Link to="./result"><NavDropdown.Item href="#action/3.1">Results</NavDropdown.Item></Link>
-                <Link to="./standing"><NavDropdown.Item href="#action/3.2">Standings</NavDropdown.Item></Link>
+                  <Link to="./result"><NavDropdown.Item href="#action/3.1">Results</NavDropdown.Item></Link>
+                  <Link to="./standing"><NavDropdown.Item href="#action/3.2">Standings</NavDropdown.Item></Link>
                 </NavDropdown>
               </Nav>
 
@@ -61,8 +66,8 @@ const Navbar = () => {
                   title="Riders & Teams"
                   menuVariant="dark"
                 >
-                <Link to="./rider"><NavDropdown.Item href="#action/3.1">Riders</NavDropdown.Item></Link>
-                <Link to="./team"><NavDropdown.Item href="#action/3.2">Teams</NavDropdown.Item></Link>
+                  <Link to="./rider"><NavDropdown.Item href="#action/3.1">Riders</NavDropdown.Item></Link>
+                  <Link to="./team"><NavDropdown.Item href="#action/3.2">Teams</NavDropdown.Item></Link>
                 </NavDropdown>
               </Nav>
             </ul>

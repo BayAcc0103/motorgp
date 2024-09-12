@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Homepage.css"
 import motor1 from './asset/motor (1).jpg'
 import motor2 from './asset/motor (2).jpg'
@@ -17,11 +17,40 @@ import Slider from "react-slick";
 import Carousel from 'react-bootstrap/Carousel';
 
 const Homepage = () => {
+  const [slidesToShow, setSlidesToShow] = useState(getSlidesToShow());
+// Xử lí slide tin tức: Nếu chiều rộng màn hình < 1300 => hiển thị 3 slide, <1130 => hiển thị 2 slide, <770 => hiển thị 1 slide
+  function getSlidesToShow() {
+    const width = window.innerWidth;
+    if (width < 400) {
+      return 0;
+    } else if (width < 770) {
+      return 1;
+    } else if (width < 1130) {
+      return 2;
+    } else if (width < 1300) {
+      return 3;
+    } else {
+      return 4;
+    }
+  }
+
+  useEffect(() => {
+    const handleResize = () => {
+      setSlidesToShow(getSlidesToShow());
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  // Cài đặt các thuộc tính cho slider
   const settings = {
     className: "center",
     infinite: true,
     centerPadding: "60px",
-    slidesToShow: 4,
+    slidesToShow: slidesToShow,
     swipeToSlide: true,
     afterChange: function (index) {
       console.log(
@@ -31,7 +60,7 @@ const Homepage = () => {
   };
   return (
     <>
-    {/* slide ảnh */}
+      {/* slide ảnh */}
       <Carousel>
         <Carousel.Item>
           <div class="item active">
@@ -85,7 +114,7 @@ const Homepage = () => {
         </Carousel.Item>
       </Carousel>
       <>
-      {/* tin tức */}
+        {/* tin tức */}
         <section className="container-fluid mt-5">
           <header className="mb-0 d-flex align-items-center">
             <div className="box d-flex align-items-center">
