@@ -5,7 +5,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import './admin.css';
 import adminLogo from './asset/adminlogobw.png';
 import accLogo from './asset/accountlogo.png';
 import helmet from './asset/helmetbw.png';
@@ -19,10 +19,10 @@ import RacersAndTeam from './pages/RacersAndTeam';
 import Calendar from './pages/Calendar';
 import Ranking from './pages/Ranking';
 
-const Admin = () => {
+function Admin() {
   return (
     <Router>
-      <div className="container-fluid bg-dark min-vh-100">
+      <div className="container-fluid min-vh-100">
         <div className="row">
           <div className="col-2 custom-sidebar min-vh-100">
             {/* Sidebar */}
@@ -65,7 +65,7 @@ const Admin = () => {
           </div>
 
           {/* Main Content */}
-          <div className="col-10">
+          <div className="col-10 main-content">
             <Routes>
               <Route path="/account" element={<Account />} />
               <Route path="/racers-and-team" element={<RacersAndTeam />} />
@@ -78,4 +78,5 @@ const Admin = () => {
     </Router>
   );
 }
+
 export default Admin;
