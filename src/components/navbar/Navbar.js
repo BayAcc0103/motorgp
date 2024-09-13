@@ -32,13 +32,18 @@ const Navbar = () => {
         <div className="container-fluid">
           <img src={logo} alt="Logo" style={{ width: '100px', height: '50px', marginRight: '5px' }} ></img>
 
-          {/* sửa đoạn này */}
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon">
-            </span>
-          </button>
+          {/* button navbar-toggler được thiết kế để chỉ hiển thị khi chiều rộng màn hình giảm xuống một mức nhất định.*/}
+          <Nav className="navbar-toggler">
+            <NavDropdown>
+              <Link to="/" className="nav-link" aria-current="page">Homepage</Link>
+              <Link to="/calendar" className="nav-link" aria-current="page">Calendar</Link>
+              <Link to="./result" className="nav-link" aria-current="page">Results</Link>
+              <Link to="./standing" className="nav-link" aria-current="page">Standings</Link>
+              <Link to="./rider" className="nav-link" aria-current="page">Riders</Link>
+              <Link to="./team" className="nav-link" aria-current="page">Teams</Link>
+            </NavDropdown>
+          </Nav>
 
-        
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mb-2 mb-lg-0">
               <li className="nav-item">
