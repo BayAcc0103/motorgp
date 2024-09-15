@@ -1,0 +1,158 @@
+/* General Styles */
+.default-template {
+  /* Add any general styles for the page here */
+}
+
+.rider-header {
+  /* Styles for the header section */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.page-header__title {
+  /* Styles for the page title */
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Tabs Styles */
+.tabs-header {
+  /* Styles for the tabs header */
+  background-color: #f0f0f0;
+  padding: 10px;
+}
+
+.tabs__list {
+  /* Styles for the tabs list */
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tabs__item {
+  /* Styles for each tab item */
+  margin-right: 10px;
+}
+
+.tabs__link {
+  /* Styles for the tab link */
+  text-decoration: none;
+  color: #333;
+  padding: 10px;
+  border-bottom: 2px solid transparent;
+}
+
+.tabs__link.is-active {
+  /* Styles for the active tab link */
+  border-bottom-color: #c80502;
+}
+
+/* Rider Grid Styles */
+.rider-grid__container {
+  /* Styles for the rider grid container */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+}
+
+.rider-grid__motogp,
+.rider-grid__moto2,
+.rider-grid__moto3,
+.rider-grid__motoe {
+  /* Styles for each rider category grid */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.rider-list__container {
+  /* Styles for the rider list container */
+  display: flex;
+  flex-direction: column; /* Arrange rider types vertically */
+  gap: 20px; /* Adjust spacing between rider types as needed */
+}
+
+.rider-list__rider {
+  /* Styles for each rider item */
+  width: 200px; /* Adjust width as needed */
+  margin: 10px;
+  text-decoration: none;
+  color: #333;
+}
+
+.rider-list__image-container {
+  /* Styles for the rider image container */
+  position: relative;
+  padding-top: 100%;
+  overflow: hidden;
+}
+
+.rider-list__image {
+  /* Styles for the rider image */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.rider-list__info-container {
+  /* Styles for the rider information container */
+  padding: 10px;
+}
+
+.rider-list__info-hashtag {
+  /* Styles for the rider hashtag */
+  font-size: 12px;
+  color: #666;
+}
+
+.rider-list__info-name {
+  /* Styles for the rider name */
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.rider-list__details-container {
+  /* Styles for the rider details container */
+  margin-top: 10px;
+}
+
+.rider-list__details-country {
+  /* Styles for the rider country */
+  display: block;
+  margin-bottom: 5px;
+}
+
+.rider-list__details-team {
+  /* Styles for the rider team */
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Rider Row Styles */
+.rider-row-container {
+  display: flex;
+  flex-direction: column; /* Arrange rows vertically */
+  gap: 20px; /* Adjust spacing between rows as needed */
+}
+
+.rider-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Hide Elements */
+.u-hide {
+  display: none;
+}
+
+.rider-list__career-type {
+  margin-bottom: 10px;
+}
