@@ -1,60 +1,128 @@
+/* CSS for 2024 Calendar */
 .calendar__header-container {
     background-color: #000000e8;
     background-image: radial-gradient(96.8% 493.26% at 100% 93.41%, rgba(201, 3, 0, 0.23) 0, rgba(148, 4, 1, 0) 100%);
     padding: 1.2rem 1.6rem 2.2rem;
     box-shadow: 0 .4rem .8rem 0 rgba(0, 0, 0, .15);
 }
-.col-2{
-    height: 125px;
-}
+
 .calendar__title {
     color: #fff;
     font-size: 3.2rem;
     text-transform: capitalize;
 }
+
+/* CSS for Month */
+.monthrace {
+    margin-left: 5%;
+}
+
+/* CSS for Calendar */
+/* CSS for bgr-rowstriped */
 .row-striped:nth-of-type(odd) {
     background-color: #f6f6f6;
     border-left: 4px #000000 solid;
 }
+
 .row-striped:nth-of-type(even) {
     background-color: #ffffff;
     border-left: 4px #000000 solid;
 }
+
 .row-striped {
     padding: 15px 0;
 }
+
+.col-2 {
+    height: 125px;
+}
+
 .bgr-time {
     background-image: url(https://www.motogp.com/resources/v7.6.8/i/svg-files/elements/event-desktop-grid.svg);
+    background-repeat: no-repeat;
 }
-.back-sponcor{
-    background-color: #000000e8;
-    background-image: radial-gradient(96.8% 493.26% at 100% 93.41%, rgba(201, 3, 0, 0.23) 0, rgba(148, 4, 1, 0) 100%);
-    height: 50px;
-}
-.back-track{
-    background-color: #000000e8;
-    background-image: radial-gradient(96.8% 493.26% at 100% 93.41%, rgba(201, 3, 0, 0.23) 0, rgba(148, 4, 1, 0) 100%);
-    height: 75%;
-}
+
 .date-component {
     font-weight: bold;
 }
-.month-component{
+
+.month-component {
     display: block;
     font-size: 1.5rem;
     color: gray;
 }
+
 .location_flag {
     width: 2.7rem;
     height: 1.8rem;
     margin: 0;
     margin-right: 10px;
 }
-.calendar-listing_flag{
+
+.calendar-listing_flag {
     border-radius: .4rem;
     border: .1rem solid #c5c5c5;
 }
-.monthrace{
-    margin-left: 5%;
+
+.calendar-listing__track-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: .4rem 0 0 .4rem;
 }
 
+.object-fit-cover-picture__img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    object-position: center;
+    font-family: "object-fit: cover; object-position: center";
+}
+
+.calendar-listing__track-layout {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: linear-gradient(270deg, #181c21 10%, rgba(24, 28, 33, .8) 25%, rgba(24, 28, 33, 0) 70%);
+}
+
+.calendar-listing__layout {
+    bottom: auto;
+    left: auto;
+    top: 50%;
+    right: 0;
+    transform: translate(28%, -50%);
+    max-height: 20rem;
+    position: absolute;
+    filter: drop-shadow(0 .5rem .8rem rgba(0, 0, 0, .55));
+    max-width: none;
+}
+
+.calendar-listing__track-sponcor {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    justify-content: center;
+    padding: 0 1.7rem;
+    height: 100%;
+    background: linear-gradient(90deg, #171c21, rgba(23, 28, 33, .8) 20%, rgba(23, 28, 33, 0) 40%);
+    display: flex;
+    flex-flow: column nowrap;
+    gap: .4rem;
+}
+.calendar-listing__track-sponsor-container{
+    width: 50%;
+    justify-content: flex-start;
+    display: flex;
+    margin-top: .4rem;
+}
+.calendar-listing__track-sponsor-logo {
+    display: flex;
+    justify-content: flex-start;
+}

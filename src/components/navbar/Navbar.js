@@ -84,7 +84,7 @@ const Navbar = () => {
             </div>
           </div>
           <div class="d-flex gap-2 justify-content-center custom-gap">
-            <Link to="/login">
+            <Link to="./admin">
               <button class="btn btn-outline-danger text-white" type="login">
                 <span class="bi-person-circle"></span>Login</button>
             </Link>

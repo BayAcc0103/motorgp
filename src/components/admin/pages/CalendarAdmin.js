@@ -4,7 +4,7 @@ import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
 import './Account.css';
 
-const Calendar = () => {
+const CalendarAdmin = () => {
   return (
     <div className="account-container d-flex flex-column justify-content-center align-items-center min-vh-100">
       {/* Thanh tìm kiếm */}
@@ -49,4 +49,4 @@ const Calendar = () => {
   );
 };
 
-export default Calendar;
+export default CalendarAdmin;
