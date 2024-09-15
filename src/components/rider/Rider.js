@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.css';
+import './Rider.css';
 
 // Rider Component
 const Rider = ({ name, hashtag, country, team, image}) => {
