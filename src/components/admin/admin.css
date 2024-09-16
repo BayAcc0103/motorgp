@@ -1,26 +1,33 @@
-.list-group a:hover{
-    background-color: rgba(255, 255, 255, 0.31);
-    color: white;
-    cursor: pointer;
+/* Sidebar cố định */
+.custom-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: calc(100vh - 20px);
+  background-color: rgb(96, 8, 8);
+  color: #fff;
+  padding: 70px 15px 15px 15px;
+  overflow-y: auto;
 }
 
-/* Tùy chỉnh màu nền và màu chữ cho sidebar */
-.custom-sidebar {
-    background-color: rgb(180, 41, 55); /* Màu nền tối cho sidebar */
-    color: #fff; /* Màu chữ trắng */
-  }
-  
-  /* Tùy chỉnh các mục trong sidebar */
-  .custom-sidebar-item {
-    background-color: rgb(180, 41, 55); /* Màu nền các mục sidebar */
-    color: #ffffff; /* Màu chữ trắng */
-    border: none; /* Bỏ viền mặc định */
-  }
-  
-  /* Tùy chỉnh màu viền giữa các mục */
-  hr {
-    border-color: #ffffff; /* Màu viền sáng hơn */
-  }
+/* Các item trong sidebar */
+.custom-sidebar-item {
+  background-color: rgb(96, 8, 8); /* Màu nền các mục sidebar */
+  color: #ffffff; /* Màu chữ trắng */
+  padding: 10px;
+  display: block; /* Đảm bảo các item hiển thị dạng block */
+  text-decoration: none; /* Bỏ gạch chân mặc định của thẻ a */
+}
 
-  
-  
+/* Hiệu ứng hover cho các item trong sidebar */
+.custom-sidebar-item:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Đổi màu nền khi hover */
+  color: white; /* Màu chữ khi hover */
+  cursor: pointer;
+}
+
+/* Để đảm bảo hr không bị ảnh hưởng */
+hr {
+  border-color: #ffffff; /* Màu viền sáng hơn */
+}

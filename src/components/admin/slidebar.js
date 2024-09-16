@@ -28,7 +28,7 @@ const SlideBar = () => {
                     </Link>
 
                     <Link to="/admin/racers-and-team" className="list-group-item py-2 my-1 custom-sidebar-item">
-                        <img src={helmet} alt="helmet logo" style={{ width: '28px' }} />
+                        <img src={helmet} alt="helmet logo" style={{ width: '27px' }} />
                         <span className="fs-5 ms-2">Racers and team</span>
                     </Link>
 
