@@ -18,6 +18,37 @@
 }
 
 /* CSS for Calendar */
+@media (max-width: 720px) {
+    .container {
+        height: 300px;
+    }
+}
+@media (max-width: 1200px) {
+    .container {
+        height: 175px;
+    }
+}
+@media (max-width: 767px) {
+    .container {
+        height: 220px;
+    }
+}
+@media (max-width: 720px) {
+    .row-striped {
+        height: 300px;
+    }
+}
+@media (max-width: 1200px) {
+    .row-striped {
+        height: 175px;
+    }
+}
+@media (max-width: 768px) {
+    .row-striped {
+        height: 220px;
+    }
+}
+
 /* CSS for bgr-rowstriped */
 .row-striped:nth-of-type(odd) {
     background-color: #f6f6f6;
@@ -28,15 +59,14 @@
     background-color: #ffffff;
     border-left: 4px #690000 solid;
 }
+.container{
+    width: 100%;
+    padding: 0;
 
+}
 .row-striped {
     padding: 15px 0;
-}
-
-@media (max-width: 52.5em) {
-    .row-striped {
-        min-height: 12.4rem ;
-    }
+    width: 100%;
 }
 
 
@@ -54,13 +84,69 @@
     font-weight: bold;
 }
 
+.date-num {
+    font-size: 3.5rem;
+    color: gray;  
+}
+
 .month-component {
     display: block;
     font-size: 1.5rem;
     color: gray;
 }
-
+@media (max-width: 1400px) {
+    .month-component {
+        display: block;
+        font-size: 1.2rem;
+        color: gray;
+    }
+}
+@media (max-width: 1400px) {
+    .date-num {
+        font-size: 3.0rem;
+        color: gray;  
+    }
+}
+@media (max-width: 1200px) {
+    .date-num {
+        font-size: 2.0rem;
+        color: gray;  
+    }
+}
+@media (max-width: 320px) {
+    .date-num {
+        font-size: 1.5rem;
+        color: gray;  
+    }
+}
+@media (max-width: 320px) {
+    .month-component {
+        display: block;
+        font-size: .9rem;
+        color: gray;
+    }
+}
 /* CSS for location */
+@media (max-width: 768px) {
+   .text-uppercase {
+       font-size: 1.2rem;
+   }
+}
+@media (max-width: 320px) {
+    .text-uppercase {
+        font-size: 1.0rem;
+    }
+}
+@media (max-width: 768px) {
+    .location-track-name {
+        font-size: 1.0rem;
+    }
+ }
+@media (max-width: 320px) {
+     .location-track-name {
+         font-size: .8rem;
+     }
+ }
 .location_flag {
     width: 2.7rem;
     height: 1.8rem;
@@ -71,6 +157,9 @@
 .calendar-listing_flag {
     border-radius: .4rem;
     border: .1rem solid #c5c5c5;
+}
+.object-fit-cover-picture {
+    height: 100%;
 }
 
 /* CSS for track */

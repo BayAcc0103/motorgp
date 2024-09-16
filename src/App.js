@@ -14,6 +14,7 @@ import Account from './components/admin/pages/Account';
 import RacersAndTeam from './components/admin/pages/RacersAndTeam';
 import CalendarAdmin from './components/admin/pages/CalendarAdmin';
 import Ranking from './components/admin/pages/Ranking';
+import Footer from './components/footer/Footer';
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="ranking" element={<Ranking />} />
         </Route>
       </Routes>
+      <Footer />
     </Router>
   )
 }
