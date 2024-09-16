@@ -3,6 +3,9 @@ import './Footer.css'
 const Footer = () => {
     return (
         <>
+            <div>
+                <img alt="Misano MotoGP™ Official Test" src="https://esport.motogp.com/uploads/abd526905fabd87f952df026f216b637.jpg" class="w-100 banner"></img>
+            </div>
             <div class="footer-sponsors__container">
                 <div class="footer-sponsors__title">Official Sponsors</div>
                 <div class="footer-sponsors__list">
