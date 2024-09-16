@@ -21,18 +21,26 @@
 /* CSS for bgr-rowstriped */
 .row-striped:nth-of-type(odd) {
     background-color: #f6f6f6;
-    border-left: 4px #000000 solid;
+    border-left: 4px #690000 solid;
 }
 
 .row-striped:nth-of-type(even) {
     background-color: #ffffff;
-    border-left: 4px #000000 solid;
+    border-left: 4px #690000 solid;
 }
 
 .row-striped {
     padding: 15px 0;
 }
 
+@media (max-width: 52.5em) {
+    .row-striped {
+        min-height: 12.4rem ;
+    }
+}
+
+
+/* CSS for time to celeb */
 .col-2 {
     height: 125px;
 }
@@ -52,6 +60,7 @@
     color: gray;
 }
 
+/* CSS for location */
 .location_flag {
     width: 2.7rem;
     height: 1.8rem;
@@ -64,29 +73,9 @@
     border: .1rem solid #c5c5c5;
 }
 
-.calendar-listing__track-image {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: .4rem 0 0 .4rem;
-}
-
-.object-fit-cover-picture__img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    object-fit: cover;
-    object-position: center;
-    font-family: "object-fit: cover; object-position: center";
-}
+/* CSS for track */
 
 .calendar-listing__track-layout {
-    width: 100%;
-    height: 100%;
-    position: relative;
     background: linear-gradient(270deg, #181c21 10%, rgba(24, 28, 33, .8) 25%, rgba(24, 28, 33, 0) 70%);
 }
 
@@ -97,32 +86,34 @@
     right: 0;
     transform: translate(28%, -50%);
     max-height: 20rem;
-    position: absolute;
     filter: drop-shadow(0 .5rem .8rem rgba(0, 0, 0, .55));
     max-width: none;
 }
 
-.calendar-listing__track-sponcor {
-    position: absolute;
+/* CSS for sponcor */
+.calendar-listing__sponcor {
     left: 0;
-    width: 100%;
     top: 50%;
     transform: translateY(-50%);
-    justify-content: center;
     padding: 0 1.7rem;
-    height: 100%;
     background: linear-gradient(90deg, #171c21, rgba(23, 28, 33, .8) 20%, rgba(23, 28, 33, 0) 40%);
-    display: flex;
     flex-flow: column nowrap;
     gap: .4rem;
 }
-.calendar-listing__track-sponsor-container{
-    width: 50%;
-    justify-content: flex-start;
-    display: flex;
-    margin-top: .4rem;
-}
-.calendar-listing__track-sponsor-logo {
+
+.calendar-listing__sponsor-logo {
     display: flex;
     justify-content: flex-start;
 }
+
+/* (Có thể dùng đến)
+.object-fit-cover-picture__img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    object-position: center;
+} */
