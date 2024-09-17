@@ -22,3 +22,8 @@ nav {
     color: white;
     font-weight: bold;
 }
+@media (max-width: 344px) {
+    .custom-gap{
+        justify-content: end;
+    }
+}

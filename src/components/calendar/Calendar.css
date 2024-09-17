@@ -153,7 +153,11 @@
     margin: 0;
     margin-right: 10px;
 }
-
+@media (max-width: 1200px) {
+    .imgundertrack{
+        height: 100%;
+    }
+}
 .calendar-listing_flag {
     border-radius: .4rem;
     border: .1rem solid #c5c5c5;

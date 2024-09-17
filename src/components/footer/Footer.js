@@ -22,24 +22,24 @@ const Footer = () => {
                             <div class="container-fluid border border-dark">
                                 <div class="footer-sponsors__container">
                                     <div class="footer-sponsors__title">Official Sponsors</div>
-                                    <div class="d-flex justify-content-center flex-row">
+                                    <div class="d-flex justify-content-center sponcor-list">
                                         <a href="https://www.qatarairways.com/es-es/homepage.html" class="footer-sponsors__sponsor" title="QATAR" target="_blank" rel="noopener">
-                                            <img class="w-50" src="https://resources.motogp.pulselive.com/photo-resources/2024/05/09/74b76695-1cf4-4776-8a3a-e5e28a32b484/sponsor-qatar.png?width=100" alt="sponsor-qatar"></img>
+                                            <img class="sponcor-logo" src="https://resources.motogp.pulselive.com/photo-resources/2024/05/09/74b76695-1cf4-4776-8a3a-e5e28a32b484/sponsor-qatar.png?width=100" alt="sponsor-qatar"></img>
                                         </a>
                                         <a href="https://www.tissotwatches.com" class="footer-sponsors__sponsor" title="TISSOT" target="_blank" rel="noopener">
-                                            <img class="w-50" src="https://resources.motogp.pulselive.com/photo-resources/2024/09/12/179ab216-720b-4b7c-bc32-c7579a8b1cc2/Tissot_Main_Sponsor.png?width=100" alt="Tissot_Main_Sponsor"></img>
+                                            <img class="sponcor-logo" src="https://resources.motogp.pulselive.com/photo-resources/2024/09/12/179ab216-720b-4b7c-bc32-c7579a8b1cc2/Tissot_Main_Sponsor.png?width=100" alt="Tissot_Main_Sponsor"></img>
                                         </a>
                                         <a href="https://www.michelinmotorsport.com/en/motorsport/" class="footer-sponsors__sponsor" title="MICHELIN">
-                                            <img class="w-50" src="https://resources.motogp.pulselive.com/photo-resources/2023/03/27/6499fb7c-58c7-4e12-b107-98156ed85931/MICHELIN_logo.png?width=100" alt="MICHELIN_logo"></img>
+                                            <img class="sponcor-logo" src="https://resources.motogp.pulselive.com/photo-resources/2023/03/27/6499fb7c-58c7-4e12-b107-98156ed85931/MICHELIN_logo.png?width=100" alt="MICHELIN_logo"></img>
                                         </a>
                                         <a href="https://www.bmw-m.com/en/fastlane/motogp.html" class="footer-sponsors__sponsor" title="BMW M" target="_blank" rel="noopener">
-                                            <img class="w-50" src="https://resources.motogp.pulselive.com/photo-resources/2023/10/25/f0612155-0f76-452f-9db8-348c37fdd01b/BMW-M_logo.png?width=100" alt="BMW-M_logo"></img>
+                                            <img class="sponcor-logo" src="https://resources.motogp.pulselive.com/photo-resources/2023/10/25/f0612155-0f76-452f-9db8-348c37fdd01b/BMW-M_logo.png?width=100" alt="BMW-M_logo"></img>
                                         </a>
                                         <a href="https://estrellagalicia00.es/moto/moto-moto-gp/" class="footer-sponsors__sponsor" title="ESTRELLA GALICIA" target="_blank" rel="noopener">
-                                            <img class="w-50" src="https://resources.motogp.pulselive.com/photo-resources/2023/04/17/8a22cccc-b9e4-4b80-8a78-da85a042adf2/EstrellaGalicia_Logo.png?width=100" alt="EstrellaGalicia_Logo"></img>
+                                            <img class="sponcor-logo" src="https://resources.motogp.pulselive.com/photo-resources/2023/04/17/8a22cccc-b9e4-4b80-8a78-da85a042adf2/EstrellaGalicia_Logo.png?width=100" alt="EstrellaGalicia_Logo"></img>
                                         </a>
                                         <a href="https://www.dhl.com/global-en/home/about-us/partnerships.html" class="footer-sponsors__sponsor" title="DHL">
-                                            <img class="w-50" src="https://resources.motogp.pulselive.com/photo-resources/2023/03/27/ef2af200-beec-45b5-bfac-0e9b453ad4ed/DHL_logo.png?width=100" alt="DHL_logo"></img>
+                                            <img class="sponcor-logo" src="https://resources.motogp.pulselive.com/photo-resources/2023/03/27/ef2af200-beec-45b5-bfac-0e9b453ad4ed/DHL_logo.png?width=100" alt="DHL_logo"></img>
                                         </a>
                                     </div>
                                 </div>

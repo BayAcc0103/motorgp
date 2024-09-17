@@ -59,7 +59,7 @@ const Calendar = () => {
                             <div class="position-absolute w-100 h-100">
                                 <img src="https://resources.motogp.pulselive.com/photo-resources/2024/06/06/dac9c483-db57-413d-89c5-e37097f7a381/QAT.jpg?height=125&amp;width=412"
                                     alt="2024_Calendar_Background_Qatar" loading="lazy"
-                                    class="object-fit-cover-picture"></img>
+                                    class="imgundertrack"></img>
                             </div>
                             {/* HTML for track */}
                             <div class="calendar-listing__track-layout w-100 h-100 position-relative">

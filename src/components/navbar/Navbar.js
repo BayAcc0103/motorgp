@@ -30,20 +30,21 @@ const Navbar = () => {
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div className="container-fluid">
-          <img src={logo} alt="Logo" style={{ width: '100px', height: '50px', marginRight: '5px' }} ></img>
+          <div class="top">
+            <img src={logo} alt="Logo" style={{ width: '100px', height: '50px', marginRight: '5px' }} class="img-logo"></img>
 
-          {/* button navbar-toggler được thiết kế để chỉ hiển thị khi chiều rộng màn hình giảm xuống một mức nhất định.*/}
-          <Nav className="navbar-toggler">
-            <NavDropdown>
-              <Link to="/" className="nav-link" aria-current="page">Homepage</Link>
-              <Link to="/calendar" className="nav-link" aria-current="page">Calendar</Link>
-              <Link to="./result" className="nav-link" aria-current="page">Results</Link>
-              <Link to="./standing" className="nav-link" aria-current="page">Standings</Link>
-              <Link to="./rider" className="nav-link" aria-current="page">Riders</Link>
-              <Link to="./team" className="nav-link" aria-current="page">Teams</Link>
-            </NavDropdown>
-          </Nav>
-
+            {/* button navbar-toggler được thiết kế để chỉ hiển thị khi chiều rộng màn hình giảm xuống một mức nhất định.*/}
+            <Nav className="navbar-toggler">
+              <NavDropdown>
+                <Link to="/" className="nav-link" aria-current="page">Homepage</Link>
+                <Link to="/calendar" className="nav-link" aria-current="page">Calendar</Link>
+                <Link to="./result" className="nav-link" aria-current="page">Results</Link>
+                <Link to="./standing" className="nav-link" aria-current="page">Standings</Link>
+                <Link to="./rider" className="nav-link" aria-current="page">Riders</Link>
+                <Link to="./team" className="nav-link" aria-current="page">Teams</Link>
+              </NavDropdown>
+            </Nav>
+          </div>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mb-2 mb-lg-0">
               <li className="nav-item">

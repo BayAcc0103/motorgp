@@ -3,6 +3,7 @@
     border-bottom: .1rem solid #ececec;
     padding-top: 1.6rem;
 }
+
 .footer-sponsors__title {
     font-family: var(--g-typography-title);
     font-size: 1.4rem;
@@ -14,12 +15,36 @@
 }
 
 .footer-sponsors__sponsor {
-    width: 11.1%;
-    height: 5.6rem;
+    width: 33.3%;
+    height: 10.2rem;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.banner{
+@media (min-width: 40em) {
+    .footer-sponsors__sponsor {
+        width: 11.1%;
+        height: 8.6rem;
+    }
+}
+
+.banner {
     max-height: 15.5rem;
 }
+
+.sponcor-logo {
+    display: flex;
+    align-items: center;
+    width: 2.5rem;
+    height: 1rem;
+    margin: .7rem;
+}
+@media (min-width: 40em) {
+    .sponcor-logo {
+        display: flex;
+        align-items: center;
+        width: 4rem;
+        height: 2rem;
+    }
+}
+
