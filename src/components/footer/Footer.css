@@ -12,29 +12,13 @@
     text-align: center;
     margin-bottom: .8rem;
 }
-.footer-sponsors__list {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-}
+
 .footer-sponsors__sponsor {
     width: 11.1%;
     height: 5.6rem;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-.footer-sponsors__sponsor .u-observed {
-    display: flex;
-    align-items: center;
-}
-.u-observed {
-    min-width: .1rem;
-    min-height: .1rem;
-}
-.picture__img {
-    width: 50%;
-    height: 25%;
 }
 .banner{
     max-height: 15.5rem;
