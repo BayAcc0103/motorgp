@@ -10,7 +10,7 @@ import scicon from './asset/snapchat.png'
 const Footer = () => {
     return (
         <>
-            <div class="container-fluid">
+            <div class="container-fluid container-banner">
                 <div>
                     <img alt="Misano MotoGP™ Official Test" src="https://esport.motogp.com/uploads/abd526905fabd87f952df026f216b637.jpg" class="w-100 banner"></img>
                 </div>

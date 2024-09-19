@@ -9,7 +9,7 @@ const Calendar = () => {
                 {/* HTLML for 2024 Calendar */}
                 <div class="container-fluid calendar__container">
                     <div class="calendar__header-container">
-                        <h1 class="calendar__title">2024 Calendar</h1>
+                        <h1 class="calendar__title ">2024 Calendar</h1>
                     </div>
                 </div>
                 {/* HTML for Month */}
@@ -49,7 +49,7 @@ const Calendar = () => {
                             <h3 class="text-uppercase"><strong>Qatar Airways Grand Prix of Qatarâ</strong></h3>
                             <div class="mt-2 d-flex justify-content-left">
                                 <div class="location_flag d-flex">
-                                    <img class="calendar-listing_flag" src="https://static-files.motogp.pulselive.com/assets/flags/qa.svg" alt="ES flag" loading="lazy"></img>
+                                    <img class="calendar-listing_flag" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1024px-Flag_of_Vietnam.svg.png" alt="ES flag" loading="lazy"></img>
                                 </div>
                                 <div class="location-track-name mt-1">Lusail International Circuit</div>
                             </div>
@@ -68,7 +68,7 @@ const Calendar = () => {
                             {/* HTML for sponcor */}
                             <div class="calendar-listing__sponcor position-absolute d-flex justify-content-center w-100 h-100 ">
                                 <div class="calendar-listing__sponsor-logo">
-                                    <img class="" src="https://resources.motogp.pulselive.com/photo-resources/2023/06/16/2edbf7ab-e569-4f03-ba7a-8681e21a061f/sponsor-qatar.png?width=37" alt="Lusail International Circuit track" loading="lazy"></img>
+                                    <img class="" src="https://w7.pngwing.com/pngs/58/69/png-transparent-aon-business-sponsor-organization-board-of-directors-business-text-trademark-people.png" alt="Lusail International Circuit track" loading="lazy"></img>
                                 </div>
                             </div>
                         </div>

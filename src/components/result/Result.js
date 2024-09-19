@@ -39,11 +39,11 @@ const Result = () => {
                 
                 <div class={`d-flex flex-column justify-content-between position-relative w-100 h-auto bg-dark ${styles.hero_container}`}>
                     <div class={`position-absolute w-100 h-100 bg-dark ${styles.hero_image}`}>
-                        <img alt="Misano MotoGP™ Official Test" src="https://photos.motogp.com/2024/events/background/RSM.png" class={`${styles.hero_image_img}`}></img>
+                        <img alt="Misano MotoGP™ Official Test" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSIQnF35pqkvoZEo65xXApGNqC2Ue7-2nwvg&s" class={`${styles.hero_image_img}`}></img>
                     </div>
                     <div class={`text-white w-75 position-relative ${styles.hero_text}`}>Misano MotoGP™ Official Test 2024</div>
                     <div class={`d-flex align-items-center z-1 ${styles.hero_details_container}`}>
-                        <img src="https://static-files.motogp.pulselive.com/assets/flags/it.svg" alt="IT flag" class={`${styles.hero_details_flag}`}></img>
+                        <img src="https://eurotravel.com.vn/wp-content/uploads/2023/05/quoc-ky-chinh-thuc-cua-phap.png" alt="IT flag" class={`${styles.hero_details_flag}`}></img>
                         <div class={`text-white d-flex align-items-center ${styles.hero_details_location}`}>Misano World Circuit Marco Simoncelli</div>
                     </div>
                 </div>
