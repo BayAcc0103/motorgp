@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Rider.css';
+import './App.css';
 
 // Rider Component
 const Rider = ({ name, hashtag, country, team, image }) => {
@@ -99,7 +99,19 @@ const TabsHeader = ({ activeTab, onTabChange }) => {
 // Main App Component
 const App = () => {
   const [activeTab, setActiveTab] = useState('MotoGP');
-  const [riders, setRiders] = useState([]);
+  const [riders, setRiders] = useState([
+    // MotoGP Riders
+    {
+      id: 1,
+      name: 'Francesco Bagnaia',
+      hashtag: 'FB1',
+      image: 'https://resources.motogp.pulselive.com/photo-resources/2024/02/19/3a568eee-1e12-4091-b120-f53c71cbe8f6/rider-bio_francescobagnaia.png?height=400&width=600',
+      country: 'Italy',
+      team: 'Ducati Lenovo Team',
+      category: 'motogp',
+      type: 'official',
+    },
+  ]);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
