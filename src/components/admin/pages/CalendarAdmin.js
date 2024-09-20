@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Table, Form, Modal, Alert } from 'react-bootstrap';
+import { v4 as uuidv4 } from 'uuid'; // Import UUID library
 import './Account.css';
 
 const CalendarAdmin = () => {
@@ -15,6 +16,20 @@ const CalendarAdmin = () => {
   const [changesSaved, setChangesSaved] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch('/calendar'); // Fetch events from backend
+        const eventsData = await response.json(); // Parse the JSON response
+        setEvents(eventsData); // Set the events into state, including their UUIDs
+      } catch (error) {
+        console.error('Error fetching events:', error);
+      }
+    };
+  
+    fetchEvents(); // Call the function when the component mounts
+  }, []);
+  
   // Handle showing the modal
   const handleShowAdd = () => {
     setShowModal(true);
@@ -51,17 +66,22 @@ const CalendarAdmin = () => {
   // Handle adding or editing an event
   const handleFormSubmit = (e) => {
     e.preventDefault();
+  
     if (onEdit) {
+      // Editing an existing event
       setEvents(events.map((event) => (event.id === currentEventId ? { ...event, ...eventData } : event)));
     } else {
-      setEvents([...events, { ...eventData, id: events.length + 1 }]);
+      // Adding a new event
+      setEvents([...events, { ...eventData, id: uuidv4(), isNew: true }]); // Generate UUID here
     }
+    
     handleClose();
-    setHasUnsavedChanges(true);
+    setHasUnsavedChanges(true); // Mark as unsaved changes
   };
-
+  
   const handleRowClick = (event) => {
     setCurrentEventId(event.id); 
+    console.log(event.id);
   };
 
   const deleteEvent = () => {
@@ -73,10 +93,39 @@ const CalendarAdmin = () => {
   };
 
   // Handle saving changes
-  const handleSave = () => {
-    setChangesSaved(true);
-    setHasUnsavedChanges(false);
+  const handleSave = async () => {
+    try {
+      // Loop through all events and send updates to the backend
+      for (const event of events) {
+        if (event.isNew) {
+          // If the event is new, POST it to the backend
+          await fetch('/calendar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(event),
+          });
+        } else {
+          // Otherwise, update the event via PUT using its UUID
+          await fetch(`/calendar/${event.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(event),
+          });
+        }
+      }
+  
+      // Optionally, re-fetch the updated list of events from the backend after save
+      const response = await fetch('/calendar');
+      const updatedEvents = await response.json();
+      setEvents(updatedEvents);
+  
+      setChangesSaved(true);
+      setHasUnsavedChanges(false); // Reset the unsaved changes flag
+    } catch (error) {
+      console.error('Error saving events:', error);
+    }
   };
+  
 
   return (
     <div className="account-container d-flex flex-column justify-content-center align-items-center min-vh-100">
