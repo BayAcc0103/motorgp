@@ -11,7 +11,7 @@ const CalendarAdmin = () => {
   const [showModal, setShowModal] = useState(false);
   const [onEdit, setOnEdit] = useState(false); 
   const [currentEventId, setCurrentEventId] = useState(null); 
-  const [eventData, setEventData] = useState({ time: '', location: '', racers: '' });
+  const [eventData, setEventData] = useState({ sponcorname:'', datestart:'', dateend:'', name: '', season_id: '', circuitname: '', countryname:'' });
   const [changesSaved, setChangesSaved] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
@@ -19,7 +19,7 @@ const CalendarAdmin = () => {
   const handleShowAdd = () => {
     setShowModal(true);
     setOnEdit(false); 
-    setEventData({ time: '', location: '', racers: '' });
+    setEventData({ sponcorname:'', datestart:'', dateend:'', name: '', season_id: '', circuitname: '', countryname:'' });
   };
 
   const handleShowEdit = () => {
@@ -93,9 +93,13 @@ const CalendarAdmin = () => {
         <thead>
           <tr>
             <th>#</th>
-            <th>Time</th>
-            <th>Location</th>
-            <th>Racers and Team</th>
+            <th>sponcorname</th>
+            <th>date_start</th>
+            <th>date_end</th>
+            <th>name</th>
+            <th>season_id</th>
+            <th>circuitname</th>
+            <th>countryname</th>
           </tr>
         </thead>
         <tbody>
@@ -106,9 +110,13 @@ const CalendarAdmin = () => {
               style={{ cursor: 'pointer', backgroundColor: event.id === currentEventId ? '#f0f8ff' : '' }} 
             >
               <td>{event.id}</td>
-              <td>{event.time}</td>
-              <td>{event.location}</td>
-              <td>{event.racers}</td>
+              <td>{event.sponcorname}</td>
+              <td>{event.datestart}</td>
+              <td>{event.dateend}</td>
+              <td>{event.name}</td>
+              <td>{event.season_id}</td>
+              <td>{event.circuitname}</td>
+              <td>{event.countryname}</td>
             </tr>
           ))}
         </tbody>
@@ -146,34 +154,74 @@ const CalendarAdmin = () => {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleFormSubmit}>
-            <Form.Group controlId="formTime" className="mb-3">
-              <Form.Label>Time</Form.Label>
+            <Form.Group controlId="formSponcorname" className="mb-3">
+              <Form.Label>Sponcor-Name</Form.Label>
               <Form.Control 
                 type="text" 
-                name="time" 
-                value={eventData.time} 
+                name="Sponcor-Name" 
+                value={eventData.sponcorname} 
                 onChange={handleInputChange} 
                 required 
               />
             </Form.Group>
 
             <Form.Group controlId="formLocation" className="mb-3">
-              <Form.Label>Location</Form.Label>
+              <Form.Label>date_start</Form.Label>
               <Form.Control 
                 type="text" 
                 name="location" 
-                value={eventData.location} 
+                value={eventData.datestart} 
                 onChange={handleInputChange} 
                 required 
               />
             </Form.Group>
 
             <Form.Group controlId="formRacers" className="mb-3">
-              <Form.Label>Racers and Team</Form.Label>
+              <Form.Label>DateEnd</Form.Label>
               <Form.Control 
                 type="text" 
                 name="racers" 
-                value={eventData.racers} 
+                value={eventData.dateend} 
+                onChange={handleInputChange} 
+                required 
+              />
+            </Form.Group>
+            <Form.Group controlId="formRacers" className="mb-3">
+              <Form.Label>name</Form.Label>
+              <Form.Control 
+                type="text" 
+                name="racers" 
+                value={eventData.name} 
+                onChange={handleInputChange} 
+                required 
+              />
+            </Form.Group>
+            <Form.Group controlId="formRacers" className="mb-3">
+              <Form.Label>season_id</Form.Label>
+              <Form.Control 
+                type="text" 
+                name="racers" 
+                value={eventData.season_id} 
+                onChange={handleInputChange} 
+                required 
+              />
+            </Form.Group>
+            <Form.Group controlId="formRacers" className="mb-3">
+              <Form.Label>circuitname</Form.Label>
+              <Form.Control 
+                type="text" 
+                name="racers" 
+                value={eventData.circuitname} 
+                onChange={handleInputChange} 
+                required 
+              />
+            </Form.Group>
+            <Form.Group controlId="formRacers" className="mb-3">
+              <Form.Label>countryname</Form.Label>
+              <Form.Control 
+                type="text" 
+                name="racers" 
+                value={eventData.countryname} 
                 onChange={handleInputChange} 
                 required 
               />
