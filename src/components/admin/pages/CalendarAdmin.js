@@ -5,14 +5,14 @@ import './Account.css';
 
 const CalendarAdmin = () => {
   const [events, setEvents] = useState([
-    { id: 1, sponcorname: 'Sponsor 1', dateend: '12/1/2024', datestart: '11/9/2024', name: 'Racer 1',season_id: '1', circuitname: 'Inferno', countryname: 'USA' },
-    { id: 2, sponcorname: 'Sponsor 2', dateend: '12/1/2024', datestart: '11/9/2024', name: 'Racer 2',season_id: '1', circuitname: 'Twin Tower', countryname: 'USA' },
+    // { id: 1, sponcorname: 'Sponsor 1', dateend: '12/1/2024', datestart: '11/9/2024', name: 'Racer 1',season_id: '1', circuitname: 'Inferno', countryname: 'USA' },
+    // { id: 2, sponcorname: 'Sponsor 2', dateend: '12/1/2024', datestart: '11/9/2024', name: 'Racer 2',season_id: '1', circuitname: 'Twin Tower', countryname: 'USA' },
   ]);
 
   const [showModal, setShowModal] = useState(false);
   const [onEdit, setOnEdit] = useState(false); 
   const [currentEventId, setCurrentEventId] = useState(null); 
-  const [eventData, setEventData] = useState({ sponcorname:'', datestart:'', dateend:'', name: '', season_id: '', circuitname: '', countryname:'' });
+  const [eventData, setEventData] = useState({ sponsored_name:'', date_start:'', date_end:'', name: '', season_id: '', circuit_name: '', country_name:'' });
   const [changesSaved, setChangesSaved] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
@@ -34,20 +34,20 @@ const CalendarAdmin = () => {
   const handleShowAdd = () => {
     setShowModal(true);
     setOnEdit(false); 
-    setEventData({ sponcorname:'', datestart:'', dateend:'', name: '', season_id: '', circuitname: '', countryname:'' });
+    setEventData({ sponsored_name:'', date_start:'', date_end:'', name: '', season_id: '', circuit_name: '', country_name:'' });
   };
 
   const handleShowEdit = () => {
     if (currentEventId) {
       const selectedEvent = events.find((event) => event.id === currentEventId);
       setEventData({
-        sponcorname: selectedEvent.sponcorname,
-        datestart: selectedEvent.location,
-        dateend: selectedEvent.dateend,
+        sponsored_name: selectedEvent.sponsored_name,
+        date_start: selectedEvent.location,
+        date_end: selectedEvent.date_end,
         name: selectedEvent.name,
         season_id: selectedEvent.season_id,
-        circuitname: selectedEvent.circuitname,
-        countryname: selectedEvent.countryname
+        circuit_name: selectedEvent.circuit_name,
+        country_name: selectedEvent.country_name
       });
       setOnEdit(true);
       setShowModal(true); 
@@ -70,6 +70,7 @@ const CalendarAdmin = () => {
     if (onEdit) {
       // Editing an existing event
       setEvents(events.map((event) => (event.id === currentEventId ? { ...event, ...eventData } : event)));
+      
     } else {
       // Adding a new event
       setEvents([...events, { ...eventData, id: uuidv4(), isNew: true }]); // Generate UUID here
@@ -97,6 +98,7 @@ const CalendarAdmin = () => {
     try {
       // Loop through all events and send updates to the backend
       for (const event of events) {
+        console.log(JSON.stringify(event));
         if (event.isNew) {
           // If the event is new, POST it to the backend
           await fetch('/calendar', {
@@ -146,13 +148,13 @@ const CalendarAdmin = () => {
         <thead>
           <tr>
             <th>#</th>
-            <th>sponcorname</th>
-            <th>date_start</th>
-            <th>date_end</th>
-            <th>name</th>
-            <th>season_id</th>
-            <th>circuitname</th>
-            <th>countryname</th>
+            <th>Sponsored name</th>
+            <th>Date start</th>
+            <th>Date end</th>
+            <th>Name</th>
+            <th>Season_id</th>
+            <th>Circuit name</th>
+            <th>Country name</th>
           </tr>
         </thead>
         <tbody>
@@ -163,13 +165,13 @@ const CalendarAdmin = () => {
               style={{ cursor: 'pointer', backgroundColor: event.id === currentEventId ? '#f0f8ff' : '' }} 
             >
               <td>{event.id}</td>
-              <td>{event.sponcorname}</td>
-              <td>{event.datestart}</td>
-              <td>{event.dateend}</td>
+              <td>{event.sponsored_name}</td>
+              <td>{event.date_start}</td>
+              <td>{event.date_end}</td>
               <td>{event.name}</td>
               <td>{event.season_id}</td>
-              <td>{event.circuitname}</td>
-              <td>{event.countryname}</td>
+              <td>{event.circuit_name}</td>
+              <td>{event.country_name}</td>
             </tr>
           ))}
         </tbody>
@@ -208,33 +210,33 @@ const CalendarAdmin = () => {
         <Modal.Body>
           <Form onSubmit={handleFormSubmit}>
             <Form.Group controlId="formSponcorname" className="mb-3">
-              <Form.Label>Sponcor-Name</Form.Label>
+              <Form.Label>Sponsored name</Form.Label>
               <Form.Control 
                 type="text" 
-                name="sponcorname" 
-                value={eventData.sponcorname} 
+                name="sponsored_name" 
+                value={eventData.sponsored_name} 
                 onChange={handleInputChange} 
                 required 
               />
             </Form.Group>
 
             <Form.Group controlId="formLocation" className="mb-3">
-              <Form.Label>date_start</Form.Label>
+              <Form.Label>Date Start</Form.Label>
               <Form.Control 
                 type="text" 
-                name="datestart" 
-                value={eventData.datestart} 
+                name="date_start" 
+                value={eventData.date_start} 
                 onChange={handleInputChange} 
                 required 
               />
             </Form.Group>
 
             <Form.Group controlId="formRacers" className="mb-3">
-              <Form.Label>DateEnd</Form.Label>
+              <Form.Label>Date End</Form.Label>
               <Form.Control 
                 type="text" 
-                name="dateend"
-                value={eventData.dateend} 
+                name="date_end"
+                value={eventData.date_end} 
                 onChange={handleInputChange} 
                 required 
               />
@@ -260,21 +262,21 @@ const CalendarAdmin = () => {
               />
             </Form.Group>
             <Form.Group controlId="formRacers" className="mb-3">
-              <Form.Label>circuitname</Form.Label>
+              <Form.Label>Circuit name</Form.Label>
               <Form.Control 
                 type="text" 
-                name="circuitname"
-                value={eventData.circuitname} 
+                name="circuit_name"
+                value={eventData.circuit_name} 
                 onChange={handleInputChange} 
                 required 
               />
             </Form.Group>
             <Form.Group controlId="formRacers" className="mb-3">
-              <Form.Label>countryname</Form.Label>
+              <Form.Label>Country name</Form.Label>
               <Form.Control 
                 type="text" 
-                name="countryname"
-                value={eventData.countryname} 
+                name="country_name"
+                value={eventData.country_name} 
                 onChange={handleInputChange} 
                 required 
               />
