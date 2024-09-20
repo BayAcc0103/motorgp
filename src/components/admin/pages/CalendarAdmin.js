@@ -4,8 +4,8 @@ import './Account.css';
 
 const CalendarAdmin = () => {
   const [events, setEvents] = useState([
-    { id: 1, time: '12/1/2024', location: 'Inferno', racers: 'Racer 1' },
-    { id: 2, time: '11/9/2024', location: 'Twin Tower', racers: 'Racer 2' },
+    { id: 1, sponcorname: 'Sponsor 1', dateend: '12/1/2024', datestart: '11/9/2024', name: 'Racer 1',season_id: '1', circuitname: 'Inferno', countryname: 'USA' },
+    { id: 2, sponcorname: 'Sponsor 2', dateend: '12/1/2024', datestart: '11/9/2024', name: 'Racer 2',season_id: '1', circuitname: 'Twin Tower', countryname: 'USA' },
   ]);
 
   const [showModal, setShowModal] = useState(false);
@@ -26,9 +26,13 @@ const CalendarAdmin = () => {
     if (currentEventId) {
       const selectedEvent = events.find((event) => event.id === currentEventId);
       setEventData({
-        time: selectedEvent.time,
-        location: selectedEvent.location,
-        racers: selectedEvent.racers,
+        sponcorname: selectedEvent.sponcorname,
+        datestart: selectedEvent.location,
+        dateend: selectedEvent.dateend,
+        name: selectedEvent.name,
+        season_id: selectedEvent.season_id,
+        circuitname: selectedEvent.circuitname,
+        countryname: selectedEvent.countryname
       });
       setOnEdit(true);
       setShowModal(true); 
@@ -158,7 +162,7 @@ const CalendarAdmin = () => {
               <Form.Label>Sponcor-Name</Form.Label>
               <Form.Control 
                 type="text" 
-                name="Sponcor-Name" 
+                name="sponcorname" 
                 value={eventData.sponcorname} 
                 onChange={handleInputChange} 
                 required 
@@ -169,7 +173,7 @@ const CalendarAdmin = () => {
               <Form.Label>date_start</Form.Label>
               <Form.Control 
                 type="text" 
-                name="location" 
+                name="datestart" 
                 value={eventData.datestart} 
                 onChange={handleInputChange} 
                 required 
@@ -180,7 +184,7 @@ const CalendarAdmin = () => {
               <Form.Label>DateEnd</Form.Label>
               <Form.Control 
                 type="text" 
-                name="racers" 
+                name="dateend"
                 value={eventData.dateend} 
                 onChange={handleInputChange} 
                 required 
@@ -190,7 +194,7 @@ const CalendarAdmin = () => {
               <Form.Label>name</Form.Label>
               <Form.Control 
                 type="text" 
-                name="racers" 
+                name="name"
                 value={eventData.name} 
                 onChange={handleInputChange} 
                 required 
@@ -200,7 +204,7 @@ const CalendarAdmin = () => {
               <Form.Label>season_id</Form.Label>
               <Form.Control 
                 type="text" 
-                name="racers" 
+                name="season_id"
                 value={eventData.season_id} 
                 onChange={handleInputChange} 
                 required 
@@ -210,7 +214,7 @@ const CalendarAdmin = () => {
               <Form.Label>circuitname</Form.Label>
               <Form.Control 
                 type="text" 
-                name="racers" 
+                name="circuitname"
                 value={eventData.circuitname} 
                 onChange={handleInputChange} 
                 required 
@@ -220,7 +224,7 @@ const CalendarAdmin = () => {
               <Form.Label>countryname</Form.Label>
               <Form.Control 
                 type="text" 
-                name="racers" 
+                name="countryname"
                 value={eventData.countryname} 
                 onChange={handleInputChange} 
                 required 
