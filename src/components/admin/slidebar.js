@@ -21,7 +21,7 @@ const SlideBar = ({ isOpen, onClose }) => {
         >
             <div className="row">
                 <div className="col-2 custom-sidebar min-vh-100">
-                    <div style={{ display: 'flex', justifyContent: 'flex-end', padding: 8 }}>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', padding: 0 }}>
                         <IconButton onClick={onClose}>
                             <CloseIcon />
                         </IconButton>
