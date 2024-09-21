@@ -78,27 +78,18 @@ const CalendarAdmin = () => {
       // Adding a new event
       setEvents([...events, { ...eventData, id: uuidv4(), isNew: true }]); // Generate UUID here
     }
-
+    if (selectedImage1) {
+      setImagesData((prevImages) => [...prevImages, selectedImage1]);
+      setSelectedImage1(null); // Reset selected image
+    }
     handleClose();
     setHasUnsavedChanges(true); // Mark as unsaved changes
   };
 
   const handleRowClick = (event) => {
     setCurrentEventId(event.id);
-    console.log(event.id);
   };
-
-  // const deleteEvent = () => {
-  //   if (currentEventId) {
-  //     setEvents(
-  //       events.map((event) =>
-  //         event.id === currentEventId ? { ...event, isDeleted: true } : event
-  //       )
-  //     );
-  //     setCurrentEventId(null);
-  //     setHasUnsavedChanges(true);
-  //   }
-  // };
+  
   const handleSelectEvent = (id) => {
     setSelectedEvents((prevSelected) =>
       prevSelected.includes(id)
@@ -215,6 +206,11 @@ const CalendarAdmin = () => {
 
     handleClose1();
   };
+
+
+  const [imagesData, setImagesData] = useState([]);
+
+
   return (
     <div className="account-container d-flex flex-column justify-content-center align-items-center min-vh-100">
       {/* Alert when changes are saved */}
@@ -294,6 +290,20 @@ const CalendarAdmin = () => {
               <td>{event.season_id}</td>
               <td>{event.circuit_name}</td>
               <td>{event.country_name}</td>
+              {imagesData.map((image, index) => (
+                <td key={index}>
+                  <img
+                    src={image}
+                    alt={`img-${index}`}
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handleOpen(imagesData, index)}
+                  />
+                </td>
+                ))}
             </tr>
           ))}
         </tbody>
