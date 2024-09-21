@@ -9,7 +9,10 @@ const CalendarAdmin = () => {
     // { id: 1, sponcorname: 'Sponsor 1', dateend: '12/1/2024', datestart: '11/9/2024', name: 'Racer 1',season_id: '1', circuitname: 'Inferno', countryname: 'USA' },
     // { id: 2, sponcorname: 'Sponsor 2', dateend: '12/1/2024', datestart: '11/9/2024', name: 'Racer 2',season_id: '1', circuitname: 'Twin Tower', countryname: 'USA' },
   ]);
-
+  const [BackgroundImages, setBackgrounImages] = useState([]); // New state for images data
+  const [CircuitImages, setCircuitImages] = useState([]); // New state for images data
+  const [SponsoredImages, setSponsoredImages] = useState([]);
+  const [FlagImages, setFlagImages] = useState([]) // New state for images data
   const [showModal, setShowModal] = useState(false);
   const [onEdit, setOnEdit] = useState(false);
   const [currentEventId, setCurrentEventId] = useState(null);
@@ -21,10 +24,10 @@ const CalendarAdmin = () => {
     season_id: '',
     circuit_name: '',
     country_name: '',
-    image1: null, // New image fields
-    image2: null,
-    image3: null,
-    image4: null,
+    circuit_img: null, // New image fields
+    sponsored_img: null,
+    circuit_track_img: null,
+    flag_img: null,
   });
   const [changesSaved, setChangesSaved] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
@@ -43,6 +46,38 @@ const CalendarAdmin = () => {
     };
 
     fetchEvents(); // Call the function when the component mounts
+    const fetchImages = async (category) => {
+      try {
+        const response = await fetch(`/defaultImages/${category}`); // Fetch images from category
+        const imagesData = await response.json(); // Parse the JSON response
+
+        // Extract imageUrl from the response and set the respective state
+        const urls = imagesData.map(image => image.imageUrl); // Map to get imageUrl
+        switch (category) {
+            case 'eventImage':
+                setBackgrounImages(urls); // Set BackgroundImages state
+                break;
+            case 'circuitTrackImage':
+                setCircuitImages(urls); // Set CircuitImages state
+                break;
+            case 'sponsoredImage':
+                setSponsoredImages(urls); // Set SponsoredImages state
+                break;
+            case 'flagImage':
+                setFlagImages(urls); // Set FlagImages state
+                break;
+            default:
+                console.warn(`Unknown image category: ${category}`);
+                break;
+        }
+      } catch (error) {
+        console.error('Error fetching images:', error);
+      }
+    };
+    fetchImages('eventImage');
+    fetchImages('circuitTrackImage');
+    fetchImages('sponsoredImage');
+    fetchImages('flagImage');
   }, []);
 
   // Handle showing the modal
@@ -101,7 +136,7 @@ const CalendarAdmin = () => {
   const handleRowClick = (event) => {
     setCurrentEventId(event.id);
   };
-  
+
   const handleSelectEvent = (id) => {
     setSelectedEvents((prevSelected) =>
       prevSelected.includes(id)
@@ -146,7 +181,7 @@ const CalendarAdmin = () => {
         }
       }
 
-      // Optionally, re-fetch the updated list of events from the backend after save
+      // re-fetch the updated list of events from the backend after save
       const response = await fetch('/calendar');
       const updatedEvents = await response.json();
       setEvents(updatedEvents);
@@ -169,31 +204,41 @@ const CalendarAdmin = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(null);
 
 
-  const imagesSet1 = [
-    "https://via.placeholder.com/150",
-    "https://via.placeholder.com/150/0000FF",
-    "https://via.placeholder.com/150/FF0000",
-    "https://via.placeholder.com/150/00FF00",
-  ];
+  // const imagesSet1 = [
+    
+  //   "https://via.placeholder.com/150",
+  //   "https://via.placeholder.com/150/0000FF",
+  //   "https://via.placeholder.com/150/FF0000",
+  //   "https://via.placeholder.com/150/00FF00",
+  // ];
 
-  const imagesSet2 = [
-    "https://via.placeholder.com/150/FFFF00",
-    "https://via.placeholder.com/150/00FFFF",
-    "https://via.placeholder.com/150/FF00FF",
-    "https://via.placeholder.com/150/000000",
-  ];
-  const imagesSet3 = [
-    "https://via.placeholder.com/150/FFFF00",
-    "https://via.placeholder.com/150/00FFFF",
-    "https://via.placeholder.com/150/FF00FF",
-    "https://via.placeholder.com/150/000000",
-  ];
-  const imagesSet4 = [
-    "https://via.placeholder.com/150/FFFF00",
-    "https://via.placeholder.com/150/00FFFF",
-    "https://via.placeholder.com/150/FF00FF",
-    "https://via.placeholder.com/150/000000",
-  ];
+  // const imagesSet2 = [
+    
+  //   "https://via.placeholder.com/150/FFFF00",
+  //   "https://via.placeholder.com/150/00FFFF",
+  //   "https://via.placeholder.com/150/FF00FF",
+  //   "https://via.placeholder.com/150/000000",
+  // ];
+  // const imagesSet3 = [
+    
+  //   "https://via.placeholder.com/150/FFFF00",
+  //   "https://via.placeholder.com/150/00FFFF",
+  //   "https://via.placeholder.com/150/FF00FF",
+  //   "https://via.placeholder.com/150/000000",
+  // ];
+  // const imagesSet4 = [
+    
+  //   "https://via.placeholder.com/150/FFFF00",
+  //   "https://via.placeholder.com/150/00FFFF",
+  //   "https://via.placeholder.com/150/FF00FF",
+  //   "https://via.placeholder.com/150/000000",
+  // ];
+
+  // Image sets
+  const imagesSet1 = FlagImages;
+  const imagesSet2 = BackgroundImages;
+  const imagesSet3 = CircuitImages;
+  const imagesSet4 = SponsoredImages;
   const handleOpen = (images, index) => {
     setCurrentImageSet(images);
     setCurrentImageIndex(index);
