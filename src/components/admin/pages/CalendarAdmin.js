@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Table, Form, Modal, Alert } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid'; // Import UUID library
 import './Account.css';
-import { Dialog, DialogTitle, DialogContent, Grid } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, Grid, DialogActions } from "@mui/material";
 
 const CalendarAdmin = () => {
   const [events, setEvents] = useState([
@@ -249,6 +249,10 @@ const CalendarAdmin = () => {
     setOpen(false);
   };
 
+  const handleCloseDialog = () => {
+    setOpen(false);
+  };
+
   // Modal form for image selection
   const handleImageSelect = (image) => {
     const updatedEventData = { ...eventData };
@@ -285,7 +289,7 @@ const CalendarAdmin = () => {
       </Form>
 
       {/* Image selection dialog */}
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleCloseDialog}>
         <DialogTitle>Select an Image</DialogTitle>
         <DialogContent>
           <Grid container spacing={2}>
@@ -306,6 +310,11 @@ const CalendarAdmin = () => {
             ))}
           </Grid>
         </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="primary" variant="contained">
+            Close
+          </Button>
+        </DialogActions>
       </Dialog>
 
       {/* Table */}
