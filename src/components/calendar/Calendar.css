@@ -159,7 +159,7 @@
     height: 125px;
 }
 @media (max-width: 1200px) {
-    .imgundertrack{
+    .imageundertrack{
         height: 100%;
     }
 }

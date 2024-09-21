@@ -131,16 +131,19 @@ const Calendar = () => {
                                         </div>
                                         <div className="col-4 position-relative overflow-hidden p-0">
                                             <div className="position-absolute w-100 h-100">
-                                                <img src={event.circuit_track_img}
+                                                <img src={event.circuit_img}
                                                     alt={`${event.title} Background`} loading="lazy"
-                                                    className="imgundertrack" />
+                                                    className="imageundertrack" />
                                             </div>
                                             <div className="calendar-listing__track-layout w-100 h-100 position-relative">
-                                                <img className="calendar-listing__layout position-absolute" src={event.circuit_img} alt={`${event.circuit_name} track`} loading="lazy" />
+                                                <img className="calendar-listing__layout position-absolute" 
+                                                src={event.circuit_track_img} 
+                                                alt={`${event.circuit_name} track`} loading="lazy" />
                                             </div>
-                                            <div className="calendar-listing__sponsor position-absolute d-flex justify-content-center w-100 h-100">
+                                            <div className="calendar-listing__sponcor position-absolute d-flex justify-content-center w-100 h-100">
                                                 <div className="calendar-listing__sponsor-logo">
-                                                    <img src={event.sponsored_img} alt="Sponsor logo" loading="lazy" />
+                                                    <img src={event.sponsored_img} 
+                                                    alt="Sponsor logo" loading="lazy" />
                                                 </div>
                                             </div>
                                         </div>
