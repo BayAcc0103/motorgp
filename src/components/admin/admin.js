@@ -2,7 +2,7 @@
 // sidebar -- các chức năng | chức năng A
 //                          | chức năng B  
 //                          | chức năng thứ n          
-import React from 'react';
+import React, { useState } from 'react';
 // import { Route, Router, Routes } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.min.css';
@@ -21,6 +21,11 @@ import './admin.css';
 // import Ranking from './pages/Ranking';
 import SlideBar from './slidebar';
 const Admin = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
   return (
     <div className="container-fluid min-vh-100">
       <div className="row">
@@ -65,16 +70,18 @@ const Admin = () => {
         </div>
         {/* Main Content */}
         <div>
-          
-            <SlideBar />
-            {/* <Routes>
+          <button className="hamburger" onClick={toggleSidebar}>
+            &#9776;
+          </button>
+          <SlideBar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+          {/* <Routes>
               <Route path="account" element={<Account />} />
               <Route path="racers-and-team" element={<RacersAndTeam />} />
               <Route path="calendar-admin" element={<CalendarAdmin />} />
               <Route path="ranking" element={<Ranking />} />
             </Routes>
            */}
-           <Outlet /> {/* Renders the nested routes */}
+          <Outlet /> {/* Renders the nested routes */}
         </div>
       </div>
     </div>

@@ -90,27 +90,18 @@ const CalendarAdmin = () => {
       // Adding a new event
       setEvents([...events, { ...eventData, id: uuidv4(), isNew: true }]); // Generate UUID here
     }
-
+    if (selectedImage1) {
+      setImagesData((prevImages) => [...prevImages, selectedImage1]);
+      setSelectedImage1(null); // Reset selected image
+    }
     handleClose();
     setHasUnsavedChanges(true); // Mark as unsaved changes
   };
 
   const handleRowClick = (event) => {
     setCurrentEventId(event.id);
-    console.log(event.id);
   };
-
-  // const deleteEvent = () => {
-  //   if (currentEventId) {
-  //     setEvents(
-  //       events.map((event) =>
-  //         event.id === currentEventId ? { ...event, isDeleted: true } : event
-  //       )
-  //     );
-  //     setCurrentEventId(null);
-  //     setHasUnsavedChanges(true);
-  //   }
-  // };
+  
   const handleSelectEvent = (id) => {
     setSelectedEvents((prevSelected) =>
       prevSelected.includes(id)
@@ -227,6 +218,11 @@ const CalendarAdmin = () => {
     setEventData(updatedEventData);
     handleClose1();
   };
+
+
+  const [imagesData, setImagesData] = useState([]);
+
+
   return (
     <div className="account-container d-flex flex-column justify-content-center align-items-center min-vh-100">
       {/* Alert when changes are saved */}
