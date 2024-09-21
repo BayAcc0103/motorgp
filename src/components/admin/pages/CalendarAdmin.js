@@ -13,7 +13,19 @@ const CalendarAdmin = () => {
   const [showModal, setShowModal] = useState(false);
   const [onEdit, setOnEdit] = useState(false);
   const [currentEventId, setCurrentEventId] = useState(null);
-  const [eventData, setEventData] = useState({ sponsored_name: '', date_start: '', date_end: '', name: '', season_id: '', circuit_name: '', country_name: '' });
+  const [eventData, setEventData] = useState({
+    sponsored_name: '',
+    date_start: '',
+    date_end: '',
+    name: '',
+    season_id: '',
+    circuit_name: '',
+    country_name: '',
+    image1: null, // New image fields
+    image2: null,
+    image3: null,
+    image4: null,
+  });
   const [changesSaved, setChangesSaved] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [selectedEvents, setSelectedEvents] = useState([]); // New state for selected events
@@ -45,7 +57,7 @@ const CalendarAdmin = () => {
       const selectedEvent = events.find((event) => event.id === currentEventId);
       setEventData({
         sponsored_name: selectedEvent.sponsored_name,
-        date_start: selectedEvent.location,
+        date_start: selectedEvent.date_start,
         date_end: selectedEvent.date_end,
         name: selectedEvent.name,
         season_id: selectedEvent.season_id,
@@ -200,19 +212,19 @@ const CalendarAdmin = () => {
     setOpen(false);
   };
 
+  // Modal form for image selection
   const handleImageSelect = (image) => {
+    const updatedEventData = { ...eventData };
     if (currentImageIndex === 0) {
-      setSelectedImage1(image);
+      updatedEventData.image1 = image; // Save image1
     } else if (currentImageIndex === 1) {
-      setSelectedImage2(image);
+      updatedEventData.image2 = image; // Save image2
+    } else if (currentImageIndex === 2) {
+      updatedEventData.image3 = image; // Save image3
+    } else if (currentImageIndex === 3) {
+      updatedEventData.image4 = image; // Save image4
     }
-    else if (currentImageIndex === 2) {
-      setSelectedImage3(image);
-    }
-    else if (currentImageIndex === 3) {
-      setSelectedImage4(image);
-    }
-
+    setEventData(updatedEventData);
     handleClose1();
   };
   return (
@@ -294,6 +306,10 @@ const CalendarAdmin = () => {
               <td>{event.season_id}</td>
               <td>{event.circuit_name}</td>
               <td>{event.country_name}</td>
+              <td>{event.image1 && <img src={event.image1} alt="Image 1" style={{ width: '50px', height: 'auto' }} />}</td>
+              <td>{event.image2 && <img src={event.image2} alt="Image 2" style={{ width: '50px', height: 'auto' }} />}</td>
+              <td>{event.image3 && <img src={event.image3} alt="Image 3" style={{ width: '50px', height: 'auto' }} />}</td>
+              <td>{event.image4 && <img src={event.image4} alt="Image 4" style={{ width: '50px', height: 'auto' }} />}</td>
             </tr>
           ))}
         </tbody>
@@ -403,42 +419,43 @@ const CalendarAdmin = () => {
                 required
               />
             </Form.Group>
+            {/* Display selected images in the form */}
             <Form.Group controlId="formcountryflag" className="mb-3">
-              <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet1, 0)}>Thêm ảnh 1</Button>
-              {selectedImage1 && (
+              <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet1, 0)}>Add Image 1</Button>
+              {eventData.image1 && (
                 <img
-                  src={selectedImage1}
-                  alt="Racer 1"
+                  src={eventData.image1}
+                  alt="Image 1"
                   style={{ width: '412px', height: '125px' }}
                 />
               )}
             </Form.Group>
             <Form.Group controlId="formcountryflag" className="mb-3">
-              <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet2, 1)}>Thêm ảnh 2</Button>
-              {selectedImage2 && (
+              <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet2, 1)}>Add Image 2</Button>
+              {eventData.image2 && (
                 <img
-                  src={selectedImage2}
-                  alt="Racer 1"
-                  style={{ width: '2.7rem', height: '1.8rem' }}
-                />
-              )}
-            </Form.Group>
-            <Form.Group controlId="formcountryflag" className="mb-3">
-              <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet3, 2)}>Thêm ảnh 3</Button>
-              {selectedImage3 && (
-                <img
-                  src={selectedImage3}
-                  alt="Racer 1"
+                  src={eventData.image2}
+                  alt="Image 2"
                   style={{ width: '412px', height: '125px' }}
                 />
               )}
             </Form.Group>
             <Form.Group controlId="formcountryflag" className="mb-3">
-              <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet4, 3)}>Thêm ảnh 4</Button>
-              {selectedImage4 && (
+              <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet3, 2)}>Add Image 3</Button>
+              {eventData.image3 && (
                 <img
-                  src={selectedImage4}
-                  alt="Racer 1"
+                  src={eventData.image3}
+                  alt="Image 3"
+                  style={{ width: '412px', height: '125px' }}
+                />
+              )}
+            </Form.Group>
+            <Form.Group controlId="formcountryflag" className="mb-3">
+              <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet4, 3)}>Add Image 4</Button>
+              {eventData.image4 && (
+                <img
+                  src={eventData.image4}
+                  alt="Image 4"
                   style={{ width: '412px', height: '125px' }}
                 />
               )}

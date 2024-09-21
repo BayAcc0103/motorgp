@@ -67,7 +67,7 @@ const Calendar = () => {
     if (!events) {
         return <div>Loading...</div>;
     }
-
+        
         // Group events by month
         const groupedEvents = events.reduce((accumulator, event) => {
             const dateStart = new Date(event.date_start).getMonth() + 1; // Get the month (1-12)
