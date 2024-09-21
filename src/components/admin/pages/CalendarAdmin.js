@@ -10,11 +10,13 @@ const CalendarAdmin = () => {
   ]);
 
   const [showModal, setShowModal] = useState(false);
-  const [onEdit, setOnEdit] = useState(false); 
-  const [currentEventId, setCurrentEventId] = useState(null); 
-  const [eventData, setEventData] = useState({ sponsored_name:'', date_start:'', date_end:'', name: '', season_id: '', circuit_name: '', country_name:'' });
+  const [onEdit, setOnEdit] = useState(false);
+  const [currentEventId, setCurrentEventId] = useState(null);
+  const [eventData, setEventData] = useState({ sponsored_name: '', date_start: '', date_end: '', name: '', season_id: '', circuit_name: '', country_name: '' });
   const [changesSaved, setChangesSaved] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [selectedEvents, setSelectedEvents] = useState([]); // New state for selected events
+
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -26,15 +28,15 @@ const CalendarAdmin = () => {
         console.error('Error fetching events:', error);
       }
     };
-  
+
     fetchEvents(); // Call the function when the component mounts
   }, []);
-  
+
   // Handle showing the modal
   const handleShowAdd = () => {
     setShowModal(true);
-    setOnEdit(false); 
-    setEventData({ sponsored_name:'', date_start:'', date_end:'', name: '', season_id: '', circuit_name: '', country_name:'' });
+    setOnEdit(false);
+    setEventData({ sponsored_name: '', date_start: '', date_end: '', name: '', season_id: '', circuit_name: '', country_name: '' });
   };
 
   const handleShowEdit = () => {
@@ -50,7 +52,7 @@ const CalendarAdmin = () => {
         country_name: selectedEvent.country_name
       });
       setOnEdit(true);
-      setShowModal(true); 
+      setShowModal(true);
     }
   };
 
@@ -66,31 +68,49 @@ const CalendarAdmin = () => {
   // Handle adding or editing an event
   const handleFormSubmit = (e) => {
     e.preventDefault();
-  
+
     if (onEdit) {
       // Editing an existing event
       setEvents(events.map((event) => (event.id === currentEventId ? { ...event, ...eventData } : event)));
-      
+
     } else {
       // Adding a new event
       setEvents([...events, { ...eventData, id: uuidv4(), isNew: true }]); // Generate UUID here
     }
-    
+
     handleClose();
     setHasUnsavedChanges(true); // Mark as unsaved changes
   };
-  
+
   const handleRowClick = (event) => {
-    setCurrentEventId(event.id); 
+    setCurrentEventId(event.id);
     console.log(event.id);
   };
 
-  const deleteEvent = () => {
-    if (currentEventId) {
-      setEvents(events.filter((event) => event.id !== currentEventId));
-      setCurrentEventId(null);
-      setHasUnsavedChanges(true);
-    }
+  // const deleteEvent = () => {
+  //   if (currentEventId) {
+  //     setEvents(
+  //       events.map((event) =>
+  //         event.id === currentEventId ? { ...event, isDeleted: true } : event
+  //       )
+  //     );
+  //     setCurrentEventId(null);
+  //     setHasUnsavedChanges(true);
+  //   }
+  // };
+  const handleSelectEvent = (id) => {
+    setSelectedEvents((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((eventId) => eventId !== id)
+        : [...prevSelected, id]
+    );
+  };
+  const deleteSelectedEvents = () => {
+    setEvents(events.map(event =>
+      selectedEvents.includes(event.id) ? { ...event, isDeleted: true } : event
+    ));
+    setSelectedEvents([]); // Clear the selected events after deletion
+    setHasUnsavedChanges(true);
   };
 
   // Handle saving changes
@@ -106,7 +126,13 @@ const CalendarAdmin = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(event),
           });
-        } else {
+        } else if (event.isDeleted) {
+          // If the event is deleted, delete it from the backend
+          await fetch(`/calendar/${event.id}`, {
+            method: 'DELETE',
+          });
+        }
+        else {
           // Otherwise, update the event via PUT using its UUID
           await fetch(`/calendar/${event.id}`, {
             method: 'PUT',
@@ -115,19 +141,19 @@ const CalendarAdmin = () => {
           });
         }
       }
-  
+
       // Optionally, re-fetch the updated list of events from the backend after save
       const response = await fetch('/calendar');
       const updatedEvents = await response.json();
       setEvents(updatedEvents);
-  
+
       setChangesSaved(true);
       setHasUnsavedChanges(false); // Reset the unsaved changes flag
     } catch (error) {
       console.error('Error saving events:', error);
     }
   };
-  
+
 
   return (
     <div className="account-container d-flex flex-column justify-content-center align-items-center min-vh-100">
@@ -159,11 +185,18 @@ const CalendarAdmin = () => {
         </thead>
         <tbody>
           {events.map((event) => (
-            <tr 
-              key={event.id} 
-              onClick={() => handleRowClick(event)} 
-              style={{ cursor: 'pointer', backgroundColor: event.id === currentEventId ? '#f0f8ff' : '' }} 
+            <tr
+              key={event.id}
+              onClick={() => handleRowClick(event)}
+              style={{ cursor: 'pointer', backgroundColor: event.isDeleted ? 'red' : (event.id === currentEventId ? '#f0f8ff' : '') }}
             >
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selectedEvents.includes(event.id)}
+                  onChange={() => handleSelectEvent(event.id)}
+                />
+              </td>
               <td>{event.id}</td>
               <td>{event.sponsored_name}</td>
               <td>{event.date_start}</td>
@@ -180,23 +213,23 @@ const CalendarAdmin = () => {
       {/* Buttons */}
       <div className="button-group mt-4 d-flex justify-content-center">
         <Button variant="primary" onClick={handleShowAdd}>Add</Button>
-        <Button 
-          variant="success" 
-          className="mx-2" 
-          disabled={!currentEventId} 
+        <Button
+          variant="success"
+          className="mx-2"
+          disabled={!currentEventId}
           onClick={handleShowEdit}>
           Edit
         </Button>
-        <Button 
-          variant="danger" 
-          disabled={!currentEventId} 
-          onClick={deleteEvent}>
+        <Button
+          variant="danger"
+          disabled={!currentEventId}
+          onClick={deleteSelectedEvents}>
           Delete
         </Button>
-        <Button 
-          variant="info" 
-          className="mx-2" 
-          onClick={handleSave} 
+        <Button
+          variant="info"
+          className="mx-2"
+          onClick={handleSave}
           disabled={!hasUnsavedChanges}>
           Save
         </Button>
@@ -211,74 +244,74 @@ const CalendarAdmin = () => {
           <Form onSubmit={handleFormSubmit}>
             <Form.Group controlId="formSponcorname" className="mb-3">
               <Form.Label>Sponsored name</Form.Label>
-              <Form.Control 
-                type="text" 
-                name="sponsored_name" 
-                value={eventData.sponsored_name} 
-                onChange={handleInputChange} 
-                required 
+              <Form.Control
+                type="text"
+                name="sponsored_name"
+                value={eventData.sponsored_name}
+                onChange={handleInputChange}
+                required
               />
             </Form.Group>
 
             <Form.Group controlId="formLocation" className="mb-3">
               <Form.Label>Date Start</Form.Label>
-              <Form.Control 
-                type="text" 
-                name="date_start" 
-                value={eventData.date_start} 
-                onChange={handleInputChange} 
-                required 
+              <Form.Control
+                type="text"
+                name="date_start"
+                value={eventData.date_start}
+                onChange={handleInputChange}
+                required
               />
             </Form.Group>
 
             <Form.Group controlId="formRacers" className="mb-3">
               <Form.Label>Date End</Form.Label>
-              <Form.Control 
-                type="text" 
+              <Form.Control
+                type="text"
                 name="date_end"
-                value={eventData.date_end} 
-                onChange={handleInputChange} 
-                required 
+                value={eventData.date_end}
+                onChange={handleInputChange}
+                required
               />
             </Form.Group>
             <Form.Group controlId="formRacers" className="mb-3">
               <Form.Label>name</Form.Label>
-              <Form.Control 
-                type="text" 
+              <Form.Control
+                type="text"
                 name="name"
-                value={eventData.name} 
-                onChange={handleInputChange} 
-                required 
+                value={eventData.name}
+                onChange={handleInputChange}
+                required
               />
             </Form.Group>
             <Form.Group controlId="formRacers" className="mb-3">
               <Form.Label>season_id</Form.Label>
-              <Form.Control 
-                type="text" 
+              <Form.Control
+                type="text"
                 name="season_id"
-                value={eventData.season_id} 
-                onChange={handleInputChange} 
-                required 
+                value={eventData.season_id}
+                onChange={handleInputChange}
+                required
               />
             </Form.Group>
             <Form.Group controlId="formRacers" className="mb-3">
               <Form.Label>Circuit name</Form.Label>
-              <Form.Control 
-                type="text" 
+              <Form.Control
+                type="text"
                 name="circuit_name"
-                value={eventData.circuit_name} 
-                onChange={handleInputChange} 
-                required 
+                value={eventData.circuit_name}
+                onChange={handleInputChange}
+                required
               />
             </Form.Group>
             <Form.Group controlId="formRacers" className="mb-3">
               <Form.Label>Country name</Form.Label>
-              <Form.Control 
-                type="text" 
+              <Form.Control
+                type="text"
                 name="country_name"
-                value={eventData.country_name} 
-                onChange={handleInputChange} 
-                required 
+                value={eventData.country_name}
+                onChange={handleInputChange}
+                required
               />
             </Form.Group>
 
