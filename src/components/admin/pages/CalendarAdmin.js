@@ -24,10 +24,10 @@ const CalendarAdmin = () => {
     season_id: '',
     circuit_name: '',
     country_name: '',
-    circuit_img: null, // New image fields
-    sponsored_img: null,
-    circuit_track_img: null,
-    flag_img: null,
+    circuit_img: '', // New image fields
+    sponsored_img: '',
+    circuit_track_img: '',
+    flag_img: '',
   });
   const [changesSaved, setChangesSaved] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
@@ -54,21 +54,21 @@ const CalendarAdmin = () => {
         // Extract imageUrl from the response and set the respective state
         const urls = imagesData.map(image => image.imageUrl); // Map to get imageUrl
         switch (category) {
-            case 'eventImage':
-                setBackgrounImages(urls); // Set BackgroundImages state
-                break;
-            case 'circuitTrackImage':
-                setCircuitImages(urls); // Set CircuitImages state
-                break;
-            case 'sponsoredImage':
-                setSponsoredImages(urls); // Set SponsoredImages state
-                break;
-            case 'flagImage':
-                setFlagImages(urls); // Set FlagImages state
-                break;
-            default:
-                console.warn(`Unknown image category: ${category}`);
-                break;
+          case 'eventImage':
+            setBackgrounImages(urls); // Set BackgroundImages state
+            break;
+          case 'circuitTrackImage':
+            setCircuitImages(urls); // Set CircuitImages state
+            break;
+          case 'sponsoredImage':
+            setSponsoredImages(urls); // Set SponsoredImages state
+            break;
+          case 'flagImage':
+            setFlagImages(urls); // Set FlagImages state
+            break;
+          default:
+            console.warn(`Unknown image category: ${category}`);
+            break;
         }
       } catch (error) {
         console.error('Error fetching images:', error);
@@ -97,7 +97,11 @@ const CalendarAdmin = () => {
         name: selectedEvent.name,
         season_id: selectedEvent.season_id,
         circuit_name: selectedEvent.circuit_name,
-        country_name: selectedEvent.country_name
+        country_name: selectedEvent.country_name,
+        circuit_img: selectedEvent.circuit_img, // New image fields
+        sponsored_img: selectedEvent.sponsored_img,
+        circuit_track_img: selectedEvent.circuit_track_img,
+        flag_img: selectedEvent.flag_img
       });
       setOnEdit(true);
       setShowModal(true);
@@ -125,10 +129,7 @@ const CalendarAdmin = () => {
       // Adding a new event
       setEvents([...events, { ...eventData, id: uuidv4(), isNew: true }]); // Generate UUID here
     }
-    if (selectedImage1) {
-      setImagesData((prevImages) => [...prevImages, selectedImage1]);
-      setSelectedImage1(null); // Reset selected image
-    }
+
     handleClose();
     setHasUnsavedChanges(true); // Mark as unsaved changes
   };
@@ -205,7 +206,7 @@ const CalendarAdmin = () => {
 
 
   // const imagesSet1 = [
-    
+
   //   "https://via.placeholder.com/150",
   //   "https://via.placeholder.com/150/0000FF",
   //   "https://via.placeholder.com/150/FF0000",
@@ -213,21 +214,21 @@ const CalendarAdmin = () => {
   // ];
 
   // const imagesSet2 = [
-    
+
   //   "https://via.placeholder.com/150/FFFF00",
   //   "https://via.placeholder.com/150/00FFFF",
   //   "https://via.placeholder.com/150/FF00FF",
   //   "https://via.placeholder.com/150/000000",
   // ];
   // const imagesSet3 = [
-    
+
   //   "https://via.placeholder.com/150/FFFF00",
   //   "https://via.placeholder.com/150/00FFFF",
   //   "https://via.placeholder.com/150/FF00FF",
   //   "https://via.placeholder.com/150/000000",
   // ];
   // const imagesSet4 = [
-    
+
   //   "https://via.placeholder.com/150/FFFF00",
   //   "https://via.placeholder.com/150/00FFFF",
   //   "https://via.placeholder.com/150/FF00FF",
@@ -252,14 +253,15 @@ const CalendarAdmin = () => {
   const handleImageSelect = (image) => {
     const updatedEventData = { ...eventData };
     if (currentImageIndex === 0) {
-      updatedEventData.image1 = image; // Save image1
+      updatedEventData.flag_img = image; // Save image1
     } else if (currentImageIndex === 1) {
-      updatedEventData.image2 = image; // Save image2
+      updatedEventData.circuit_img = image; // Save image2
     } else if (currentImageIndex === 2) {
-      updatedEventData.image3 = image; // Save image3
+      updatedEventData.circuit_track_img = image; // Save image3
     } else if (currentImageIndex === 3) {
-      updatedEventData.image4 = image; // Save image4
+      updatedEventData.sponsored_img = image; // Save image4
     }
+    console.log(updatedEventData);
     setEventData(updatedEventData);
     handleClose1();
   };
@@ -347,10 +349,10 @@ const CalendarAdmin = () => {
               <td>{event.season_id}</td>
               <td>{event.circuit_name}</td>
               <td>{event.country_name}</td>
-              <td>{event.image1 && <img src={event.image1} alt="Image 1" style={{ width: '50px', height: 'auto' }} />}</td>
-              <td>{event.image2 && <img src={event.image2} alt="Image 2" style={{ width: '50px', height: 'auto' }} />}</td>
-              <td>{event.image3 && <img src={event.image3} alt="Image 3" style={{ width: '50px', height: 'auto' }} />}</td>
-              <td>{event.image4 && <img src={event.image4} alt="Image 4" style={{ width: '50px', height: 'auto' }} />}</td>
+              <td>{event.flag_img && <img src={event.flag_img} alt="Image 1" style={{ width: '50px', height: 'auto' }} />}</td>
+              <td>{event.circuit_img && <img src={event.circuit_img} alt="Image 2" style={{ width: '50px', height: 'auto' }} />}</td>
+              <td>{event.circuit_track_img && <img src={event.circuit_track_img} alt="Image 3" style={{ width: '50px', height: 'auto' }} />}</td>
+              <td>{event.sponsored_img && <img src={event.sponsored_img} alt="Image 4" style={{ width: '50px', height: 'auto' }} />}</td>
             </tr>
           ))}
         </tbody>
@@ -463,40 +465,40 @@ const CalendarAdmin = () => {
             {/* Display selected images in the form */}
             <Form.Group controlId="formcountryflag" className="mb-3">
               <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet1, 0)}>Add Image 1</Button>
-              {eventData.image1 && (
+              {eventData.flag_img && (
                 <img
-                  src={eventData.image1}
-                  alt="Image 1"
+                  src={eventData.flag_img}
+                  alt="flag_img"
                   style={{ width: '412px', height: '125px' }}
                 />
               )}
             </Form.Group>
             <Form.Group controlId="formcountryflag" className="mb-3">
               <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet2, 1)}>Add Image 2</Button>
-              {eventData.image2 && (
+              {eventData.circuit_img && (
                 <img
-                  src={eventData.image2}
-                  alt="Image 2"
+                  src={eventData.circuit_img}
+                  alt="circuit_img"
                   style={{ width: '412px', height: '125px' }}
                 />
               )}
             </Form.Group>
             <Form.Group controlId="formcountryflag" className="mb-3">
               <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet3, 2)}>Add Image 3</Button>
-              {eventData.image3 && (
+              {eventData.circuit_track_img && (
                 <img
-                  src={eventData.image3}
-                  alt="Image 3"
+                  src={eventData.circuit_track_img}
+                  alt="ciruit_track_img"
                   style={{ width: '412px', height: '125px' }}
                 />
               )}
             </Form.Group>
             <Form.Group controlId="formcountryflag" className="mb-3">
               <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet4, 3)}>Add Image 4</Button>
-              {eventData.image4 && (
+              {eventData.sponsored_img && (
                 <img
-                  src={eventData.image4}
-                  alt="Image 4"
+                  src={eventData.sponsored_img}
+                  alt="sposored_img"
                   style={{ width: '412px', height: '125px' }}
                 />
               )}
