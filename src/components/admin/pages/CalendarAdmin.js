@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Table, Form, Modal, Alert } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid'; // Import UUID library
 import './Account.css';
+import { Dialog, DialogTitle, DialogContent, Grid } from "@mui/material";
 
 const CalendarAdmin = () => {
   const [events, setEvents] = useState([
@@ -155,6 +156,65 @@ const CalendarAdmin = () => {
   };
 
 
+  //xử lí ảnh 
+  const [open, setOpen] = useState(false);
+  const [currentImageSet, setCurrentImageSet] = useState([]);
+  const [selectedImage1, setSelectedImage1] = useState(null);
+  const [selectedImage2, setSelectedImage2] = useState(null);
+  const [selectedImage3, setSelectedImage3] = useState(null);
+  const [selectedImage4, setSelectedImage4] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(null);
+
+
+  const imagesSet1 = [
+    "https://via.placeholder.com/150",
+    "https://via.placeholder.com/150/0000FF",
+    "https://via.placeholder.com/150/FF0000",
+    "https://via.placeholder.com/150/00FF00",
+  ];
+
+  const imagesSet2 = [
+    "https://via.placeholder.com/150/FFFF00",
+    "https://via.placeholder.com/150/00FFFF",
+    "https://via.placeholder.com/150/FF00FF",
+    "https://via.placeholder.com/150/000000",
+  ];
+  const imagesSet3 = [
+    "https://via.placeholder.com/150/FFFF00",
+    "https://via.placeholder.com/150/00FFFF",
+    "https://via.placeholder.com/150/FF00FF",
+    "https://via.placeholder.com/150/000000",
+  ];
+  const imagesSet4 = [
+    "https://via.placeholder.com/150/FFFF00",
+    "https://via.placeholder.com/150/00FFFF",
+    "https://via.placeholder.com/150/FF00FF",
+    "https://via.placeholder.com/150/000000",
+  ];
+  const handleOpen = (images, index) => {
+    setCurrentImageSet(images);
+    setCurrentImageIndex(index);
+    setOpen(true);
+  };
+  const handleClose1 = () => {
+    setOpen(false);
+  };
+
+  const handleImageSelect = (image) => {
+    if (currentImageIndex === 0) {
+      setSelectedImage1(image);
+    } else if (currentImageIndex === 1) {
+      setSelectedImage2(image);
+    }
+    else if (currentImageIndex === 2) {
+      setSelectedImage3(image);
+    }
+    else if (currentImageIndex === 3) {
+      setSelectedImage4(image);
+    }
+
+    handleClose1();
+  };
   return (
     <div className="account-container d-flex flex-column justify-content-center align-items-center min-vh-100">
       {/* Alert when changes are saved */}
@@ -169,10 +229,35 @@ const CalendarAdmin = () => {
         <Form.Control type="search" placeholder="Search..." className="mr-sm-2" />
       </Form>
 
+      {/* Image selection dialog */}
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Select an Image</DialogTitle>
+        <DialogContent>
+          <Grid container spacing={2}>
+            {currentImageSet.map((image, index) => (
+              <Grid item xs={3} key={index}>
+                <img
+                  src={image}
+                  alt={`img-${index}`}
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    cursor: "pointer",
+                    border: (currentImageIndex === 0 && selectedImage1 === image) || (currentImageIndex === 1 && selectedImage2 === image) || (currentImageIndex === 2 && selectedImage3 === image) || (currentImageIndex === 3 && selectedImage4 === image) ? "2px solid blue" : "none",
+                  }}
+                  onClick={() => handleImageSelect(image)}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </DialogContent>
+      </Dialog>
+
       {/* Table */}
       <Table striped bordered hover className="text-center">
         <thead>
           <tr>
+            <th></th>
             <th>#</th>
             <th>Sponsored name</th>
             <th>Date start</th>
@@ -181,6 +266,10 @@ const CalendarAdmin = () => {
             <th>Season_id</th>
             <th>Circuit name</th>
             <th>Country name</th>
+            <th>Image1</th>
+            <th>Image2</th>
+            <th>Image3</th>
+            <th>Image4</th>
           </tr>
         </thead>
         <tbody>
@@ -242,7 +331,7 @@ const CalendarAdmin = () => {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleFormSubmit}>
-            <Form.Group controlId="formSponcorname" className="mb-3">
+            <Form.Group controlId="formsponcorname" className="mb-3">
               <Form.Label>Sponsored name</Form.Label>
               <Form.Control
                 type="text"
@@ -253,7 +342,7 @@ const CalendarAdmin = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="formLocation" className="mb-3">
+            <Form.Group controlId="formdatestart" className="mb-3">
               <Form.Label>Date Start</Form.Label>
               <Form.Control
                 type="text"
@@ -264,7 +353,7 @@ const CalendarAdmin = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="formRacers" className="mb-3">
+            <Form.Group controlId="formdateend" className="mb-3">
               <Form.Label>Date End</Form.Label>
               <Form.Control
                 type="text"
@@ -274,7 +363,7 @@ const CalendarAdmin = () => {
                 required
               />
             </Form.Group>
-            <Form.Group controlId="formRacers" className="mb-3">
+            <Form.Group controlId="formname" className="mb-3">
               <Form.Label>name</Form.Label>
               <Form.Control
                 type="text"
@@ -284,7 +373,7 @@ const CalendarAdmin = () => {
                 required
               />
             </Form.Group>
-            <Form.Group controlId="formRacers" className="mb-3">
+            <Form.Group controlId="formseasonid" className="mb-3">
               <Form.Label>season_id</Form.Label>
               <Form.Control
                 type="text"
@@ -294,7 +383,7 @@ const CalendarAdmin = () => {
                 required
               />
             </Form.Group>
-            <Form.Group controlId="formRacers" className="mb-3">
+            <Form.Group controlId="formcircuitname" className="mb-3">
               <Form.Label>Circuit name</Form.Label>
               <Form.Control
                 type="text"
@@ -304,7 +393,7 @@ const CalendarAdmin = () => {
                 required
               />
             </Form.Group>
-            <Form.Group controlId="formRacers" className="mb-3">
+            <Form.Group controlId="formcountryname" className="mb-3">
               <Form.Label>Country name</Form.Label>
               <Form.Control
                 type="text"
@@ -314,7 +403,46 @@ const CalendarAdmin = () => {
                 required
               />
             </Form.Group>
-
+            <Form.Group controlId="formcountryflag" className="mb-3">
+              <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet1, 0)}>Thêm ảnh 1</Button>
+              {selectedImage1 && (
+                <img
+                  src={selectedImage1}
+                  alt="Racer 1"
+                  style={{ width: '412px', height: '125px' }}
+                />
+              )}
+            </Form.Group>
+            <Form.Group controlId="formcountryflag" className="mb-3">
+              <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet2, 1)}>Thêm ảnh 2</Button>
+              {selectedImage2 && (
+                <img
+                  src={selectedImage2}
+                  alt="Racer 1"
+                  style={{ width: '2.7rem', height: '1.8rem' }}
+                />
+              )}
+            </Form.Group>
+            <Form.Group controlId="formcountryflag" className="mb-3">
+              <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet3, 2)}>Thêm ảnh 3</Button>
+              {selectedImage3 && (
+                <img
+                  src={selectedImage3}
+                  alt="Racer 1"
+                  style={{ width: '412px', height: '125px' }}
+                />
+              )}
+            </Form.Group>
+            <Form.Group controlId="formcountryflag" className="mb-3">
+              <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet4, 3)}>Thêm ảnh 4</Button>
+              {selectedImage4 && (
+                <img
+                  src={selectedImage4}
+                  alt="Racer 1"
+                  style={{ width: '412px', height: '125px' }}
+                />
+              )}
+            </Form.Group>
             <Button variant="primary" type="submit">
               {onEdit ? 'Save Changes' : 'Add'}
             </Button>
