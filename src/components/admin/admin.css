@@ -1,13 +1,13 @@
 /* Sidebar cố định */
 .custom-sidebar {
   position: fixed;
-  top: 0;
+  top: 68px;
   left: 0;
   width: 300px;
   height: calc(100vh - 20px);
   background-color: rgb(96, 8, 8);
   color: #fff;
-  padding: 70px 15px 15px 15px;
+  padding: 0px 15px 15px 15px;
   overflow-y: auto;
 }
 
