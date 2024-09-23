@@ -54,15 +54,15 @@ const Calendar = () => {
         }
     ]);
     
-    // useEffect(() => {
-    //     const fetchEventData = async () => {
-    //         const response = await fetch('/calendar');
-    //         const data = await response.json();
-    //         setEvents(data);
-    //     };
+    useEffect(() => {
+        const fetchEventData = async () => {
+            const response = await fetch('/calendar');
+            const data = await response.json();
+            setEvents(data);
+        };
 
-    //     fetchEventData();
-    // }, []);
+        fetchEventData();
+    }, []);
 
     if (!events) {
         return <div>Loading...</div>;
@@ -115,7 +115,7 @@ const Calendar = () => {
                                                 <div className="col text-center">
                                                     <div className="date-component">
                                                         <h1 className="date-num">{new Date(event.date_end).getDate()}</h1>
-                                                        <span className="month-component">{new Date(date_start).toLocaleString('en-US', { month: 'short' }).toLocaleUpperCase()}</span>
+                                                        <span className="month-component">{new Date(event.date_end).toLocaleString('en-US', { month: 'short' }).toLocaleUpperCase()}</span>
                                                     </div>
                                                 </div>
                                             </div>

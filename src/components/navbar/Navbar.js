@@ -53,21 +53,24 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/calendar" className="nav-link text-white" aria-current="page">Calendar</Link>
+                <Link to="/calendar" className="nav-link text-white" aria-current="page" 
+                style={{ fontFamily: '"Playwrite DE Grund", cursive', fontStyle: 'bold' }}>Calendar</Link>
               </li>
               <Nav>
                 <NavDropdown
+                  style={{ fontFamily: '"Playwrite DE Grund", cursive' }}
                   id="nav-dropdown"
                   title="Results & Standings"
                   menuVariant="dark"
                 >
-                  <Link to="./result"><NavDropdown.Item href="#action/3.1">Results</NavDropdown.Item></Link>
+                  <Link to="./result"><NavDropdown.Item href="#action/3.1" >Results</NavDropdown.Item></Link>
                   <Link to="./standing"><NavDropdown.Item href="#action/3.2">Standings</NavDropdown.Item></Link>
                 </NavDropdown>
               </Nav>
 
               <Nav>
                 <NavDropdown
+                  style={{ fontFamily: '"Playwrite DE Grund", cursive' }}
                   id="nav-dropdown"
                   title="Riders & Teams"
                   menuVariant="dark"
@@ -80,14 +83,14 @@ const Navbar = () => {
 
             <div className="d-flex align-items-center custom-gap ms-auto">
               <div className="d-flex flex-column me-3">
-                <span className="text-white">{currentDate}</span>
+                <span className="text-white" style={{ fontFamily: '"Playwrite DE Grund", cursive' }}>{currentDate}</span>
               </div>
             </div>
           </div>
           <div class="d-flex gap-2 justify-content-center custom-gap">
             <Link to="./admin">
-              <button class="btn btn-outline-danger text-white" type="login">
-                <span class="bi-person-circle"></span>Login</button>
+              <button class="btn btn-outline-danger text-white" type="login" style={{ fontFamily: '"Playwrite DE Grund", cursive' }}>
+                <span class="bi-person-circle" ></span>Login</button>
             </Link>
             <img src={logo1} alt='racing-helmet'></img>
           </div>
