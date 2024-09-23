@@ -289,9 +289,9 @@ const CalendarAdmin = () => {
       </Form>
 
       {/* Image selection dialog */}
-      <Dialog open={open} onClose={handleCloseDialog}>
-        <DialogTitle>Select an Image</DialogTitle>
-        <DialogContent>
+      <Dialog open={open} onClose={handleCloseDialog} style={{ backgroundImage: 'url(https://motogpvideogame.com/wp-content/uploads/it-only-happens-in-motogp24.webp)', backgroundSize: "cover" }}>
+        <DialogTitle style={{ backgroundColor: "red" }}>Select an Image</DialogTitle>
+        <DialogContent style={{ backgroundColor: "red", color: "white" }}>
           <Grid container spacing={2}>
             {currentImageSet.map((image, index) => (
               <Grid item xs={3} key={index}>
@@ -310,7 +310,7 @@ const CalendarAdmin = () => {
             ))}
           </Grid>
         </DialogContent>
-        <DialogActions>
+        <DialogActions style={{ backgroundColor: "red", color: "white" }}>
           <Button onClick={handleCloseDialog} color="primary" variant="contained">
             Close
           </Button>
