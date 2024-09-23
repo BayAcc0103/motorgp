@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Rider.css';
+import riderImage from './asset/riderr.png'; // Import the rider image
 
 // Rider Component
 const Rider = ({ name, hashtag, country, team, image }) => {
@@ -8,20 +9,20 @@ const Rider = ({ name, hashtag, country, team, image }) => {
       <div className="rider-list__image-container">
         <img
           className="rider-list__image js-image placeholder"
-          src={image}
+          src={image} // Use the image prop
           alt={name}
         />
-      </div>
-      <div className="rider-list__info-container">
-        <span className="rider-list__info-hashtag">#{hashtag}</span>
-        <div className="rider-list__info-name">
-          {name}
-        </div>
-        <div className="rider-list__details-container">
-          <span className="rider-list__details-country">
-            {country}
-          </span>
-          <span className="rider-list__details-team">{team}</span>
+        <div className="rider-list__info-container">
+          <span className="rider-list__info-hashtag">#{hashtag}</span>
+          <div className="rider-list__info-name">
+            {name}
+          </div>
+          <div className="rider-list__details-container">
+            <span className="rider-list__details-country">
+              {country}
+            </span>
+            <span className="rider-list__details-team">{team}</span>
+          </div>
         </div>
       </div>
     </a>
@@ -105,12 +106,34 @@ const App = () => {
       id: 1,
       name: 'Francesco Bagnaia',
       hashtag: 'FB1',
-      image: 'https://resources.motogp.pulselive.com/photo-resources/2024/02/19/3a568eee-1e12-4091-b120-f53c71cbe8f6/rider-bio_francescobagnaia.png?height=400&width=600',
+      image: riderImage, // Use the imported image here
       country: 'Italy',
       team: 'Ducati Lenovo Team',
       category: 'motogp',
       type: 'official',
     },
+    {
+      id: 1,
+      name: 'Francesco Bagnaia',
+      hashtag: 'FB1',
+      image: riderImage, // Use the imported image here
+      country: 'Italy',
+      team: 'Ducati Lenovo Team',
+      category: 'motogp',
+      type: 'official',
+    },
+    {
+      id: 1,
+      name: 'Francesco Bagnaia',
+      hashtag: 'FB1',
+      image: riderImage, // Use the imported image here
+      country: 'Italy',
+      team: 'Ducati Lenovo Team',
+      category: 'motogp',
+      type: 'official',
+    },
+    
+
   ]);
 
   const handleTabChange = (tab) => {
