@@ -1,51 +1,70 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Rider.css';
-import riderImage from './asset/riderr.png'; // Import the rider image
 
-// Rider Component
-const Rider = () => {
+// Data for Riders
+const riders = [
+  {
+    id: '#FB1',
+    name: 'Francesco Bagnaia',
+    country: 'Italy',
+    team: 'Ducati Lenovo Team',
+    img: 'https://resources.motogp.pulselive.com/photo-resources/2024/02/19/3a568eee-1e12-4091-b120-f53c71cbe8f6/rider-bio_francescobagnaia.png?height=700&width=900',
+    flag: '🇮🇹',
+  },
+  {
+    id: '#JZ5',
+    name: 'Johann Zarco',
+    country: 'France',
+    team: 'LCR Honda',
+    img: 'https://resources.motogp.pulselive.com/photo-resources/2024/02/19/804f0106-d53b-4052-bbd4-23e41f093ae6/rider-bio_johannzarco.png?height=400&width=600',
+    flag: '🇫🇷',
+  },
+  {
+    id: '#LM10',
+    name: 'Luca Marini',
+    country: 'Italy',
+    team: 'Repsol Honda Team',
+    img: 'https://resources.motogp.pulselive.com/photo-resources/2024/02/19/3a49cbe4-f2a9-4eb5-8e75-08b5387e6dea/rider-bio_lucamarini.png?height=400&width=600',
+    flag: '🇮🇹',
+  },
+  {
+    id: '#MV12',
+    name: 'Maverick Viñales',
+    country: 'Spain',
+    team: 'Aprilia Racing',
+    img: 'https://resources.motogp.pulselive.com/photo-resources/2024/02/19/5cc9bb88-4d65-4498-9808-f36bde7936f1/rider-bio_maverickvin-ales.png?height=400&width=600',
+    flag: '🇪🇸',
+  },
+  {
+    id: '#FQ20',
+    name: 'Fabio Quartararo',
+    country: 'France',
+    team: 'Monster Energy Yamaha MotoGP',
+    img: 'https://resources.motogp.pulselive.com/photo-resources/2024/02/19/80de8d72-d1b8-4b41-90b0-928467018ced/rider-bio_fabioquartararo.png?height=400&width=600',
+    flag: '🇫🇷',
+  },
+  
+  
+];
+
+const RiderGrid = () => {
   return (
-    <div>
-      <div className="mb-4">
-        <div className="container-fluid team__container">
-          <div className="team__header-container">
-            <h1 className="team__title">Riders</h1>
+    <div className="rider-grid">
+      {riders.map((rider) => (
+        <div className="rider-card" key={rider.id}>
+          <img className="rider-card__image" src={rider.img} alt={rider.name} />
+          <div className="rider-card__info">
+            <span className="rider-card__id">{rider.id}</span>
+            <h3 className="rider-card__name">{rider.name}</h3>
+            <span className="rider-card__country">
+              {rider.flag} {rider.country}
+            </span>
+            <span className="rider-card__team">{rider.team}</span>
           </div>
         </div>
-      </div>
-      <a className="rider-list__rider">
-        <div className="rider-list__image-container">
-          <img
-            className="rider-list__image js-image placeholder"
-            src={riderImage} // Use the image prop
-            alt={'Francesco Bagnaia'}
-          />
-          <div className="rider-list__info-container">
-            <span className="rider-list__info-hashtag">hashtag</span>
-            <div className="rider-list__info-name">
-              {'Francesco Bagnaia'}
-            </div>
-            <div className="rider-list__details-container">
-              <span className="rider-list__details-country">
-                country
-              </span>
-              <span className="rider-list__details-team">team</span>
-            </div>
-          </div>
-        </div>
-      </a>
-      <div className={`rider-grid__ js-listing-container `}>
-        <div className="rider-list__container js-lazy-load-images">
-          <h2 className="rider-list__career-type rider-grid__title">
-          </h2>
-          <div className="rider-row-container">
-          </div>
-        </div>
-      </div>
+      ))}
     </div>
   );
 };
-export default Rider;
-// RiderGrid Component
-// TabsHeader Component
-// Main App Component
+
+export default RiderGrid;
