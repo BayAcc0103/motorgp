@@ -4,64 +4,70 @@ import flag from './asset/raceflag.png';
 
 const Calendar = () => {
     const [events, setEvents] = useState([
-        {
-            _id: "66ed9c99a6f6d5927afbf6ab",
-            id: "ff278afb-ee9a-4237-a70a-ea83eb37a27f",
-            sponsored_name: "Gran Premio de Aragón",
-            date_end: "2024-09-01",
-            date_start: "2024-08-30",
-            name: "GRAN PREMIO DE ARAGÓN",
-            season_id: "dd12382e-1d9f-46ee-a5f7-c5104db28e43",
-            year: 2024,
-            circuit_name: "MotorLand Aragón",
-            country_name: "Spain",
-            flag_img: "https://static-files.motogp.pulselive.com/assets/flags/qa.svg",
-            circuit_img: "https://resources.motogp.pulselive.com/photo-resources/2024/06/14/588935d1-100f-47fd-88bc-efd4251c5431/AUT.jpg?height=125&width=412",
-            circuit_track_img: "https://photos.motogp.com/events-admin/0/c/0c4b819d-6014-4920-877b-ab0a1f3415a3/simple/rsm2.svg",
-            sponsored_img: "https://resources.motogp.pulselive.com/photo-resources/2024/03/19/51565822-94c9-43a4-a0b3-b3bbabac15b9/sponsor-motul-2.png?width=64"
-        },
-        {
-            _id: "66ed9c99a6f6d5927afbf6ac",
-            id: "3787fdac-7a1d-4c6f-95f0-76dfdde8b0c6",
-            sponsored_name: "Motorrad Grand Prix von Österreich",
-            date_end: "2024-08-18",
-            date_start: "2024-08-16",
-            name: "MOTORRAD GRAND PRIX VON ÖSTERREICH",
-            season_id: "dd12382e-1d9f-46ee-a5f7-c5104db28e43",
-            year: 2024,
-            circuit_name: "Red Bull Ring - Spielberg",
-            country_name: "Austria",
-            flag_img: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Flag_of_Austria.svg",
-            circuit_img: "https://resources.motogp.pulselive.com/photo-resources/2024/06/06/example-austria.jpg",
-            circuit_track_img: "https://photos.motogp.com/events-admin/example-austria-track.svg",
-            sponsored_img: "https://example.com/austria-sponsor-logo.png"
-        },
-        {
-            _id: "66ed9c99a6f6d5927afbf6ad",
-            id: "9e44ac05-9362-4edf-a87a-d4aae85373c1",
-            sponsored_name: "Monster Energy British Grand Prix",
-            date_end: "2024-08-04",
-            date_start: "2024-08-02",
-            name: "BRITISH GRAND PRIX",
-            season_id: "dd12382e-1d9f-46ee-a5f7-c5104db28e43",
-            year: 2024,
-            circuit_name: "Silverstone Circuit",
-            country_name: "United Kingdom of Great Britain and Northern Ireland",
-            flag_img: "https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_the_United_Kingdom.svg",
-            circuit_img: "https://resources.motogp.pulselive.com/photo-resources/2024/06/06/example-uk.jpg",
-            circuit_track_img: "https://photos.motogp.com/events-admin/example-uk-track.svg",
-            sponsored_img: "https://example.com/uk-sponsor-logo.png"
-        }
+        // {
+        //     _id: "66ed9c99a6f6d5927afbf6ab",
+        //     id: "ff278afb-ee9a-4237-a70a-ea83eb37a27f",
+        //     sponsored_name: "Gran Premio de Aragón",
+        //     date_end: "2024-09-01",
+        //     date_start: "2024-08-30",
+        //     name: "GRAN PREMIO DE ARAGÓN",
+        //     season_id: "dd12382e-1d9f-46ee-a5f7-c5104db28e43",
+        //     year: 2024,
+        //     circuit_name: "MotorLand Aragón",
+        //     country_name: "Spain",
+        //     flag_img: "https://static-files.motogp.pulselive.com/assets/flags/qa.svg",
+        //     circuit_img: "https://resources.motogp.pulselive.com/photo-resources/2024/06/14/588935d1-100f-47fd-88bc-efd4251c5431/AUT.jpg?height=125&width=412",
+        //     circuit_track_img: "https://photos.motogp.com/events-admin/0/c/0c4b819d-6014-4920-877b-ab0a1f3415a3/simple/rsm2.svg",
+        //     sponsored_img: "https://resources.motogp.pulselive.com/photo-resources/2024/03/19/51565822-94c9-43a4-a0b3-b3bbabac15b9/sponsor-motul-2.png?width=64"
+        // },
+        // {
+        //     _id: "66ed9c99a6f6d5927afbf6ac",
+        //     id: "3787fdac-7a1d-4c6f-95f0-76dfdde8b0c6",
+        //     sponsored_name: "Motorrad Grand Prix von Österreich",
+        //     date_end: "2024-08-18",
+        //     date_start: "2024-08-16",
+        //     name: "MOTORRAD GRAND PRIX VON ÖSTERREICH",
+        //     season_id: "dd12382e-1d9f-46ee-a5f7-c5104db28e43",
+        //     year: 2024,
+        //     circuit_name: "Red Bull Ring - Spielberg",
+        //     country_name: "Austria",
+        //     flag_img: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Flag_of_Austria.svg",
+        //     circuit_img: "https://resources.motogp.pulselive.com/photo-resources/2024/06/06/example-austria.jpg",
+        //     circuit_track_img: "https://photos.motogp.com/events-admin/example-austria-track.svg",
+        //     sponsored_img: "https://example.com/austria-sponsor-logo.png"
+        // },
+        // {
+        //     _id: "66ed9c99a6f6d5927afbf6ad",
+        //     id: "9e44ac05-9362-4edf-a87a-d4aae85373c1",
+        //     sponsored_name: "Monster Energy British Grand Prix",
+        //     date_end: "2024-08-04",
+        //     date_start: "2024-08-02",
+        //     name: "BRITISH GRAND PRIX",
+        //     season_id: "dd12382e-1d9f-46ee-a5f7-c5104db28e43",
+        //     year: 2024,
+        //     circuit_name: "Silverstone Circuit",
+        //     country_name: "United Kingdom of Great Britain and Northern Ireland",
+        //     flag_img: "https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_the_United_Kingdom.svg",
+        //     circuit_img: "https://resources.motogp.pulselive.com/photo-resources/2024/06/06/example-uk.jpg",
+        //     circuit_track_img: "https://photos.motogp.com/events-admin/example-uk-track.svg",
+        //     sponsored_img: "https://example.com/uk-sponsor-logo.png"
+        // }
     ]);
     
     useEffect(() => {
-        const fetchEventData = async () => {
-            const response = await fetch('/calendar');
-            const data = await response.json();
-            setEvents(data);
-        };
-
-        fetchEventData();
+        try{
+            const fetchEventData = async () => {
+                const response = await fetch('http://localhost:3002/api/calendar');
+                const data = await response.json();
+                setEvents(data);
+            };
+    
+            fetchEventData();
+        }
+        catch (error) {
+            console.error("Error fetching event data:", error)
+        }
+        
     }, []);
 
     if (!events) {

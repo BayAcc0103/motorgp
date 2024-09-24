@@ -37,7 +37,7 @@ const CalendarAdmin = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch('/calendar'); // Fetch events from backend
+        const response = await fetch('http://localhost:3002/api/calendar'); // Fetch events from backend
         const eventsData = await response.json(); // Parse the JSON response
         setEvents(eventsData); // Set the events into state, including their UUIDs
       } catch (error) {
@@ -48,7 +48,7 @@ const CalendarAdmin = () => {
     fetchEvents(); // Call the function when the component mounts
     const fetchImages = async (category) => {
       try {
-        const response = await fetch(`/defaultImages/${category}`); // Fetch images from category
+        const response = await fetch(`http://localhost:3002/api/defaultImages/${category}`); // Fetch images from category
         const imagesData = await response.json(); // Parse the JSON response
 
         // Extract imageUrl from the response and set the respective state
@@ -161,20 +161,20 @@ const CalendarAdmin = () => {
         console.log(JSON.stringify(event));
         if (event.isNew) {
           // If the event is new, POST it to the backend
-          await fetch('/calendar', {
+          await fetch('http://localhost:3002/api/calendar', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(event),
           });
         } else if (event.isDeleted) {
           // If the event is deleted, delete it from the backend
-          await fetch(`/calendar/${event.id}`, {
+          await fetch(`http://localhost:3002/api/calendar/${event.id}`, {
             method: 'DELETE',
           });
         }
         else {
           // Otherwise, update the event via PUT using its UUID
-          await fetch(`/calendar/${event.id}`, {
+          await fetch(`http://localhost:3002/api/calendar/${event.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(event),
@@ -183,7 +183,7 @@ const CalendarAdmin = () => {
       }
 
       // re-fetch the updated list of events from the backend after save
-      const response = await fetch('/calendar');
+      const response = await fetch('http://localhost:3002/api/calendar');
       const updatedEvents = await response.json();
       setEvents(updatedEvents);
 
