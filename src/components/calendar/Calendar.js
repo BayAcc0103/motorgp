@@ -89,7 +89,7 @@ const Calendar = () => {
     return (
         <>
             
-                <div className="mb-4 bg-dark">
+                <div className="mb-4">
                     <div className="container-fluid calendar__container">
                         <div className="calendar__header-container">
                             <h1 className="calendar__title">2024 MotoGP Calendar</h1>
@@ -136,7 +136,7 @@ const Calendar = () => {
                                                 <div className="location-track-name mt-1">{event.circuit_name}</div>
                                             </div>
                                         </div>
-                                        <div className="col-4 position-relative overflow-hidden p-0 z-n1">
+                                        <div className="col-4 position-relative overflow-hidden p-0">
                                             <div className="position-absolute w-100 h-100">
                                                 <img src={event.circuit_img}
                                                     alt={`${event.title} Background`} loading="lazy"
