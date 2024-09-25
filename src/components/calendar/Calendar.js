@@ -136,7 +136,7 @@ const Calendar = () => {
                                                 <div className="location-track-name mt-1">{event.circuit_name}</div>
                                             </div>
                                         </div>
-                                        <div className="col-4 position-relative overflow-hidden p-0">
+                                        <div className="col-4 position-relative overflow-visible p-0">
                                             <div className="position-absolute w-100 h-100">
                                                 <img src={event.circuit_img}
                                                     alt={`${event.title} Background`} loading="lazy"
