@@ -330,8 +330,8 @@ const CalendarAdmin = () => {
             <th>Season_id</th>
             <th>Circuit name</th>
             <th>Country name</th>
-            <th>Image background</th>
             <th>Image flag</th>
+            <th>Image background</th>
             <th>Image track</th>
             <th>Image sponcor</th>
           </tr>
@@ -473,7 +473,7 @@ const CalendarAdmin = () => {
             </Form.Group>
             {/* Display selected images in the form */}
             <Form.Group controlId="formcountryflag" className="mb-3">
-              <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet1, 0)}>Add Image background</Button>
+              <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet1, 0)}>Add Image flag</Button>
               {eventData.flag_img && (
                 <img
                   src={eventData.flag_img}
@@ -483,7 +483,7 @@ const CalendarAdmin = () => {
               )}
             </Form.Group>
             <Form.Group controlId="formcountryflag" className="mb-3">
-              <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet2, 1)}>Add Image flag</Button>
+              <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet2, 1)}>Add Image background</Button>
               {eventData.circuit_img && (
                 <img
                   src={eventData.circuit_img}

@@ -1,6 +1,27 @@
 import React from 'react';
 import styles from "./Standing.module.css";
 import banner from "./asset/racingflag.jpg"
+const standingdata = [
+    {
+        tbody_pos: '1',
+        rider_image: 'https://resources.motogp.pulselive.com/photo-resources/2024/02/19/986b0e12-1db0-49d8-ae13-fd556286237a/93_Marc_MarquezFullbodyGresini.png?height=300&amp;width=200',
+        tbody_number: '93',
+        tbody_fullname: 'Francesco Bagnaia',
+        tbody_flag: 'https://static-files.motogp.pulselive.com/assets/flags/es.svg',
+        tbody_team: 'Gresini Racing MotoGP',
+        tbody_point: '312',
+    },
+    {
+        tbody_pos: '2',
+        tbody_point: '20',
+        rider_image: 'https://resources.motogp.pulselive.com/photo-resources/2024/02/19/986b0e12-1db0-49d8-ae13-fd556286237a/93_Marc_MarquezFullbodyGresini.png?height=300&amp;width=200',
+        tbody_number: '36',
+        tbody_fullname: 'Francesco Bagnaia',
+        tbody_flag: 'https://static-files.motogp.pulselive.com/assets/flags/es.svg',
+        tbody_team: 'Gresini Racing MotoGP',
+        tbody_time: '40:47.082',
+    },
+  ];
 const Standing = () => {
     return (
         <>
@@ -51,31 +72,32 @@ const Standing = () => {
                                 <th class={`${styles.table__header_cell} ${styles.table__header_cell__time}`}>point</th>
                             </tr>
                         </thead>
+                        {standingdata.map((standing) => (
                         <tbody class={`${styles.table__tbody}`}>
                             <tr class={`${styles.table__body_row}`}>
-                                <td class={`${styles.table__body_cell} ${styles.table__body_cell__pos} u-hide-tablet`}>1</td>
+                                <td class={`${styles.table__body_cell} ${styles.table__body_cell__pos} u-hide-tablet`}>{standing.tbody_pos}</td>
                                 <td class={`${styles.table__body_cell} ${styles.table__body_cell__pos}`}>
                                     <div class={`d-flex justify-content-start align-items-center`}>
                                         <div class={`${styles.rider_image_container}`}>
-                                            <img src="https://resources.motogp.pulselive.com/photo-resources/2024/02/19/986b0e12-1db0-49d8-ae13-fd556286237a/93_Marc_MarquezFullbodyGresini.png?height=300&amp;width=200"
+                                            <img src={standing.rider_image}
                                                 alt="rider-bio_marcmarquez" loading="lazy"></img>
                                         </div>
                                         <div class={`d-flex align-items-center justify-content-start ms-auto ${styles.table__rider_name_wrapper} u-hide-tablet`}>
                                             <div class={`${styles.table__rider_name}`}>
-                                                <span class={`text-danger ${styles.table__body_cell} ${styles.table__body_cell__number}`}>93</span>
-                                                <span class={`${styles.table__body_cell} ${styles.table__body_cell__full_name}`}>M. Marquez</span>
+                                                <span class={`text-danger ${styles.table__body_cell} ${styles.table__body_cell__number}`}>{standing.tbody_number}</span>
+                                                <span class={`${styles.table__body_cell} ${styles.table__body_cell__full_name}`}>{standing.tbody_fullname}</span>
                                             </div>
-                                            <img src="https://static-files.motogp.pulselive.com/assets/flags/es.svg" alt="ES flag"
+                                            <img src={standing.tbody_flag} alt="ES flag"
                                                 class={`${styles.table__body_cell_flag}`}></img>
                                         </div>
                                     </div>
                                 </td>
-                                <td class={`${styles.table__body_cell} ${styles.table__body_cell__team} u-hide-tablet`}>Gresini Racing
-                                    MotoGP
+                                <td class={`${styles.table__body_cell} ${styles.table__body_cell__team} u-hide-tablet`}>{standing.tbody_team}
                                 </td>
-                                <td class={`${styles.table__body_cell} ${styles.table__body_cell__point}`}><span>312</span></td>
+                                <td class={`${styles.table__body_cell} ${styles.table__body_cell__point}`}><span>{standing.tbody_point}</span></td>
                             </tr>
                         </tbody>
+                    ))}
                     </table>
                 </section>
             </div>
