@@ -1,5 +1,28 @@
 import React from 'react';
 import styles from "./Result.module.css";
+
+const resultdata = [
+    {
+        tbody_pos: '1',
+        tbody_point: '25',
+        rider_image: 'https://resources.motogp.pulselive.com/photo-resources/2024/02/19/986b0e12-1db0-49d8-ae13-fd556286237a/93_Marc_MarquezFullbodyGresini.png?height=300&amp;width=200',
+        tbody_number: '93',
+        tbody_fullname: 'Francesco Bagnaia',
+        tbody_flag: 'https://static-files.motogp.pulselive.com/assets/flags/es.svg',
+        tbody_team: 'Gresini Racing MotoGP',
+        tbody_time: '41:47.082',
+    },
+    {
+        tbody_pos: '2',
+        tbody_point: '20',
+        rider_image: 'https://resources.motogp.pulselive.com/photo-resources/2024/02/19/986b0e12-1db0-49d8-ae13-fd556286237a/93_Marc_MarquezFullbodyGresini.png?height=300&amp;width=200',
+        tbody_number: '36',
+        tbody_fullname: 'Francesco Bagnaia',
+        tbody_flag: 'https://static-files.motogp.pulselive.com/assets/flags/es.svg',
+        tbody_team: 'Gresini Racing MotoGP',
+        tbody_time: '40:47.082',
+    },
+  ];
 const Result = () => {
 
     return (
@@ -59,33 +82,34 @@ const Result = () => {
                                 <th class={`${styles.table__header_cell} ${styles.table__header_cell__time}`}>time / gap</th>
                             </tr>
                         </thead>
+                        {resultdata.map((result) => (
                         <tbody class={`${styles.table__tbody}`}>
                             <tr class={`${styles.table__body_row}`}>
-                                <td class={`${styles.table__body_cell} ${styles.table__body_cell__pos} u-hide-tablet`}>1</td>
-                                <td class={`text-black-50 fw-bolder ${styles.table__body_cell} ${styles.table__body_cell__pos} u-hide-tablet`}>25</td>
+                                <td class={`${styles.table__body_cell} ${styles.table__body_cell__pos} u-hide-tablet`}>{result.tbody_pos}</td>
+                                <td class={`text-black-50 fw-bolder ${styles.table__body_cell} ${styles.table__body_cell__pos} u-hide-tablet`}>{result.tbody_point}</td>
                                 <td class={`${styles.table__body_cell} ${styles.table__body_cell__pos}`}>
                                     <div class={`d-flex justify-content-start align-items-center`}>
                                         <div class={`${styles.rider_image_container}`}> 
-                                            <img src="https://resources.motogp.pulselive.com/photo-resources/2024/02/19/986b0e12-1db0-49d8-ae13-fd556286237a/93_Marc_MarquezFullbodyGresini.png?height=300&amp;width=200"
+                                            <img src={result.rider_image}
                                             alt="rider-bio_marcmarquez" loading="lazy"></img>       
                                         </div>
                                         <div class={`d-flex align-items-center justify-content-start ms-auto ${styles.table__rider_name_wrapper} u-hide-tablet`}>
                                             <div class={`${styles.table__rider_name}`}>
-                                                <span class={`text-danger ${styles.table__body_cell} ${styles.table__body_cell__number}`}>93</span>
-                                                <span class={`${styles.table__body_cell} ${styles.table__body_cell__full_name}`}>M.Marquez</span>
+                                                <span class={`text-danger ${styles.table__body_cell} ${styles.table__body_cell__number}`}>{result.tbody_number}</span>
+                                                <span class={`${styles.table__body_cell} ${styles.table__body_cell__full_name}`}>{result.tbody_fullname}</span>
                                             </div>
-                                            <img src="https://static-files.motogp.pulselive.com/assets/flags/es.svg" alt="ES flag"
+                                            <img src={result.tbody_flag}alt="ES flag"
                                                 class={`${styles.table__body_cell_flag}`}></img>
                                         </div>
                                     </div>
                                 </td>
-                                <td class={`${styles.table__body_cell} ${styles.table__body_cell__team} u-hide-tablet`}>Gresini Racing
-                                    MotoGP
-                                </td>
-                                <td class={`${styles.table__body_cell} ${styles.table__body_cell__time}`}><span>41:47.082</span></td>
+                                    <td class={`${styles.table__body_cell} ${styles.table__body_cell__team} u-hide-tablet`}>{result.tbody_team}</td>
+                                <td class={`${styles.table__body_cell} ${styles.table__body_cell__time}`}><span>{result.tbody_time}</span></td>
                             </tr>
                         </tbody>
+                        ))}
                     </table>
+                
                 </section>
             </div>
         </>

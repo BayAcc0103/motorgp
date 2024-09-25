@@ -43,27 +43,36 @@ const riders = [
     img: 'https://resources.motogp.pulselive.com/photo-resources/2024/02/19/80de8d72-d1b8-4b41-90b0-928467018ced/rider-bio_fabioquartararo.png?height=400&width=600',
     flag: '🇫🇷',
   },
-  
-  
+
+
 ];
 
 const RiderGrid = () => {
   return (
-    <div className="rider-grid">
-      {riders.map((rider) => (
-        <div className="rider-card" key={rider.id}>
-          <img className="rider-card__image" src={rider.img} alt={rider.name} />
-          <div className="rider-card__info">
-            <span className="rider-card__id">{rider.id}</span>
-            <h3 className="rider-card__name">{rider.name}</h3>
-            <span className="rider-card__country">
-              {rider.flag} {rider.country}
-            </span>
-            <span className="rider-card__team">{rider.team}</span>
+    <>
+      <div className="mb-4">
+        <div className="container-fluid team__container">
+          <div className="team__header-container">
+            <h1 className="team__title">Riders</h1>
           </div>
         </div>
-      ))}
-    </div>
+      </div>
+      <div className="rider-grid">
+        {riders.map((rider) => (
+          <div className="rider-card" key={rider.id}>
+            <img className="rider-card__image" src={rider.img} alt={rider.name} />
+            <div className="rider-card__info">
+              <span className="rider-card__id">{rider.id}</span>
+              <h3 className="rider-card__name">{rider.name}</h3>
+              <span className="rider-card__country">
+                {rider.flag} {rider.country}
+              </span>
+              <span className="rider-card__team">{rider.team}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 
