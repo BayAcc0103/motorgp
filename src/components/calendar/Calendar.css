@@ -55,6 +55,7 @@
 .row-striped:nth-of-type(odd) {
     background-color: #f6f6f6;
     border-left: 4px #690000 solid;
+    
 }
 
 .row-striped:nth-of-type(even) {
@@ -175,7 +176,6 @@
 /* CSS for track */
 
 .calendar-listing__track-layout {
-    
     background: linear-gradient(270deg, #181c21 10%, rgba(24, 28, 33, .8) 25%, rgba(24, 28, 33, 0) 70%);
 }
 
@@ -183,7 +183,7 @@
     bottom: auto;
     left: auto;
     top: 50%;
-    right: 0;
+    right: 20px;
     transform: translate(28%, -50%);
     max-height: 20rem;
     filter: drop-shadow(0 .5rem .8rem rgba(0, 0, 0, .55));

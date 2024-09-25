@@ -53,42 +53,43 @@ const Calendar = () => {
         //     sponsored_img: "https://example.com/uk-sponsor-logo.png"
         // }
     ]);
-    
+
     useEffect(() => {
-        try{
+        try {
             const fetchEventData = async () => {
                 const response = await fetch('http://localhost:3002/api/calendar');
                 const data = await response.json();
                 setEvents(data);
             };
-    
+
             fetchEventData();
         }
         catch (error) {
             console.error("Error fetching event data:", error)
         }
-        
+
     }, []);
 
     if (!events) {
         return <div>Loading...</div>;
     }
-        
-        // Group events by month
-        const groupedEvents = events.reduce((accumulator, event) => {
-            const dateStart = new Date(event.date_start).getMonth() + 1; // Get the month (1-12)
+
+    // Group events by month
+    const groupedEvents = events.reduce((accumulator, event) => {
+        const dateStart = new Date(event.date_start).getMonth() + 1; // Get the month (1-12)
+
+        if (!accumulator[dateStart]) {
+            accumulator[dateStart] = []; // Create a new array for this month if it doesn't exist
+        }
+
+        accumulator[dateStart].push(event); // Add the event to the corresponding month
+        return accumulator;
+    }, {});
+    // console.log(groupedEvents);
+    return (
+        <>
             
-            if (!accumulator[dateStart]) {
-                accumulator[dateStart] = []; // Create a new array for this month if it doesn't exist
-            }
-        
-            accumulator[dateStart].push(event); // Add the event to the corresponding month
-            return accumulator;
-        }, {});
-        // console.log(groupedEvents);
-        return (
-            <>
-                <div className="mb-4">
+                <div className="mb-4 bg-dark">
                     <div className="container-fluid calendar__container">
                         <div className="calendar__header-container">
                             <h1 className="calendar__title">2024 MotoGP Calendar</h1>
@@ -104,7 +105,7 @@ const Calendar = () => {
                             </header>
                             <div className="container">
                                 {groupedEvents[date_start].map((event) => (
-                                    <div key={event.id} className="row row-striped mb-5 mt-3">
+                                    <div key={event.id} className="row row-striped mb-5 mt-3 z-n1">
                                         <div className="col-2">
                                             <div className="row justify-content-center">
                                                 <div className="col text-center">
@@ -135,21 +136,21 @@ const Calendar = () => {
                                                 <div className="location-track-name mt-1">{event.circuit_name}</div>
                                             </div>
                                         </div>
-                                        <div className="col-4 position-relative overflow-hidden p-0">
+                                        <div className="col-4 position-relative overflow-hidden p-0 z-n1">
                                             <div className="position-absolute w-100 h-100">
                                                 <img src={event.circuit_img}
                                                     alt={`${event.title} Background`} loading="lazy"
                                                     className="imageundertrack" />
                                             </div>
                                             <div className="calendar-listing__track-layout w-100 h-100 position-relative">
-                                                <img className="calendar-listing__layout position-absolute" 
-                                                src={event.circuit_track_img} 
-                                                alt={`${event.circuit_name} track`} loading="lazy" />
+                                                <img className="calendar-listing__layout position-absolute"
+                                                    src={event.circuit_track_img}
+                                                    alt={`${event.circuit_name} track`} loading="lazy" />
                                             </div>
                                             <div className="calendar-listing__sponcor position-absolute d-flex justify-content-center w-100 h-100">
                                                 <div className="calendar-listing__sponsor-logo">
-                                                    <img src={event.sponsored_img} 
-                                                    alt="Sponsor logo" loading="lazy" />
+                                                    <img src={event.sponsored_img}
+                                                        alt="Sponsor logo" loading="lazy" />
                                                 </div>
                                             </div>
                                         </div>
@@ -159,9 +160,9 @@ const Calendar = () => {
                         </div>
                     ))}
                 </div>
-            </>
-        );
-    };
-    
-    export default Calendar;
-    
+            
+        </>
+    );
+};
+
+export default Calendar;
