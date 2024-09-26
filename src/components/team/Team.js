@@ -1,5 +1,5 @@
 import React from 'react';
-import './Team.css';
+import './Team.css'; // Ensure that the styling is handled in this CSS file
 
 // Data for Teams
 const teams = [
@@ -35,6 +35,14 @@ const teams = [
     img: 'https://resources.motogp.pulselive.com/photo-resources/2024/02/22/4bc7ea28-2774-4031-b7a5-078ba9f81b5c/SEvzc0TL.png?width=400',
     flag: '🇯🇵',
   },
+  {
+    id: '#LCR',
+    name: 'LCR Honda',
+    country: 'Japan',
+    riders: ['Johann Zarco', 'Takaaki Nakagami'],
+    img: 'https://resources.motogp.pulselive.com/photo-resources/2024/02/22/4bc7ea28-2774-4031-b7a5-078ba9f81b5c/SEvzc0TL.png?width=400',
+    flag: '🇯🇵',
+  },
 ];
 
 const TeamGrid = () => {
@@ -47,15 +55,21 @@ const TeamGrid = () => {
           </div>
         </div>
       </div>
+
+      {/* Team grid layout */}
       <div className="team-grid">
         {teams.map((team) => (
           <div className="team-card" key={team.id}>
             <img className="team-card__image" src={team.img} alt={team.name} />
             <div className="team-card__info">
-              <span className="team-card__riders">
-                {team.riders.join(', ')}
-              </span>
-              <h3 className="team-card__name">{team.name}</h3>
+              <h3 className="team-card__name">{team.name} {team.flag}</h3>
+              <p className="team-card__country">{team.country}</p>
+              <div className="team-card__riders">
+                <strong>Riders:</strong>
+                {team.riders.map((rider, index) => (
+                  <div key={index}>{rider}</div> // Each rider on a new line
+                ))}
+              </div>
             </div>
           </div>
         ))}
