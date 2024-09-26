@@ -39,19 +39,28 @@ const teams = [
 
 const TeamGrid = () => {
   return (
-    <div className="team-grid">
-      {teams.map((team) => (
-        <div className="team-card" key={team.id}>
-          <img className="team-card__image" src={team.img} alt={team.name} />
-          <span className="team-card__riders">
-              {team.riders.join(', ')}
-            </span>
-          <div className="team-card__info">
-            <h3 className="team-card__name">{team.name}</h3>
+    <>
+      <div className="mb-4">
+        <div className="container-fluid team__container">
+          <div className="team__header-container">
+            <h1 className="team__title">Teams</h1>
           </div>
         </div>
-      ))}
-    </div>
+      </div>
+      <div className="team-grid">
+        {teams.map((team) => (
+          <div className="team-card" key={team.id}>
+            <img className="team-card__image" src={team.img} alt={team.name} />
+            <div className="team-card__info">
+              <span className="team-card__riders">
+                {team.riders.join(', ')}
+              </span>
+              <h3 className="team-card__name">{team.name}</h3>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 
