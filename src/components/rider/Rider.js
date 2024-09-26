@@ -43,8 +43,6 @@ const riders = [
     img: 'https://resources.motogp.pulselive.com/photo-resources/2024/02/19/80de8d72-d1b8-4b41-90b0-928467018ced/rider-bio_fabioquartararo.png?height=400&width=600',
     flag: '🇫🇷',
   },
-
-
 ];
 
 const RiderGrid = () => {
