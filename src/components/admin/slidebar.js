@@ -52,7 +52,7 @@ const SlideBar = ({ isOpen, onClose }) => {
 
                         {/* Rider Section */}
                         <div className="list-group list-group-flush">
-                            <Link to="/admin/riders" className="list-group-item py-2 my-1 custom-sidebar-item">
+                            <Link to="/admin/racersadmin" className="list-group-item py-2 my-1 custom-sidebar-item">
                                 <img src={helmet} alt="helmet logo" style={{ width: '27px' }} />
                                 <span className="fs-5 ms-2">Rider</span>
                             </Link>
@@ -60,7 +60,7 @@ const SlideBar = ({ isOpen, onClose }) => {
 
                         {/* Team Section */}
                         <div className="list-group list-group-flush">
-                            <Link to="/admin/team" className="list-group-item py-2 my-1 custom-sidebar-item">
+                            <Link to="/admin/teamsadmin" className="list-group-item py-2 my-1 custom-sidebar-item">
                                 <img src={helmet} alt="helmet logo" style={{ width: '27px' }} />
                                 <span className="fs-5 ms-2">Team</span>
                             </Link>
@@ -68,7 +68,7 @@ const SlideBar = ({ isOpen, onClose }) => {
 
                         {/* Result Section */}
                         <div className="list-group list-group-flush">
-                            <Link to="/admin/results" className="list-group-item py-2 my-1 custom-sidebar-item">
+                            <Link to="/admin/resultadmin" className="list-group-item py-2 my-1 custom-sidebar-item">
                                 <img src={cup} alt="results logo" style={{ width: '30px' }} />
                                 <span className="fs-5 ms-2">Result</span>
                             </Link>
@@ -76,7 +76,7 @@ const SlideBar = ({ isOpen, onClose }) => {
 
                         {/* Standing Section */}
                         <div className="list-group list-group-flush">
-                            <Link to="/admin/standing" className="list-group-item py-2 my-1 custom-sidebar-item">
+                            <Link to="/admin/standingadmin" className="list-group-item py-2 my-1 custom-sidebar-item">
                                 <img src={cup} alt="standing logo" style={{ width: '30px' }} />
                                 <span className="fs-5 ms-2">Standing</span>
                             </Link>

@@ -13,7 +13,8 @@ import Account from './components/admin/pages/Account';
 import RacersAdmin from './components/admin/pages/RacerAdmin';
 import TeamsAdmin from './components/admin/pages/TeamAdmin';
 import CalendarAdmin from './components/admin/pages/CalendarAdmin';
-import Ranking from './components/admin/pages/Ranking';
+import ResultAdmin from './components/admin/pages/ResultAdmin';
+import StandingAdmin from './components/admin/pages/StandingAdmin';
 import Footer from './components/footer/Footer';
 
 const App = () => {
@@ -35,7 +36,8 @@ const App = () => {
           <Route path="racersadmin" element={<RacersAdmin />} />
           <Route path="teamsadmin" element={<TeamsAdmin />} />
           <Route path="calendaradmin" element={<CalendarAdmin />} />
-          <Route path="ranking" element={<Ranking />} />
+          <Route path="resultadmin" element={<ResultAdmin />} />
+          <Route path="standingadmin" element={<StandingAdmin />} />
         </Route>
       </Routes>
       <Footer />
