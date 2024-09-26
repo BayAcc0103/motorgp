@@ -1,8 +1,61 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import logo from "./asset/36-1.png"
 import "./Loginform.css"
 
+// const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+
+//   const [message, setMessage] = useState('');
+
+
+// const login = async (email, password) => {
+//     try {
+//       const response = await fetch('/users/login', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ email, password }),
+//       });
+//       const token = await response.json();
+//       localStorage.setItem('token', token);
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
+
 const LoginForm = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
+
+    const login = async (email, password) => {
+        try {
+            const response = await fetch('http://localhost:3002/users/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+            if (!response.ok) {
+                throw new Error('Login failed');
+            }
+            const token = await response.json();
+            localStorage.setItem('token', token);
+            // Optionally, redirect or update state after successful login
+        } catch (error) {
+            console.error(error);
+            setMessage('Login failed. Please check your credentials.');
+        }
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        login(email, password);
+    };
+    
     return (
         <div class="bg-fullscreen py-3 py-md-5">
             <div class="container">
@@ -18,7 +71,7 @@ const LoginForm = () => {
                                     </div>
                                 </div>
                             </div>
-                            <form action="#!">
+                            <form onSubmit={handleSubmit}>
                                 <div class="row gy-3 gy-md-4 overflow-hidden">
                                     <div class="col-12">
                                         <label for="email" class="form-label text-light">Email <span class="text-danger">*</span></label>
@@ -28,7 +81,7 @@ const LoginForm = () => {
                                                     <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
                                                 </svg>
                                             </span>
-                                            <input type="email" class="form-control" name="email" id="email" required></input>
+                                            <input type="email" class="form-control" name="email" id="email" required value={email} onChange={(e) => setEmail(e.target.value)}></input>:
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -40,23 +93,35 @@ const LoginForm = () => {
                                                     <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                                                 </svg>
                                             </span>
-                                            <input type="password" class="form-control" name="password" id="password" value="" required></input>
+                                            <input type="password" class="form-control" name="password" id="password" required value={password} onChange={(e) => setPassword(e.target.value)}></input>:
                                         </div>
                                     </div>
-                                    <div class="col-12">
-                                        <div class="d-grid">
-                                            <button class="btn btn-primary btn-lg" type="submit">Log In</button>
+                                    <div className="col-12">
+                                        <div className="d-grid">
+                                            <button
+                                                className="btn btn-primary btn-lg"
+                                                type="submit"
+                                            >
+                                                Log In
+                                            </button>
                                         </div>
                                     </div>
+                                    {message && (
+                                        <div className="col-12">
+                                            <div className="alert alert-danger" role="alert">
+                                                {message}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </form>
-                            <div class="row">
-                                <div class="col-12">
-                                    <hr class="mt-5 mb-4 border-secondary-subtle"></hr>
-                                        <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-center">
-                                            <a href="#!" class="link-secondary text-decoration-none">Create new account</a>
-                                            <a href="#!" class="link-secondary text-decoration-none">Forgot password</a>
-                                        </div>
+                            <div className="row">
+                                <div className="col-12">
+                                    <hr className="mt-5 mb-4 border-secondary-subtle" />
+                                    <div className="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-center">
+                                        <a href="#!" className="link-secondary text-decoration-none">Create new account</a>
+                                        <a href="#!" className="link-secondary text-decoration-none">Forgot password</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -66,5 +131,6 @@ const LoginForm = () => {
         </div>
     );
 };
+
 
 export default LoginForm;
