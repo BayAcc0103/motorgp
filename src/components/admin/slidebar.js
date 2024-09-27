@@ -34,29 +34,57 @@ const SlideBar = ({ isOpen, onClose }) => {
 
                         <hr className="text-light" />
 
-                        {/* Sidebar Items */}
+                        {/* Account Section */}
                         <div className="list-group list-group-flush">
                             <Link to="account" className="list-group-item py-2 my-1 custom-sidebar-item">
                                 <img src={accLogo} alt="account logo" style={{ width: '35px' }} />
                                 <span className="fs-5 ms-2">Account</span>
                             </Link>
+                        </div>
 
-                            <Link to="/admin/racers-and-team" className="list-group-item py-2 my-1 custom-sidebar-item">
-                                <img src={helmet} alt="helmet logo" style={{ width: '27px' }} />
-                                <span className="fs-5 ms-2">Racers and team</span>
-                            </Link>
-
-                            <Link to="/admin/calendaradmin" className="list-group-item py-2 custom-sidebar-item">
+                        {/* Calendar Section */}
+                        <div className="list-group list-group-flush">
+                            <Link to="/admin/calendaradmin" className="list-group-item py-2 my-1 custom-sidebar-item">
                                 <img src={calend} alt="calendar logo" style={{ width: '30px' }} />
                                 <span className="fs-5 ms-2">Calendar</span>
                             </Link>
+                        </div>
 
-                            <Link to="/admin/ranking" className="list-group-item py-2 custom-sidebar-item">
-                                <img src={cup} alt="ranking logo" style={{ width: '30px' }} />
-                                <span className="fs-5 ms-2">Ranking</span>
+                        {/* Rider Section */}
+                        <div className="list-group list-group-flush">
+                            <Link to="/admin/racersadmin" className="list-group-item py-2 my-1 custom-sidebar-item">
+                                <img src={helmet} alt="helmet logo" style={{ width: '27px' }} />
+                                <span className="fs-5 ms-2">Rider</span>
                             </Link>
+                        </div>
 
-                            <Link to="/admin/logout" className="list-group-item py-2 custom-sidebar-item">
+                        {/* Team Section */}
+                        <div className="list-group list-group-flush">
+                            <Link to="/admin/teamsadmin" className="list-group-item py-2 my-1 custom-sidebar-item">
+                                <img src={helmet} alt="helmet logo" style={{ width: '27px' }} />
+                                <span className="fs-5 ms-2">Team</span>
+                            </Link>
+                        </div>
+
+                        {/* Result Section */}
+                        <div className="list-group list-group-flush">
+                            <Link to="/admin/resultadmin" className="list-group-item py-2 my-1 custom-sidebar-item">
+                                <img src={cup} alt="results logo" style={{ width: '30px' }} />
+                                <span className="fs-5 ms-2">Result</span>
+                            </Link>
+                        </div>
+
+                        {/* Standing Section */}
+                        <div className="list-group list-group-flush">
+                            <Link to="/admin/standingadmin" className="list-group-item py-2 my-1 custom-sidebar-item">
+                                <img src={cup} alt="standing logo" style={{ width: '30px' }} />
+                                <span className="fs-5 ms-2">Standing</span>
+                            </Link>
+                        </div>
+
+                        {/* Logout Section */}
+                        <div className="list-group list-group-flush">
+                            <Link to="/admin/logout" className="list-group-item py-2 my-1 custom-sidebar-item">
                                 <img src={logout} alt="logout logo" style={{ width: '30px' }} />
                                 <span className="fs-5 ms-2">Logout</span>
                             </Link>

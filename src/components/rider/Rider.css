@@ -1,49 +1,63 @@
+/* Rider grid layout similar to team-grid */
 .rider-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Creates a flexible grid with consistent sizing */
+  gap: 30px; /* Matches the gap in the team grid */
+  justify-content: center;
   padding: 20px;
 }
 
 .rider-card {
-  background-color: #f8f9fa;
-  border-radius: 8px;
+  background-color: #fff;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for a lifted look */
   text-align: center;
-  position: relative;
+  transition: transform 0.3s ease; /* Adds a smooth hover effect */
+}
+
+.rider-card:hover {
+  transform: translateY(-10px); /* Lifts the card on hover, similar to the team-card */
 }
 
 .rider-card__image {
   width: 100%;
-  height: 300px;
-  object-fit: cover;
+  height: auto; /* Ensures the image maintains aspect ratio */
+  border-bottom: 1px solid #ddd; /* Adds a separator line between the image and content */
 }
 
 .rider-card__info {
   padding: 15px;
-  background-color: white;
 }
 
 .rider-card__id {
-  font-size: 14px;
+  font-size: 0.85rem;
   font-weight: bold;
   color: #555;
 }
 
 .rider-card__name {
-  font-size: 18px;
+  font-size: 1.5rem; /* Increases the size for better readability, similar to team card name */
   margin: 10px 0;
+  font-weight: bold;
   color: #333;
 }
 
 .rider-card__country,
 .rider-card__team {
-  font-size: 16px;
+  font-size: 1rem; /* Standardizes font size for country and team info */
   color: #777;
 }
 
 .rider-card__team {
-  display: block;
   margin-top: 5px;
+  display: block;
+  font-weight: 500;
+}
+
+/* Optional media query to adjust image height on smaller screens */
+@media (max-width: 768px) {
+  .rider-card__image {
+    height: 200px;
+  }
 }

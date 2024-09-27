@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Table, Form, Modal, Alert } from 'react-bootstrap';
 import './Account.css';
 
-const Ranking = () => {
+const ResultAdmin = () => {
   const [rankings, setRankings] = useState([
     { id: 1, racers: 'Racer 1', location: 'Inferno', points: 100 },
     { id: 2, racers: 'Racer 2', location: 'Twin Tower', points: 80 },
@@ -189,4 +189,4 @@ const Ranking = () => {
   );
 };
 
-export default Ranking;
+export default ResultAdmin;

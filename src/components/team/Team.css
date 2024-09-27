@@ -1,14 +1,55 @@
-.team__header-container {
-    background-color: #000000e8;
-    background-image: radial-gradient(96.8% 493.26% at 100% 93.41%, rgba(201, 3, 0, 0.23) 0, rgba(148, 4, 1, 0) 100%);
-    padding: 1.2rem 1.6rem 2.2rem;
-    box-shadow: 0 .4rem .8rem 0 rgba(0, 0, 0, .15);
-    border-radius: 0 0 15px 15px;
+.team__container {
+  text-align: center;
+  padding: 20px 0;
 }
 
 .team__title {
-    color: #fff;
-    font-size: 3.2rem;
-    text-transform: capitalize;
-    font-family: "Bangers", system-ui;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.team-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  padding: 20px;
+}
+
+.team-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 250px;
+  transition: transform 0.3s;
+}
+
+.team-card:hover {
+  transform: translateY(-10px);
+}
+
+.team-card__image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.team-card__info {
+  margin-top: 10px;
+}
+
+.team-card__name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 5px;
+  color: #333;
+}
+
+.team-card__riders {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 5px;
 }
