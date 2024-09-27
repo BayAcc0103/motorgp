@@ -360,9 +360,7 @@ const Result = () => {
         </div>
     );
 };
-        </div>
-    );
-};
+        
 
 export default Result;
 
