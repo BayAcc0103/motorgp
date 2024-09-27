@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "firefox", // Change this from "firefox" to "chrome" for use with Chrome
+            "request": "launch",
+            "name": "Launch Firefox against localhost",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}/src" // Ensure that this points to the correct path of your source files
+        }
+    ]
+}
