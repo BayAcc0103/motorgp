@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from "./Result.module.css";
 
-const eventsData = [ {
+const eventsData = [{
     "_id": "650ab8d3f0a2134567890abc",
     "name": "Spanish Grand Prix",
     "location": "Circuito de Jerez",
@@ -118,80 +118,80 @@ const eventsData = [ {
             ]
         }
     ]
-},{
+}, {
     "_id": "650ab8d3f0a21345678901234",
     "name": "Argentine Grand Prix",
     "location": "Termas de Rio Hondo Circuit",
     "date": "2023-03-01T00:00:00.000Z",
     "sessions": [
-      {
-        "sessionName": "RAC",
-        "sessionDate": "2023-03-01T10:00:00.000Z",
-        "category": "MotoGP",
-        "results": [
-          {
-            "riderId": "650ab8d3f0a21345678901245",
-            "position": 1,
-            "time": "01:30.901",
-            "number": "12",
-            "fullname": "Luca Marini",
-            "flag": "https://static-files.motogp.pulselive.com/assets/flags/it.svg",
-            "team": "Mooney VR46 Racing Team"
-          },
-          {
-            "riderId": "650ab8d3f0a21345678901267",
-            "position": 2,
-            "time": "01:31.234",
-            "number": "45",
-            "fullname": "Johann Zarco",
-            "flag": "https://static-files.motogp.pulselive.com/assets/flags/fr.svg",
-            "team": "Pramac Racing"
-          }
-        ]
-      },
-      {
-        "sessionName": "WUP",
-        "sessionDate": "2023-03-02T14:00:00.000Z",
-        "category": "MotoGP",
-        "results": [
-          {
-            "riderId": "650ab8d3f0a21345678901289",
-            "position": 1,
-            "time": "01:29.567",
-            "number": "23",
-            "fullname": "Enea Bastianini",
-            "flag": "https://static-files.motogp.pulselive.com/assets/flags/it.svg",
-            "team": "Gresini Racing MotoGP"
-          },
-          {
-            "riderId": "650ab8d3f0a21345678901201",
-            "position": 2,
-            "time": "01:30.234",
-            "number": "5",
-            "fullname": "Fabio Quartararo",
-            "flag": "https://static-files.motogp.pulselive.com/assets/flags/fr.svg",
-            "team": "Yamaha Factory Racing"
-          }
-        ]
-      }
+        {
+            "sessionName": "RAC",
+            "sessionDate": "2023-03-01T10:00:00.000Z",
+            "category": "MotoGP",
+            "results": [
+                {
+                    "riderId": "650ab8d3f0a21345678901245",
+                    "position": 1,
+                    "time": "01:30.901",
+                    "number": "12",
+                    "fullname": "Luca Marini",
+                    "flag": "https://static-files.motogp.pulselive.com/assets/flags/it.svg",
+                    "team": "Mooney VR46 Racing Team"
+                },
+                {
+                    "riderId": "650ab8d3f0a21345678901267",
+                    "position": 2,
+                    "time": "01:31.234",
+                    "number": "45",
+                    "fullname": "Johann Zarco",
+                    "flag": "https://static-files.motogp.pulselive.com/assets/flags/fr.svg",
+                    "team": "Pramac Racing"
+                }
+            ]
+        },
+        {
+            "sessionName": "WUP",
+            "sessionDate": "2023-03-02T14:00:00.000Z",
+            "category": "MotoGP",
+            "results": [
+                {
+                    "riderId": "650ab8d3f0a21345678901289",
+                    "position": 1,
+                    "time": "01:29.567",
+                    "number": "23",
+                    "fullname": "Enea Bastianini",
+                    "flag": "https://static-files.motogp.pulselive.com/assets/flags/it.svg",
+                    "team": "Gresini Racing MotoGP"
+                },
+                {
+                    "riderId": "650ab8d3f0a21345678901201",
+                    "position": 2,
+                    "time": "01:30.234",
+                    "number": "5",
+                    "fullname": "Fabio Quartararo",
+                    "flag": "https://static-files.motogp.pulselive.com/assets/flags/fr.svg",
+                    "team": "Yamaha Factory Racing"
+                }
+            ]
+        }
     ]
-  }, ];
+},];
 
 const Result = () => {
-    
+
     const [selectedEventName, setSelectedEventName] = useState(null);
     const [selectedSessionName, setSelectedSessionName] = useState("RAC");
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
     const [selectedCategory, setSelectedCategory] = useState("MotoGP");
 
-   
+
 
     //Listening for changes in the selected year and updating the selected event name accordingly
     useEffect(() => {
         setSelectedEventName(filteredEventsbyYear[0]?.name);
-      }, [selectedYear]);
+    }, [selectedYear]);
 
-      const filteredEventsbyYear = eventsData.filter(event => {
+    const filteredEventsbyYear = eventsData.filter(event => {
         const eventYear = new Date(event.date).getFullYear().toString(); // Extracting year from the event date
         return eventYear === selectedYear;
     });
@@ -200,7 +200,7 @@ const Result = () => {
     const filteredEvents = eventsData.filter(event => {
         const eventDate = new Date(event.date);
         const eventYear = eventDate.getFullYear();
-        
+
         // Check if the year matches
         const yearMatches = selectedYear ? eventYear.toString() === selectedYear : true;
 
@@ -222,9 +222,9 @@ const Result = () => {
         return yearMatches && eventNameMatches && sessionsFiltered.length > 0;
     });
 
-    
+
     const filteredYear = eventsData.map(event => new Date(event.date).getFullYear().toString());
-    
+
     // const selectedEvent = filteredEvents.find(event => event._id === selectedEventId);
     // const selectedSession = selectedEvent ? selectedEvent.sessions[selectedSessionIndex] : null;
 
@@ -242,7 +242,7 @@ const Result = () => {
                                 setSelectedEventName(filteredEventsbyYear[0]?.name); // Reset to first event on year change
                             }}
                         >
-                            {[...new Set(filteredYear)].map(year => ( 
+                            {[...new Set(filteredYear)].map(year => (
                                 <option className={`text-dark ${styles.custom_option}`} value={year}>{year}</option>))}
                             {/* <option className={`text-dark ${styles.custom_option}`} value="2024">2024</option>
                             <option className={`text-dark ${styles.custom_option}`} value="2023">2023</option> */}
@@ -260,7 +260,7 @@ const Result = () => {
                                     {event.name}
                                 </option>
                             ))}
-                            
+
                         </select>
                     </div>
                     <div className={`d-flex position-relative align-items-center ${styles.filter_container}`}>
@@ -298,6 +298,9 @@ const Result = () => {
 
                 {filteredEvents[0]?.sessions[0] && (
                     <div className={`d-flex flex-column justify-content-between position-relative w-100 h-auto bg-dark ${styles.hero_container}`}>
+                        <div class={`position-absolute w-100 h-100 bg-dark ${styles.hero_image}`}>
+                            <img alt="Misano MotoGP™ Official Test" src="https://photos.motogp.com/2024/events/background/RSM.png" class={`${styles.hero_image_img}`}></img>
+                        </div>
                         <div className={`text-white w-75 position-relative ${styles.hero_text}`}>
                             {selectedEventName} - {filteredEvents[0]?.sessions[0].sessionName}
                         </div>
@@ -322,34 +325,39 @@ const Result = () => {
                             <thead>
                                 <tr>
                                     <th className={`${styles.table__header_cell} ${styles.table__header_cell__pos}`}>Pos.</th>
-                                    <th className={`${styles.table__header_cell} ${styles.table__header_cell__time}`}>Time</th>
+                                    <th className={`${styles.table__header_cell} ${styles.table__header_cell__points}`}>pts</th>
                                     <th className={`${styles.table__header_cell} ${styles.table__header_cell__rider}`}>Rider</th>
                                     <th className={`${styles.table__header_cell} ${styles.table__header_cell__team}`}>Team</th>
+                                    <th className={`${styles.table__header_cell} ${styles.table__header_cell__time}`}>Time</th>
                                 </tr>
                             </thead>
                             <tbody className={`${styles.table__tbody}`}>
                                 {filteredEvents[0]?.sessions[0]?.results.map(result => (
                                     <tr key={result.riderId} className={`${styles.table__body_row}`}>
                                         <td className={`${styles.table__body_cell} ${styles.table__body_cell__pos}`}>{result.position}</td>
-                                        <td className={`${styles.table__body_cell} ${styles.table__body_cell__time}`}>{result.time}</td>
+                                        <td class={`text-black-50 fw-bolder ${styles.table__body_cell} ${styles.table__body_cell__pos} u-hide-tablet`}>25</td>
                                         <td className={`${styles.table__body_cell} ${styles.table__body_cell__rider}`}>
                                             <div className={`d-flex justify-content-start align-items-center`}>
                                                 <div className={`${styles.rider_image_container}`}>
-                                                    <img
-                                                        src={result.flag}
-                                                        alt={`Rider ${result.fullname}`}
-                                                        loading="lazy"
-                                                    />
+                                                    <img src="https://resources.motogp.pulselive.com/photo-resources/2024/02/19/986b0e12-1db0-49d8-ae13-fd556286237a/93_Marc_MarquezFullbodyGresini.png?height=300&amp;width=200"
+                                                        alt="rider-bio_marcmarquez" loading="lazy"></img>
                                                 </div>
                                                 <div className={`d-flex align-items-center justify-content-start ms-auto ${styles.table__rider_name_wrapper}`}>
                                                     <div className={`${styles.table__rider_name}`}>
                                                         <span className={`text-danger ${styles.table__body_cell} ${styles.table__body_cell__number}`}>{result.number}</span>
                                                         <span className={`${styles.table__body_cell} ${styles.table__body_cell__full_name}`}>{result.fullname}</span>
                                                     </div>
+                                                    <img
+                                                        src={result.flag}
+                                                        alt={`Rider ${result.fullname}`}
+                                                        loading="lazy"
+                                                        class={`${styles.table__body_cell_flag}`}
+                                                    />
                                                 </div>
                                             </div>
                                         </td>
                                         <td className={`${styles.table__body_cell} ${styles.table__body_cell__team}`}>{result.team}</td>
+                                        <td className={`${styles.table__body_cell} ${styles.table__body_cell__time}`}>{result.time}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -360,7 +368,7 @@ const Result = () => {
         </div>
     );
 };
-        
+
 
 export default Result;
 
