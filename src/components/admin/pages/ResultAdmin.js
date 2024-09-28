@@ -1,77 +1,111 @@
 import React, { useState } from 'react';
-import { Button, Table, Form, Modal, Alert } from 'react-bootstrap';
+import { Button, Form, Modal, Alert, Dropdown, Table } from 'react-bootstrap';
 import './Account.css';
 
 const ResultAdmin = () => {
-  const [rankings, setRankings] = useState([
-    { id: 1, racers: 'Racer 1', location: 'Inferno', points: 100 },
-    { id: 2, racers: 'Racer 2', location: 'Twin Tower', points: 80 },
-  ]);
+  const [events, setEvents] = useState(['Event A', 'Event B', 'Event C']);
+  const [categories, setCategories] = useState(['MotoGP', 'Moto2', 'Moto3']);
 
-  const [showModal, setShowModal] = useState(false);
-  const [onEdit, setOnEdit] = useState(false); 
-  const [currentRankingId, setCurrentRankingId] = useState(null); 
-  const [rankingData, setRankingData] = useState({ racers: '', location: '', points: '' });
+  const [currentEvent, setCurrentEvent] = useState(null);
+  const [currentCategory, setCurrentCategory] = useState(null);
+  
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [showResultModal, setShowResultModal] = useState(false);
+  
+  const [rankingData, setRankingData] = useState({
+    event: '',
+    category: '',
+    session: '',
+    position: '',
+    number: '',
+    fullName: '',
+    flag: '',
+    team: '',
+    time: ''
+  });
+  
+  const [rankings, setRankings] = useState([]);
   const [changesSaved, setChangesSaved] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [selectedResultId, setSelectedResultId] = useState(null);
+  const [selectedRanking, setSelectedRanking] = useState(null);
 
-  // Handle showing the modal
-  const handleShowAdd = () => {
-    setShowModal(true);
-    setOnEdit(false); 
-    setRankingData({ racers: '', location: '', points: '' });
+  const handleShowCategoryModal = (event) => {
+    setCurrentEvent(event);
+    setRankingData((prevData) => ({ ...prevData, event }));
+    setShowCategoryModal(true);
   };
 
-  const handleShowEdit = () => {
-    if (currentRankingId) {
-      const selectedRanking = rankings.find((ranking) => ranking.id === currentRankingId);
-      setRankingData({
-        racers: selectedRanking.racers,
-        location: selectedRanking.location,
-        points: selectedRanking.points,
-      });
-      setOnEdit(true);
-      setShowModal(true); 
-    }
+  const handleCloseCategoryModal = () => setShowCategoryModal(false);
+
+  const handleSelectCategory = (category) => {
+    setCurrentCategory(category);
+    setRankingData((prevData) => ({ ...prevData, category }));
+    handleCloseCategoryModal();
+    setShowResultModal(true);
   };
 
-  const handleClose = () => setShowModal(false);
+  const handleCloseResultModal = () => {
+    setShowResultModal(false);
+    setRankingData({
+      event: '',
+      category: '',
+      session: '',
+      position: '',
+      number: '',
+      fullName: '',
+      flag: '',
+      team: '',
+      time: ''
+    });
+  };
 
-  // Handle form changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setRankingData({ ...rankingData, [name]: value });
     setHasUnsavedChanges(true);
   };
 
-  // Handle adding or editing a ranking
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (onEdit) {
-      setRankings(rankings.map((ranking) => (ranking.id === currentRankingId ? { ...ranking, ...rankingData } : ranking)));
-    } else {
-      setRankings([...rankings, { ...rankingData, id: rankings.length + 1 }]);
-    }
-    handleClose();
+    setRankings([...rankings, { ...rankingData, id: rankings.length + 1 }]);
+    handleCloseResultModal();
     setHasUnsavedChanges(true);
   };
 
-  const handleRowClick = (ranking) => {
-    setCurrentRankingId(ranking.id); 
+  const handleSave = () => {
+    setChangesSaved(true);
+    setHasUnsavedChanges(false);
   };
 
-  const deleteRanking = () => {
-    if (currentRankingId) {
-      setRankings(rankings.filter((ranking) => ranking.id !== currentRankingId));
-      setCurrentRankingId(null);
+  const deleteResult = () => {
+    if (selectedResultId) {
+      setRankings(rankings.filter((ranking) => ranking.id !== selectedResultId));
+      setSelectedResultId(null);
+      setSelectedRanking(null);
       setHasUnsavedChanges(true);
     }
   };
 
-  // Handle saving changes
-  const handleSave = () => {
-    setChangesSaved(true);
-    setHasUnsavedChanges(false);
+  // Function to get unique rankings by event, category, and session
+  const getUniqueRankings = () => {
+    const uniqueRankings = [];
+    const seenCombinations = new Set();
+
+    rankings.forEach((ranking) => {
+      const combination = `${ranking.event}-${ranking.category}-${ranking.session}`;
+      if (!seenCombinations.has(combination)) {
+        seenCombinations.add(combination);
+        uniqueRankings.push({
+          id: ranking.id, // Include ID here
+          event: ranking.event,
+          category: ranking.category,
+          session: ranking.session
+        });
+      }
+    });
+
+    return uniqueRankings;
   };
 
   return (
@@ -83,108 +117,163 @@ const ResultAdmin = () => {
         </Alert>
       )}
 
-      {/* Search bar */}
-      <Form className="search-form mb-4" inline>
-        <Form.Control type="search" placeholder="Search..." className="mr-sm-2" />
-      </Form>
+      {/* Dropdown for Events */}
+      <Dropdown className="mb-4">
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+          {currentEvent && currentCategory ? `${currentEvent} - ${currentCategory}` : 'Select an Event'}
+        </Dropdown.Toggle>
 
-      {/* Table */}
-      <Table striped bordered hover className="text-center">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Racers and Team</th>
-            <th>Location</th>
-            <th>Points</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rankings.map((ranking) => (
-            <tr 
-              key={ranking.id} 
-              onClick={() => handleRowClick(ranking)} 
-              style={{ cursor: 'pointer', backgroundColor: ranking.id === currentRankingId ? '#f0f8ff' : '' }} 
+        <Dropdown.Menu>
+          {events.map((event, index) => (
+            <Dropdown.Item
+              key={index}
+              onClick={() => handleShowCategoryModal(event)}
             >
-              <td>{ranking.id}</td>
-              <td>{ranking.racers}</td>
-              <td>{ranking.location}</td>
-              <td>{ranking.points}</td>
-            </tr>
+              {event}
+            </Dropdown.Item>
           ))}
-        </tbody>
-      </Table>
+        </Dropdown.Menu>
+      </Dropdown>
 
-      {/* Buttons */}
-      <div className="button-group mt-4 d-flex justify-content-center">
-        <Button variant="primary" onClick={handleShowAdd}>Add</Button>
-        <Button 
-          variant="success" 
-          className="mx-2" 
-          disabled={!currentRankingId} 
-          onClick={handleShowEdit}>
-          Edit
-        </Button>
-        <Button 
-          variant="danger" 
-          disabled={!currentRankingId} 
-          onClick={deleteRanking}>
-          Delete
-        </Button>
-        <Button 
-          variant="info" 
-          className="mx-2" 
-          onClick={handleSave} 
-          disabled={!hasUnsavedChanges}>
-          Save
-        </Button>
-      </div>
-
-      {/* Add/Edit Ranking Modal */}
-      <Modal show={showModal} onHide={handleClose}>
+      {/* Category Modal */}
+      <Modal show={showCategoryModal} onHide={handleCloseCategoryModal}>
         <Modal.Header closeButton>
-          <Modal.Title>{onEdit ? 'Edit Ranking' : 'Add New Ranking'}</Modal.Title>
+          <Modal.Title>Select a Category</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {categories.map((category, index) => (
+            <Button
+              key={index}
+              variant="outline-primary"
+              className="m-1"
+              onClick={() => handleSelectCategory(category)}
+            >
+              {category}
+            </Button>
+          ))}
+        </Modal.Body>
+      </Modal>
+
+      {/* Result Modal */}
+      <Modal show={showResultModal} onHide={handleCloseResultModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Result for {rankingData.category}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleFormSubmit}>
-            <Form.Group controlId="formRacers" className="mb-3">
-              <Form.Label>Racers and Team</Form.Label>
-              <Form.Control 
-                type="text" 
-                name="racers" 
-                value={rankingData.racers} 
-                onChange={handleInputChange} 
-                required 
-              />
+            <Form.Group controlId="formSession" className="mb-3">
+              <Form.Label>Session</Form.Label>
+              <Form.Control type="text" name="session" value={rankingData.session} onChange={handleInputChange} required />
             </Form.Group>
 
-            <Form.Group controlId="formLocation" className="mb-3">
-              <Form.Label>Location</Form.Label>
-              <Form.Control 
-                type="text" 
-                name="location" 
-                value={rankingData.location} 
-                onChange={handleInputChange} 
-                required 
-              />
+            <Form.Group controlId="formPosition" className="mb-3">
+              <Form.Label>Position</Form.Label>
+              <Form.Control type="text" name="position" value={rankingData.position} onChange={handleInputChange} required />
             </Form.Group>
 
-            <Form.Group controlId="formPoints" className="mb-3">
-              <Form.Label>Points</Form.Label>
-              <Form.Control 
-                type="number" 
-                name="points" 
-                value={rankingData.points} 
-                onChange={handleInputChange} 
-                required 
-              />
+            <Form.Group controlId="formNumber" className="mb-3">
+              <Form.Label>Number</Form.Label>
+              <Form.Control type="text" name="number" value={rankingData.number} onChange={handleInputChange} required />
             </Form.Group>
 
-            <Button variant="primary" type="submit">
-              {onEdit ? 'Save Changes' : 'Add'}
-            </Button>
+            <Form.Group controlId="formFullName" className="mb-3">
+              <Form.Label>Full Name</Form.Label>
+              <Form.Control type="text" name="fullName" value={rankingData.fullName} onChange={handleInputChange} required />
+            </Form.Group>
+
+            <Form.Group controlId="formFlag" className="mb-3">
+              <Form.Label>Flag</Form.Label>
+              <Form.Control type="text" name="flag" value={rankingData.flag} onChange={handleInputChange} required />
+            </Form.Group>
+
+            <Form.Group controlId="formTeam" className="mb-3">
+              <Form.Label>Team</Form.Label>
+              <Form.Control type="text" name="team" value={rankingData.team} onChange={handleInputChange} required />
+            </Form.Group>
+
+            <Form.Group controlId="formTime" className="mb-3">
+              <Form.Label>Time</Form.Label>
+              <Form.Control type="text" name="time" value={rankingData.time} onChange={handleInputChange} required />
+            </Form.Group>
+
+            <Button variant="primary" type="submit">Add Result</Button>
           </Form>
         </Modal.Body>
       </Modal>
+
+      {/* First Table: Rankings Summary (Unique Entries) */}
+      {rankings.length > 0 && (
+        <Table striped bordered hover className="mt-4">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Event</th>
+              <th>Category</th>
+              <th>Session</th>
+            </tr>
+          </thead>
+          <tbody>
+            {getUniqueRankings().map((uniqueRanking, index) => (
+              <tr 
+                key={index}
+                onClick={() => {
+                  setSelectedResultId(uniqueRanking.id); // Use uniqueRanking.id for selected row
+                  setSelectedRanking(uniqueRanking); // Set selected ranking on row click
+                }}
+                style={{ backgroundColor: uniqueRanking === selectedRanking ? '#f0f8ff' : '' }} // Highlight selected row
+              >
+                <td>{uniqueRanking.id}</td>
+                <td>{uniqueRanking.event}</td>
+                <td>{uniqueRanking.category}</td>
+                <td>{uniqueRanking.session}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      )}
+
+      {/* Second Table: Riders based on selected ranking */}
+      {selectedRanking && (
+        <Table striped bordered hover className="mt-4">
+          <thead>
+            <tr>
+              <th>Position</th>
+              <th>Number</th>
+              <th>Full Name</th>
+              <th>Flag</th>
+              <th>Team</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rankings.filter(r => 
+              r.event === selectedRanking.event && 
+              r.category === selectedRanking.category && 
+              r.session === selectedRanking.session
+            ).map((rider) => (
+              <tr key={rider.id}>
+                <td>{rider.position}</td>
+                <td>{rider.number}</td>
+                <td>{rider.fullName}</td>
+                <td>{rider.flag}</td>
+                <td>{rider.team}</td>
+                <td>{rider.time}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      )}
+
+      {/* Buttons Group */}
+      <div className="button-group mt-4 d-flex justify-content-center">
+        <Button variant="primary" onClick={handleSave} disabled={!hasUnsavedChanges}>
+          Save
+        </Button>
+        
+        <Button variant="danger" className="mx-2" onClick={deleteResult} disabled={!selectedResultId}>
+          Delete
+        </Button>
+      </div>
     </div>
   );
 };

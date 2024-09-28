@@ -10,7 +10,7 @@ const eventsData = [{
     "sessions": [
         {
             "sessionName": "RAC",
-            "sessionDate": "2024-05-01T10:00:00.000Z",
+            "sessionDate": "2024-05-01T10:00:00.000Z", 
             "category": "MotoGP",
             "results": [
                 {
