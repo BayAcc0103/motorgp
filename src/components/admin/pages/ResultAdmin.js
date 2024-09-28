@@ -29,6 +29,7 @@ const ResultAdmin = () => {
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [selectedResultId, setSelectedResultId] = useState(null);
   const [selectedRanking, setSelectedRanking] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);  // New state to handle edit mode
 
   const handleShowCategoryModal = (event) => {
     setCurrentEvent(event);
@@ -58,6 +59,7 @@ const ResultAdmin = () => {
       team: '',
       time: ''
     });
+    setIsEdit(false);  // Reset edit mode
   };
 
   const handleInputChange = (e) => {
@@ -68,7 +70,13 @@ const ResultAdmin = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    setRankings([...rankings, { ...rankingData, id: rankings.length + 1 }]);
+    if (isEdit) {
+      setRankings(rankings.map((ranking) =>
+        ranking.id === selectedResultId ? { ...rankingData, id: selectedResultId } : ranking
+      ));
+    } else {
+      setRankings([...rankings, { ...rankingData, id: rankings.length + 1 }]);
+    }
     handleCloseResultModal();
     setHasUnsavedChanges(true);
   };
@@ -87,6 +95,18 @@ const ResultAdmin = () => {
     }
   };
 
+  // New function to handle editing a ranking
+  const handleEdit = () => {
+    if (selectedRanking) {
+      const rankingToEdit = rankings.find((ranking) => ranking.id === selectedResultId);
+      if (rankingToEdit) {
+        setRankingData(rankingToEdit);
+        setShowResultModal(true);
+        setIsEdit(true);
+      }
+    }
+  };
+
   // Function to get unique rankings by event, category, and session
   const getUniqueRankings = () => {
     const uniqueRankings = [];
@@ -97,7 +117,7 @@ const ResultAdmin = () => {
       if (!seenCombinations.has(combination)) {
         seenCombinations.add(combination);
         uniqueRankings.push({
-          id: ranking.id, // Include ID here
+          id: ranking.id,
           event: ranking.event,
           category: ranking.category,
           session: ranking.session
@@ -119,8 +139,8 @@ const ResultAdmin = () => {
 
       {/* Dropdown for Events */}
       <Dropdown className="mb-4">
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {currentEvent && currentCategory ? `${currentEvent} - ${currentCategory}` : 'Select an Event'}
+        <Dropdown.Toggle variant="info" id="dropdown-basic">
+          {currentEvent && currentCategory ? `${currentEvent} - ${currentCategory}` : 'Select an Event and Category'}
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
@@ -157,46 +177,88 @@ const ResultAdmin = () => {
       {/* Result Modal */}
       <Modal show={showResultModal} onHide={handleCloseResultModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Result for {rankingData.category}</Modal.Title>
+          <Modal.Title>{isEdit ? 'Edit' : 'Add'} Result for {rankingData.category}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleFormSubmit}>
             <Form.Group controlId="formSession" className="mb-3">
               <Form.Label>Session</Form.Label>
-              <Form.Control type="text" name="session" value={rankingData.session} onChange={handleInputChange} required />
+              <Form.Control 
+                type="text" 
+                name="session" 
+                value={rankingData.session} 
+                onChange={handleInputChange} 
+                required 
+              />
             </Form.Group>
 
             <Form.Group controlId="formPosition" className="mb-3">
               <Form.Label>Position</Form.Label>
-              <Form.Control type="text" name="position" value={rankingData.position} onChange={handleInputChange} required />
+              <Form.Control 
+                type="text" 
+                name="position" 
+                value={rankingData.position} 
+                onChange={handleInputChange} 
+                required 
+              />
             </Form.Group>
 
             <Form.Group controlId="formNumber" className="mb-3">
               <Form.Label>Number</Form.Label>
-              <Form.Control type="text" name="number" value={rankingData.number} onChange={handleInputChange} required />
+              <Form.Control 
+                type="text" 
+                name="number" 
+                value={rankingData.number} 
+                onChange={handleInputChange} 
+                required 
+              />
             </Form.Group>
 
             <Form.Group controlId="formFullName" className="mb-3">
               <Form.Label>Full Name</Form.Label>
-              <Form.Control type="text" name="fullName" value={rankingData.fullName} onChange={handleInputChange} required />
+              <Form.Control 
+                type="text" 
+                name="fullName" 
+                value={rankingData.fullName} 
+                onChange={handleInputChange} 
+                required 
+              />
             </Form.Group>
 
             <Form.Group controlId="formFlag" className="mb-3">
               <Form.Label>Flag</Form.Label>
-              <Form.Control type="text" name="flag" value={rankingData.flag} onChange={handleInputChange} required />
+              <Form.Control 
+                type="text" 
+                name="flag" 
+                value={rankingData.flag} 
+                onChange={handleInputChange} 
+                required 
+              />
             </Form.Group>
 
             <Form.Group controlId="formTeam" className="mb-3">
               <Form.Label>Team</Form.Label>
-              <Form.Control type="text" name="team" value={rankingData.team} onChange={handleInputChange} required />
+              <Form.Control 
+                type="text" 
+                name="team" 
+                value={rankingData.team} 
+                onChange={handleInputChange} 
+                required 
+              />
             </Form.Group>
 
             <Form.Group controlId="formTime" className="mb-3">
               <Form.Label>Time</Form.Label>
-              <Form.Control type="text" name="time" value={rankingData.time} onChange={handleInputChange} required />
+              <Form.Control 
+                type="text" 
+                name="time" 
+                value={rankingData.time} 
+                onChange={handleInputChange} 
+                required 
+              />
             </Form.Group>
 
-            <Button variant="primary" type="submit">Add Result</Button>
+            <Button variant="primary" type="submit">{isEdit ? 'Save Changes' : 'Add Result'}</Button>
           </Form>
         </Modal.Body>
       </Modal>
@@ -217,10 +279,10 @@ const ResultAdmin = () => {
               <tr 
                 key={index}
                 onClick={() => {
-                  setSelectedResultId(uniqueRanking.id); // Use uniqueRanking.id for selected row
-                  setSelectedRanking(uniqueRanking); // Set selected ranking on row click
+                  setSelectedResultId(uniqueRanking.id); 
+                  setSelectedRanking(uniqueRanking);
                 }}
-                style={{ backgroundColor: uniqueRanking === selectedRanking ? '#f0f8ff' : '' }} // Highlight selected row
+                style={{ backgroundColor: uniqueRanking === selectedRanking ? '#f0f8ff' : '' }} 
               >
                 <td>{uniqueRanking.id}</td>
                 <td>{uniqueRanking.event}</td>
@@ -272,6 +334,10 @@ const ResultAdmin = () => {
         
         <Button variant="danger" className="mx-2" onClick={deleteResult} disabled={!selectedResultId}>
           Delete
+        </Button>
+
+        <Button variant="success" onClick={handleEdit} disabled={!selectedResultId}>
+          Edit
         </Button>
       </div>
     </div>
