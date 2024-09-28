@@ -49,9 +49,9 @@ const TeamGrid = () => {
   return (
     <>
       <div className="mb-4">
-        <div className="container-fluid team__container">
+      <div className="container-fluid team__container">
           <div className="team__header-container">
-            <h1 className="team__title">Teams</h1>
+            <h1 className="team__title">Team</h1>
           </div>
         </div>
       </div>

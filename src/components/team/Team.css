@@ -1,13 +1,18 @@
-.team__container {
-  text-align: center;
-  padding: 20px 0;
+.team__header-container {
+  background-color: #000000e8;
+  background-image: radial-gradient(96.8% 493.26% at 100% 93.41%, rgba(201, 3, 0, 0.23) 0, rgba(148, 4, 1, 0) 100%);
+  padding: 1.2rem 1.6rem 2.2rem;
+  box-shadow: 0 .4rem .8rem 0 rgba(0, 0, 0, .15);
+  border-radius: 0 0 15px 15px;
 }
 
 .team__title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #333;
+  color: #fff;
+  font-size: 3.2rem;
+  text-transform: capitalize;
+  font-family: "Bangers", system-ui;
 }
+
 
 .team-grid {
   display: flex;

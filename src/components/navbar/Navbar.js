@@ -90,7 +90,7 @@ const Navbar = () => {
           <div class="d-flex gap-2 justify-content-center custom-gap">
             <Link to="./admin">
               <button class="btn btn-outline-danger text-white" type="login" style={{ fontFamily: '"Playwrite DE Grund", cursive' }}>
-                <span class="bi-person-circle" ></span>Login</button>
+                <span class="bi-person-circle" ></span>Admin</button>
             </Link>
             <img src={logo1} alt='racing-helmet'></img>
           </div>

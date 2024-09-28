@@ -49,9 +49,9 @@ const RiderGrid = () => {
   return (
     <>
       <div className="mb-4">
-        <div className="container-fluid team__container">
-          <div className="team__header-container">
-            <h1 className="team__title">Riders</h1>
+        <div className="container-fluid rider__container">
+          <div className="rider__header-container">
+            <h1 className="rider__title">Rider</h1>
           </div>
         </div>
       </div>
