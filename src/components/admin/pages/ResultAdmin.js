@@ -1,176 +1,162 @@
 import React, { useState } from 'react';
-import { Button, Form, Modal, Alert, Dropdown, Table } from 'react-bootstrap';
-import './Account.css';
+import { Button, Modal, Dropdown, Table, Alert, Form } from 'react-bootstrap';
 
 const ResultAdmin = () => {
-  const [events, setEvents] = useState(['Event A', 'Event B', 'Event C']);
-  const [categories, setCategories] = useState(['MotoGP', 'Moto2', 'Moto3']);
+  const [events] = useState(['Event A', 'Event B', 'Event C']);
+  const [categories] = useState(['MotoGP', 'Moto2', 'Moto3']);
 
   const [currentEvent, setCurrentEvent] = useState(null);
   const [currentCategory, setCurrentCategory] = useState(null);
-  const [currentSession, setCurrentSession] = useState(null);
-
+  
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [showSessionModal, setShowSessionModal] = useState(false);
-  const [showResultModal, setShowResultModal] = useState(false);
+  const [showRiderModal, setShowRiderModal] = useState(false);
+  const [showRiderEditModal, setShowRiderEditModal] = useState(false);
+  const [showSaveAlert, setShowSaveAlert] = useState(false);
 
-  const [rankingData, setRankingData] = useState({
+  const [sessionData, setSessionData] = useState({
     event: '',
     category: '',
-    session: '',
+    session: ''
+  });
+
+  const [sessions, setSessions] = useState([]);
+  const [riderData, setRiderData] = useState([]);
+  const [selectedSession, setSelectedSession] = useState(null);
+  const [riderFormData, setRiderFormData] = useState({
+    riderID: '',
     position: '',
+    time: '',
     number: '',
     fullName: '',
     flag: '',
-    team: '',
-    time: ''
+    team: ''
   });
 
-  const [rankings, setRankings] = useState([]);
-  const [changesSaved, setChangesSaved] = useState(false);
-  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-  const [selectedResultId, setSelectedResultId] = useState(null);
-  const [selectedRanking, setSelectedRanking] = useState(null);
-  const [isEdit, setIsEdit] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isEditingRider, setIsEditingRider] = useState(false);
+  const [selectedRider, setSelectedRider] = useState(null);
 
-  // Open modal for selecting category
   const handleShowCategoryModal = (event) => {
     setCurrentEvent(event);
-    setRankingData((prevData) => ({ ...prevData, event }));
     setShowCategoryModal(true);
   };
 
-  // Close category modal
   const handleCloseCategoryModal = () => setShowCategoryModal(false);
 
-  // Select category and open session input modal
   const handleSelectCategory = (category) => {
     setCurrentCategory(category);
-    setRankingData((prevData) => ({ ...prevData, category }));
-    handleCloseCategoryModal();
-    setShowSessionModal(true);
+    setSessionData({ event: currentEvent, category });
+    setShowCategoryModal(false);
+    setShowSessionModal(true); // Show session modal after selecting category
   };
 
-  // Close session modal
-  const handleCloseSessionModal = () => setShowSessionModal(false);
-
-  // Input session and update rankings
-  const handleSessionSubmit = (e) => {
-    e.preventDefault();
-    
-    setRankingData((prevData) => ({
-      ...prevData,
-      session: rankingData.session // Ensure session is updated in rankingData
-    }));
-
-    // Update current session and clear session input
-    setCurrentSession(rankingData.session);
-    setRankingData((prevData) => ({ ...prevData, session: '' }));
-    
-    handleCloseSessionModal(); // Close the session modal
+  const handleSessionInputChange = (e) => {
+    const { name, value } = e.target;
+    setSessionData({ ...sessionData, [name]: value });
   };
 
-  // Close result modal
-  const handleCloseResultModal = () => {
-    setShowResultModal(false);
-    setRankingData({
-      event: '',
-      category: '',
-      session: '',
+  const handleSessionSubmit = () => {
+    if (!isEditing) {
+      const isSessionExist = sessions.some(
+        (session) =>
+          session.event === sessionData.event &&
+          session.category === sessionData.category &&
+          session.session === sessionData.session
+      );
+
+      if (!isSessionExist) {
+        setSessions([...sessions, { ...sessionData, id: sessions.length + 1 }]);
+      }
+    } else {
+      const updatedSessions = sessions.map((session) =>
+        session.id === selectedSession.id ? { ...sessionData, id: selectedSession.id } : session
+      );
+      setSessions(updatedSessions);
+      setIsEditing(false);
+      setSelectedSession(null);
+    }
+
+    setShowSessionModal(false);
+  };
+
+  const handleEditSession = () => {
+    if (selectedSession) {
+      setIsEditing(true);
+      setSessionData(selectedSession);
+      setShowSessionModal(true);
+    }
+  };
+
+  const handleDeleteSession = () => {
+    if (selectedSession) {
+      const updatedSessions = sessions.filter((session) => session.id !== selectedSession.id);
+      setSessions(updatedSessions);
+      setSelectedSession(null);
+    }
+  };
+
+  const handleClearSelection = () => {
+    setSelectedSession(null);
+    setIsEditing(false);
+  };
+
+  const handleSave = () => {
+    setShowSaveAlert(true);
+    setTimeout(() => {
+      setShowSaveAlert(false);
+    }, 3000);
+  };
+
+  // Handle adding rider information
+  const handleRiderInputChange = (e) => {
+    const { name, value } = e.target;
+    setRiderFormData({ ...riderFormData, [name]: value });
+  };
+
+  const handleAddRider = () => {
+    if (isEditingRider) {
+      // Update existing rider
+      const updatedRiderData = riderData.map((rider) =>
+        rider.id === selectedRider.id ? { ...riderFormData, id: selectedRider.id } : rider
+      );
+      setRiderData(updatedRiderData);
+      setIsEditingRider(false);
+      setSelectedRider(null);
+    } else {
+      // Add new rider
+      setRiderData([...riderData, { ...riderFormData, id: riderData.length + 1, sessionId: selectedSession.id }]);
+    }
+    setShowRiderModal(false);
+    setRiderFormData({
+      riderID: '',
       position: '',
+      time: '',
       number: '',
       fullName: '',
       flag: '',
-      team: '',
-      time: ''
+      team: ''
     });
-    setIsEdit(false);
   };
 
-  // Handle changes in the input form
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setRankingData({ ...rankingData, [name]: value });
-    setHasUnsavedChanges(true);
-  };
-
-  // Handle submission of the result form
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    
-    const newRanking = { ...rankingData, id: rankings.length + 1 };
-    
-    if (isEdit) {
-      setRankings(rankings.map(ranking => 
-        ranking.id === selectedResultId ? newRanking : ranking
-      ));
-    } else {
-      setRankings([...rankings, newRanking]);
+  const handleEditRider = () => {
+    if (selectedRider) {
+      setIsEditingRider(true);
+      setRiderFormData(selectedRider);
+      setShowRiderModal(true);
     }
-    
-    handleCloseResultModal();
-    setHasUnsavedChanges(true); // Mark as having unsaved changes
-  };
-
-  // Save changes
-  const handleSave = () => {
-    setChangesSaved(true);
-    setHasUnsavedChanges(false);
-  };
-
-  // Delete result
-  const deleteResult = () => {
-    if (selectedResultId) {
-      setRankings(rankings.filter((ranking) => ranking.id !== selectedResultId));
-      setSelectedResultId(null);
-      setSelectedRanking(null);
-      setHasUnsavedChanges(true);
-    }
-  };
-
-  // Edit result
-  const handleEdit = () => {
-    if (selectedRanking) {
-      const rankingToEdit = rankings.find((ranking) => ranking.id === selectedResultId);
-      if (rankingToEdit) {
-        setRankingData(rankingToEdit);
-        setShowResultModal(true);
-        setIsEdit(true);
-      }
-    }
-  };
-
-  // Get unique rankings
-  const getUniqueRankings = () => {
-    const uniqueRankings = [];
-    const seenCombinations = new Set();
-
-    rankings.forEach((ranking) => {
-      const combination = `${ranking.event}-${ranking.category}-${ranking.session}`;
-      if (!seenCombinations.has(combination)) {
-        seenCombinations.add(combination);
-        uniqueRankings.push({
-          id: ranking.id,
-          event: ranking.event,
-          category: ranking.category,
-          session: ranking.session
-        });
-      }
-    });
-
-    return uniqueRankings;
   };
 
   return (
     <div className="account-container d-flex flex-column justify-content-center align-items-center min-vh-100">
-      {/* Alert for successful save */}
-      {changesSaved && (
-        <Alert variant="success" onClose={() => setChangesSaved(false)} dismissible>
-          Changes saved successfully!
+      {/* Save Alert */}
+      {showSaveAlert && (
+        <Alert variant="success" className="w-100 text-center">
+          Save successful!
         </Alert>
       )}
 
-      {/* Dropdown for selecting Event and Category */}
+      {/* Dropdown for Events */}
       <Dropdown className="mb-4">
         <Dropdown.Toggle variant="info" id="dropdown-basic">
           {currentEvent && currentCategory ? `${currentEvent} - ${currentCategory}` : 'Select an Event and Category'}
@@ -185,206 +171,247 @@ const ResultAdmin = () => {
         </Dropdown.Menu>
       </Dropdown>
 
-      {/* Modal for selecting Category */}
+      {/* Category Modal */}
       <Modal show={showCategoryModal} onHide={handleCloseCategoryModal}>
         <Modal.Header closeButton>
           <Modal.Title>Select a Category</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {categories.map((category, index) => (
-            <Button key={index} variant="outline-primary" className="m-1" onClick={() => handleSelectCategory(category)}>
+            <Button
+              key={index}
+              variant="outline-primary"
+              className="m-1"
+              onClick={() => handleSelectCategory(category)}
+            >
               {category}
             </Button>
           ))}
         </Modal.Body>
       </Modal>
 
-      {/* Modal for entering Session */}
-      <Modal show={showSessionModal} onHide={handleCloseSessionModal}>
+      {/* Session Modal */}
+      <Modal show={showSessionModal} onHide={() => setShowSessionModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Enter Session</Modal.Title>
+          <Modal.Title>{isEditing ? 'Edit Session' : 'Enter Session'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSessionSubmit}>
-            <Form.Group controlId="formSession" className="mb-3">
-              <Form.Label>Session</Form.Label>
-              <Form.Control
-                type="text"
-                name="session"
-                value={rankingData.session}
-                onChange={handleInputChange}
-                required
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit">Submit Session</Button>
-          </Form>
+          <input
+            type="text"
+            placeholder="Enter Session"
+            name="session"
+            value={sessionData.session}
+            onChange={handleSessionInputChange}
+            className="form-control"
+          />
         </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleSessionSubmit}>
+            {isEditing ? 'Save Changes' : 'Save Session'}
+          </Button>
+        </Modal.Footer>
       </Modal>
 
-      {/* Table 1: Display Event, Category, Session */}
-      {currentSession && (
-        <Table striped bordered hover className="mt-4">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Event</th>
-              <th>Category</th>
-              <th>Session</th>
-            </tr>
-          </thead>
-          <tbody>
-            {getUniqueRankings().map((uniqueRanking, index) => (
-              <tr
-                key={index}
-                onClick={() => {
-                  setSelectedResultId(uniqueRanking.id);
-                  setSelectedRanking(uniqueRanking);
-                }}
-                style={{ backgroundColor: uniqueRanking === selectedRanking ? '#f0f8ff' : '' }}
-              >
-                <td>{uniqueRanking.id}</td>
-                <td>{uniqueRanking.event}</td>
-                <td>{uniqueRanking.category}</td>
-                <td>{uniqueRanking.session}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      )}
-
-      {/* Button to Add Result */}
-      {currentSession && (
-        <Button variant="primary" className="mt-3" onClick={() => setShowResultModal(true)}>
-          Add Result
-        </Button>
-      )}
-
-      {/* Modal for entering Result */}
-      <Modal show={showResultModal} onHide={handleCloseResultModal}>
+      {/* Rider Modal */}
+      <Modal show={showRiderModal} onHide={() => setShowRiderModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>{isEdit ? 'Edit' : 'Add'} Result for {rankingData.category}</Modal.Title>
+          <Modal.Title>{isEditingRider ? 'Edit Rider Information' : 'Add Rider Information'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleFormSubmit}>
-            <Form.Group controlId="formPosition" className="mb-3">
+          <Form>
+            <Form.Group>
+              <Form.Label>RiderID</Form.Label>
+              <Form.Control
+                type="text"
+                name="riderID"
+                value={riderFormData.riderID}
+                onChange={handleRiderInputChange}
+              />
+            </Form.Group>
+            <Form.Group>
               <Form.Label>Position</Form.Label>
               <Form.Control
                 type="text"
                 name="position"
-                value={rankingData.position}
-                onChange={handleInputChange}
-                required
+                value={riderFormData.position}
+                onChange={handleRiderInputChange}
               />
             </Form.Group>
-
-            <Form.Group controlId="formNumber" className="mb-3">
-              <Form.Label>Number</Form.Label>
-              <Form.Control
-                type="text"
-                name="number"
-                value={rankingData.number}
-                onChange={handleInputChange}
-                required
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formFullName" className="mb-3">
-              <Form.Label>Full Name</Form.Label>
-              <Form.Control
-                type="text"
-                name="fullName"
-                value={rankingData.fullName}
-                onChange={handleInputChange}
-                required
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formFlag" className="mb-3">
-              <Form.Label>Flag</Form.Label>
-              <Form.Control
-                type="text"
-                name="flag"
-                value={rankingData.flag}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formTeam" className="mb-3">
-              <Form.Label>Team</Form.Label>
-              <Form.Control
-                type="text"
-                name="team"
-                value={rankingData.team}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formTime" className="mb-3">
+            <Form.Group>
               <Form.Label>Time</Form.Label>
               <Form.Control
                 type="text"
                 name="time"
-                value={rankingData.time}
-                onChange={handleInputChange}
+                value={riderFormData.time}
+                onChange={handleRiderInputChange}
               />
             </Form.Group>
-
-            <Button variant="primary" type="submit">
-              {isEdit ? 'Update Result' : 'Add Result'}
-            </Button>
+            <Form.Group>
+              <Form.Label>Number</Form.Label>
+              <Form.Control
+                type="text"
+                name="number"
+                value={riderFormData.number}
+                onChange={handleRiderInputChange}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Full Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="fullName"
+                value={riderFormData.fullName}
+                onChange={handleRiderInputChange}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Flag</Form.Label>
+              <Form.Control
+                type="text"
+                name="flag"
+                value={riderFormData.flag}
+                onChange={handleRiderInputChange}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Team</Form.Label>
+              <Form.Control
+                type="text"
+                name="team"
+                value={riderFormData.team}
+                onChange={handleRiderInputChange}
+              />
+            </Form.Group>
           </Form>
         </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleAddRider}>
+            {isEditingRider ? 'Save Changes' : 'Add Rider'}
+          </Button>
+        </Modal.Footer>
       </Modal>
 
-      {/* Table 2: Display Results */}
-      {rankings.length > 0 && (
-        <Table striped bordered hover className="mt-4">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Position</th>
-              <th>Number</th>
-              <th>Full Name</th>
-              <th>Flag</th>
-              <th>Team</th>
-              <th>Time</th>
-              <th>Actions</th>
+      {/* Sessions Table */}
+      <Table striped bordered hover className="mt-4">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Event</th>
+            <th>Category</th>
+            <th>Session</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sessions.map((session) => (
+            <tr
+              key={session.id}
+              onClick={() => setSelectedSession(session)}
+              style={{ backgroundColor: session === selectedSession ? '#f0f8ff' : '' }}
+            >
+              <td>{session.id}</td>
+              <td>{session.event}</td>
+              <td>{session.category}</td>
+              <td>{session.session}</td>
             </tr>
-          </thead>
-          <tbody>
-            {rankings.map((ranking) => (
-              <tr key={ranking.id}>
-                <td>{ranking.id}</td>
-                <td>{ranking.position}</td>
-                <td>{ranking.number}</td>
-                <td>{ranking.fullName}</td>
-                <td>{ranking.flag}</td>
-                <td>{ranking.team}</td>
-                <td>{ranking.time}</td>
-                <td>
-                  <Button variant="warning" onClick={() => {
-                    setSelectedResultId(ranking.id);
-                    setSelectedRanking(ranking);
-                    setIsEdit(true);
-                    setRankingData(ranking);
-                    setShowResultModal(true);
-                  }}>
-                    Edit
-                  </Button>
-                  <Button variant="danger" onClick={deleteResult} className="ml-1">
-                    Delete
-                  </Button>
-                </td>
+          ))}
+        </tbody>
+      </Table>
+
+      {/* Rider Data Table */}
+      <Table striped bordered hover className="mt-4">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>RiderID</th>
+            <th>Position</th>
+            <th>Time</th>
+            <th>Number</th>
+            <th>Full Name</th>
+            <th>Flag</th>
+            <th>Team</th>
+          </tr>
+        </thead>
+        <tbody>
+          {riderData
+            .filter((rider) => rider.sessionId === selectedSession?.id)
+            .map((rider) => (
+              <tr
+                key={rider.id}
+                onClick={() => {
+                  setSelectedRider(rider);
+                  setIsEditingRider(true);
+                }}
+              >
+                <td>{rider.id}</td>
+                <td>{rider.riderID}</td>
+                <td>{rider.position}</td>
+                <td>{rider.time}</td>
+                <td>{rider.number}</td>
+                <td>{rider.fullName}</td>
+                <td>{rider.flag}</td>
+                <td>{rider.team}</td>
               </tr>
             ))}
-          </tbody>
-        </Table>
-      )}
+        </tbody>
+      </Table>
 
-      {/* Save Changes Button */}
-      <Button variant="success" className="mt-3" onClick={handleSave} disabled={!hasUnsavedChanges}>
-        Save Changes
-      </Button>
+      {/* Action Buttons */}
+      <div className="mt-3">
+        <Button
+          variant="primary"
+          className="m-2"
+          onClick={handleSave}
+        >
+          Save
+        </Button>
+        <Button
+          variant="secondary"
+          className="m-2"
+          onClick={() => {
+            setShowRiderModal(true);
+            setIsEditingRider(false);
+          }}
+          disabled={!selectedSession}
+        >
+          Add
+        </Button>
+      </div>
+
+      {/* Other Action Buttons */}
+      <div className="mt-3">
+        <Button
+          variant="warning"
+          className="m-2"
+          onClick={handleEditSession}
+          disabled={!selectedSession}
+        >
+          Edit Session
+        </Button>
+        <Button
+          variant="danger"
+          className="m-2"
+          onClick={handleDeleteSession}
+          disabled={!selectedSession}
+        >
+          Delete Session
+        </Button>
+        <Button
+          variant="secondary"
+          className="m-2"
+          onClick={handleClearSelection}
+          disabled={!selectedSession}
+        >
+          Clear Selection
+        </Button>
+        <Button
+          variant="warning"
+          className="m-2"
+          onClick={handleEditRider}
+          disabled={!selectedRider}
+        >
+          Edit Rider
+        </Button>
+      </div>
     </div>
   );
 };
