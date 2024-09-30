@@ -51,8 +51,15 @@ const SlideBar = ({ isOpen, onClose }) => {
                         </div>
 
                         {/* Rider Section */}
-                        <div className="list-group list-group-flush">
+                        {/* <div className="list-group list-group-flush">
                             <Link to="/admin/racersadmin" className="list-group-item py-2 my-1 custom-sidebar-item">
+                                <img src={helmet} alt="helmet logo" style={{ width: '27px' }} />
+                                <span className="fs-5 ms-2">Rider</span>
+                            </Link>
+                        </div> */}
+
+                        <div className="list-group list-group-flush">
+                            <Link to="/admin/ridersadmin" className="list-group-item py-2 my-1 custom-sidebar-item">
                                 <img src={helmet} alt="helmet logo" style={{ width: '27px' }} />
                                 <span className="fs-5 ms-2">Rider</span>
                             </Link>
