@@ -1,26 +1,29 @@
-import React, { useState } from 'react';
-import { Button, Modal, Dropdown, Table, Alert, Form } from 'react-bootstrap';
+
+import React, { useState, useEffect } from 'react'; // Importing React and hooks
+import { Button, Modal, Dropdown, Table, Alert, Form } from 'react-bootstrap'; // Importing components from react-bootstrap
 
 const ResultAdmin = () => {
+  // State variables for events and categories
   const [events] = useState(['Event A', 'Event B', 'Event C']);
   const [categories] = useState(['MotoGP', 'Moto2', 'Moto3']);
 
+  // State for current selections and modal visibility
   const [currentEvent, setCurrentEvent] = useState(null);
   const [currentCategory, setCurrentCategory] = useState(null);
-  
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [showSessionModal, setShowSessionModal] = useState(false);
   const [showRiderModal, setShowRiderModal] = useState(false);
-  const [showRiderEditModal, setShowRiderEditModal] = useState(false);
   const [showSaveAlert, setShowSaveAlert] = useState(false);
 
+  // State for session data and sessions list
   const [sessionData, setSessionData] = useState({
     event: '',
     category: '',
     session: ''
   });
-
   const [sessions, setSessions] = useState([]);
+
+  // State for rider data and selected riders
   const [riderData, setRiderData] = useState([]);
   const [selectedSession, setSelectedSession] = useState(null);
   const [riderFormData, setRiderFormData] = useState({
@@ -33,17 +36,22 @@ const ResultAdmin = () => {
     team: ''
   });
 
+  // State for editing flags and selected riders
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingRider, setIsEditingRider] = useState(false);
   const [selectedRider, setSelectedRider] = useState(null);
+  const [selectedRiders, setSelectedRiders] = useState([]);
 
+  // Function to show category modal
   const handleShowCategoryModal = (event) => {
     setCurrentEvent(event);
     setShowCategoryModal(true);
   };
 
+  // Function to close category modal
   const handleCloseCategoryModal = () => setShowCategoryModal(false);
 
+  // Function to handle category selection
   const handleSelectCategory = (category) => {
     setCurrentCategory(category);
     setSessionData({ event: currentEvent, category });
@@ -51,11 +59,13 @@ const ResultAdmin = () => {
     setShowSessionModal(true); // Show session modal after selecting category
   };
 
+  // Function to handle session input change
   const handleSessionInputChange = (e) => {
     const { name, value } = e.target;
     setSessionData({ ...sessionData, [name]: value });
   };
 
+  // Function to handle session submission
   const handleSessionSubmit = () => {
     if (!isEditing) {
       const isSessionExist = sessions.some(
@@ -80,6 +90,7 @@ const ResultAdmin = () => {
     setShowSessionModal(false);
   };
 
+  // Function to handle editing of a session
   const handleEditSession = () => {
     if (selectedSession) {
       setIsEditing(true);
@@ -88,6 +99,7 @@ const ResultAdmin = () => {
     }
   };
 
+  // Function to delete a selected session
   const handleDeleteSession = () => {
     if (selectedSession) {
       const updatedSessions = sessions.filter((session) => session.id !== selectedSession.id);
@@ -96,11 +108,13 @@ const ResultAdmin = () => {
     }
   };
 
+  // Function to clear selection of session
   const handleClearSelection = () => {
     setSelectedSession(null);
     setIsEditing(false);
   };
 
+  // Function to handle save action
   const handleSave = () => {
     setShowSaveAlert(true);
     setTimeout(() => {
@@ -108,12 +122,13 @@ const ResultAdmin = () => {
     }, 3000);
   };
 
-  // Handle adding rider information
+  // Function to handle rider input change
   const handleRiderInputChange = (e) => {
     const { name, value } = e.target;
     setRiderFormData({ ...riderFormData, [name]: value });
   };
 
+  // Function to add or update rider information
   const handleAddRider = () => {
     if (isEditingRider) {
       // Update existing rider
@@ -139,6 +154,7 @@ const ResultAdmin = () => {
     });
   };
 
+  // Function to handle editing of rider
   const handleEditRider = () => {
     if (selectedRider) {
       setIsEditingRider(true);
@@ -147,6 +163,24 @@ const ResultAdmin = () => {
     }
   };
 
+  // Function to handle selection of riders
+  const handleSelectRider = (id) => {
+    setSelectedRiders((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((eventId) => eventId !== id)
+        : [...prevSelected, id]
+    );
+  };
+
+  // Function to delete selected riders
+  const deleteSelectedRiders = () => {
+    setRiders(riders.map(rider =>
+      selectedRiders.includes(rider.id) ? { ...rider, isDeleted: true } : rider
+    ));
+    setSelectedRiders([]); // Clear the selected riders after deletion
+  };
+
+  // Rendering the component
   return (
     <div className="account-container d-flex flex-column justify-content-center align-items-center min-vh-100">
       {/* Save Alert */}
@@ -343,6 +377,13 @@ const ResultAdmin = () => {
                 }}
                 style ={{cursor: "pointer" , backgroundColor: rider === selectedRider ? '#f0f8ff' : '' }}
               >
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selectedRiders.includes(rider.id)}
+                  onChange={() => handleSelectRider(rider.id)}
+                />
+              </td>
                 <td>{rider.id}</td>
                 <td>{rider.riderID}</td>
                 <td>{rider.position}</td>
@@ -397,6 +438,14 @@ const ResultAdmin = () => {
           Delete Session
         </Button>
         <Button
+          variant="danger"
+          className="m-2"
+          onClick={deleteSelectedRiders}
+          disabled={selectedRiders.length === 0}
+        >
+          Delete Result
+        </Button>
+        <Button
           variant="secondary"
           className="m-2"
           onClick={handleClearSelection}
@@ -417,4 +466,4 @@ const ResultAdmin = () => {
   );
 };
 
-export default ResultAdmin;
+export default ResultAdmin; // Exporting the ResultAdmin component

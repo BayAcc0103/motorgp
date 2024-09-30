@@ -24,8 +24,8 @@ const CalendarAdmin = () => {
     season_id: '',
     circuit_name: '',
     country_name: '',
-    circuit_img: '', // New image fields
-    sponsored_img: '',
+    circuit_img: '', 
+    sponsored_img: '', // New image fields
     circuit_track_img: '',
     flag_img: '',
   });
@@ -134,7 +134,7 @@ const CalendarAdmin = () => {
     setHasUnsavedChanges(true); // Mark as unsaved changes
   };
 
-  const handleRowClick = (event) => {
+  const   handleRowClick = (event) => {
     setCurrentEventId(event.id);
   };
 
@@ -158,7 +158,6 @@ const CalendarAdmin = () => {
     try {
       // Loop through all events and send updates to the backend
       for (const event of events) {
-        console.log(JSON.stringify(event));
         if (event.isNew) {
           // If the event is new, POST it to the backend
           await fetch('http://localhost:3002/api/calendar', {
@@ -198,10 +197,10 @@ const CalendarAdmin = () => {
   //xử lí ảnh 
   const [open, setOpen] = useState(false);
   const [currentImageSet, setCurrentImageSet] = useState([]);
-  const [selectedImage1, setSelectedImage1] = useState(null);
-  const [selectedImage2, setSelectedImage2] = useState(null);
-  const [selectedImage3, setSelectedImage3] = useState(null);
-  const [selectedImage4, setSelectedImage4] = useState(null);
+  const [selectedImage1] = useState(null);
+  const [selectedImage2] = useState(null);
+  const [selectedImage3] = useState(null);
+  const [selectedImage4] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(null);
 
 
@@ -265,7 +264,6 @@ const CalendarAdmin = () => {
     } else if (currentImageIndex === 3) {
       updatedEventData.sponsored_img = image; // Save image4
     }
-    console.log(updatedEventData);
     setEventData(updatedEventData);
     handleClose1();
   };
@@ -302,7 +300,7 @@ const CalendarAdmin = () => {
                     width: "100%",
                     height: "auto",
                     cursor: "pointer",
-                    border: (currentImageIndex === 0 && selectedImage1 === image) || (currentImageIndex === 1 && selectedImage2 === image) || (currentImageIndex === 2 && selectedImage3 === image) || (currentImageIndex === 3 && selectedImage4 === image) ? "2px solid blue" : "none",
+                    // border: (currentImageIndex === 0 && selectedImage1 === image) || (currentImageIndex === 1 && selectedImage2 === image) || (currentImageIndex === 2 && selectedImage3 === image) || (currentImageIndex === 3 && selectedImage4 === image) ? "2px solid blue" : "none",
                   }}
                   onClick={() => handleImageSelect(image)}
                 />
