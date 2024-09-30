@@ -10,7 +10,7 @@ import Rider from './components/rider/Rider';
 import Team from './components/team/Team';
 import Admin from './components/admin/admin';
 import Account from './components/admin/pages/Account';
-import RacersAdmin from './components/admin/pages/RacerAdmin';
+import RidersAdmin from './components/admin/pages/RiderAdmin';
 import TeamsAdmin from './components/admin/pages/TeamAdmin';
 import CalendarAdmin from './components/admin/pages/CalendarAdmin';
 import ResultAdmin from './components/admin/pages/ResultAdmin';
@@ -33,7 +33,7 @@ const App = () => {
         {/* Admin Route with Nested Routes */}
         <Route path="/admin" element={<Admin />}>
           <Route path="account" element={<Account />} />
-          <Route path="racersadmin" element={<RacersAdmin />} />
+          <Route path="ridersadmin" element={<RidersAdmin />} />
           <Route path="teamsadmin" element={<TeamsAdmin />} />
           <Route path="calendaradmin" element={<CalendarAdmin />} />
           <Route path="resultadmin" element={<ResultAdmin />} />
