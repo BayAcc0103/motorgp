@@ -24,6 +24,7 @@ const ResultAdmin = () => {
   const [sessions, setSessions] = useState([]);
 
   // State for rider data and selected riders
+  const [riders, setRiders] = useState([]);
   const [riderData, setRiderData] = useState([]);
   const [selectedSession, setSelectedSession] = useState(null);
   const [riderFormData, setRiderFormData] = useState({
