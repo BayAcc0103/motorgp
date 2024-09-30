@@ -306,7 +306,7 @@ const ResultAdmin = () => {
             <tr
               key={session.id}
               onClick={() => setSelectedSession(session)}
-              style={{ backgroundColor: session === selectedSession ? '#f0f8ff' : '' }}
+              style={{cursor: "pointer", backgroundColor: session === selectedSession ? '#f0f8ff' : '' }}
             >
               <td>{session.id}</td>
               <td>{session.event}</td>
@@ -341,6 +341,7 @@ const ResultAdmin = () => {
                   setSelectedRider(rider);
                   setIsEditingRider(true);
                 }}
+                style ={{cursor: "pointer" , backgroundColor: rider === selectedRider ? '#f0f8ff' : '' }}
               >
                 <td>{rider.id}</td>
                 <td>{rider.riderID}</td>
