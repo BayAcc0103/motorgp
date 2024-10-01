@@ -13,6 +13,7 @@ import Account from './components/admin/pages/Account';
 import RidersAdmin from './components/admin/pages/RiderAdmin';
 import TeamsAdmin from './components/admin/pages/TeamAdmin';
 import CalendarAdmin from './components/admin/pages/CalendarAdmin';
+import Schedule from './components/admin/pages/Schedule';
 import ResultAdmin from './components/admin/pages/ResultAdmin';
 import StandingAdmin from './components/admin/pages/StandingAdmin';
 import Footer from './components/footer/Footer';
@@ -36,6 +37,7 @@ const App = () => {
           <Route path="ridersadmin" element={<RidersAdmin />} />
           <Route path="teamsadmin" element={<TeamsAdmin />} />
           <Route path="calendaradmin" element={<CalendarAdmin />} />
+          <Route path="schedule" element={<Schedule />} />
           <Route path="resultadmin" element={<ResultAdmin />} />
           <Route path="standingadmin" element={<StandingAdmin />} />
         </Route>

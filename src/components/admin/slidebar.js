@@ -50,6 +50,14 @@ const SlideBar = ({ isOpen, onClose }) => {
                             </Link>
                         </div>
 
+                        {/* Schedule Section */}
+                        <div className="list-group list-group-flush">
+                            <Link to="/admin/schedule" className="list-group-item py-2 my-1 custom-sidebar-item">
+                                <img src={calend} alt="calendar logo" style={{ width: '30px' }} />
+                                <span className="fs-5 ms-2">Schedule</span>
+                            </Link>
+                        </div>
+
                         {/* Rider Section */}
                         {/* <div className="list-group list-group-flush">
                             <Link to="/admin/racersadmin" className="list-group-item py-2 my-1 custom-sidebar-item">
@@ -88,7 +96,7 @@ const SlideBar = ({ isOpen, onClose }) => {
                                 <span className="fs-5 ms-2">Standing</span>
                             </Link>
                         </div>
-
+                            
                         {/* Logout Section */}
                         <div className="list-group list-group-flush">
                             <Link to="/admin/logout" className="list-group-item py-2 my-1 custom-sidebar-item">
