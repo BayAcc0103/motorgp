@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Calendar.css";
 import flag from './asset/raceflag.png';
+import { Link } from "react-router-dom";
 
 const Calendar = () => {
     const [events, setEvents] = useState([
@@ -88,21 +89,22 @@ const Calendar = () => {
     // console.log(groupedEvents);
     return (
         <>
-            
-                <div className="mb-4">
-                    <div className="container-fluid calendar__container">
-                        <div className="calendar__header-container">
-                            <h1 className="calendar__title">2024 MotoGP Calendar</h1>
-                        </div>
+
+            <div className="mb-4">
+                <div className="container-fluid calendar__container">
+                    <div className="calendar__header-container">
+                        <h1 className="calendar__title">2024 MotoGP Calendar</h1>
                     </div>
-                    {Object.keys(groupedEvents).map((date_start) => (
-                        <div key={new Date(date_start).toLocaleString('en-US', { month: 'short' }).toLocaleUpperCase()} className="mb-5">
-                            <header className="mt-3 d-flex align-items-center">
-                                <div className="monthrace d-flex align-items-center">
-                                    <img src={flag} alt="raceflag" className="me-1" />
-                                    <h1 className="mt-0">{new Date(date_start).toLocaleString('en-US', { month: 'short' }).toLocaleUpperCase()}</h1>
-                                </div>
-                            </header>
+                </div>
+                {Object.keys(groupedEvents).map((date_start) => (
+                    <div key={new Date(date_start).toLocaleString('en-US', { month: 'short' }).toLocaleUpperCase()} className="mb-5">
+                        <header className="mt-3 d-flex align-items-center">
+                            <div className="monthrace d-flex align-items-center">
+                                <img src={flag} alt="raceflag" className="me-1" />
+                                <h1 className="mt-0">{new Date(date_start).toLocaleString('en-US', { month: 'short' }).toLocaleUpperCase()}</h1>
+                            </div>
+                        </header>
+                        <Link to="/schedule" className="nav-link" aria-current="page">
                             <div className="container">
                                 {groupedEvents[date_start].map((event) => (
                                     <div key={event.id} className="row row-striped mb-5 mt-3 z-n1">
@@ -157,10 +159,12 @@ const Calendar = () => {
                                     </div>
                                 ))}
                             </div>
-                        </div>
-                    ))}
-                </div>
-            
+                        </Link>
+                    </div>
+
+                ))}
+            </div >
+
         </>
     );
 };
