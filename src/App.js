@@ -18,6 +18,7 @@ import ResultAdmin from './components/admin/pages/ResultAdmin';
 import StandingAdmin from './components/admin/pages/StandingAdmin';
 import Footer from './components/footer/Footer';
 import Schedule from './components/schedule/Schedule';
+import ReviewPDF from './components/review/Review';
 
 const App = () => {
   return (
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/rider" element={<Rider />} />
         <Route path="/team" element={<Team />} />
         <Route path="/schedule" element={<Schedule />} />
+        <Route path="/reviewpdf" element={<ReviewPDF />} />
 
         {/* Admin Route with Nested Routes */}
         <Route path="/admin" element={<Admin />}>
@@ -42,6 +44,7 @@ const App = () => {
           <Route path="scheduleadmin" element={<ScheduleAdmin />} />
           <Route path="resultadmin" element={<ResultAdmin />} />
           <Route path="standingadmin" element={<StandingAdmin />} />
+
         </Route>
       </Routes>
       <Footer />

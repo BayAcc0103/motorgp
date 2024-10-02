@@ -1,6 +1,8 @@
 // src/components/result/Result.js
 import React, { useState, useEffect } from 'react';
 import styles from "./Result.module.css";
+import { Link } from "react-router-dom";
+import { Button } from 'react-bootstrap';
 
 const eventsData = [{
     "_id": "650ab8d3f0a2134567890abc",
@@ -10,7 +12,7 @@ const eventsData = [{
     "sessions": [
         {
             "sessionName": "RAC",
-            "sessionDate": "2024-05-01T10:00:00.000Z", 
+            "sessionDate": "2024-05-01T10:00:00.000Z",
             "category": "MotoGP",
             "results": [
                 {
@@ -364,6 +366,11 @@ const Result = () => {
                         </table>
                     </section>
                 )}
+                <Link to="/reviewpdf" className="nav-link" aria-current="page">
+                    <Button variant="primary">
+                        Export Admin Results to PDF
+                    </Button>
+                </Link>
             </div>
         </div>
     );
