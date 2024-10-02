@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Table, Form, Modal, Alert, Dropdown } from 'react-bootstrap';
 import './Account.css';
 
-const Schedule = () => {
+const ScheduleAdmin = () => {
   const [schedules, setSchedules] = useState([
     { race: 'Race 1', date: '2024-10-01', timeStart: '10:00', timeEnd: '11:00', category: 'MotoGP', event: 'Event 1' },
     { race: 'Race 2', date: '2024-10-02', timeStart: '12:00', timeEnd: '13:00', category: 'Moto2', event: 'Event 2' },
@@ -292,4 +292,4 @@ const Schedule = () => {
   );
 };
 
-export default Schedule;
+export default ScheduleAdmin;

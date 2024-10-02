@@ -52,7 +52,7 @@ const SlideBar = ({ isOpen, onClose }) => {
 
                         {/* Schedule Section */}
                         <div className="list-group list-group-flush">
-                            <Link to="/admin/schedule" className="list-group-item py-2 my-1 custom-sidebar-item">
+                            <Link to="/admin/scheduleadmin" className="list-group-item py-2 my-1 custom-sidebar-item">
                                 <img src={calend} alt="calendar logo" style={{ width: '30px' }} />
                                 <span className="fs-5 ms-2">Schedule</span>
                             </Link>
