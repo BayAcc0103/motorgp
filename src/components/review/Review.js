@@ -3,6 +3,9 @@ import './Review.css';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import { Button, Table } from 'react-bootstrap';
+import logofim from './asset/logofim.png';
+import logomotorgp from './asset/logomotorgp.png';
+import logotissot from './asset/logotissot.png';
 
 const riderData = [
     {
@@ -10,7 +13,18 @@ const riderData = [
         points: 312,
         races: [
             { total: 28, spr: 12, rac: 16 },
-            { total: 32, spr: 15, rac: 17 },
+            { total: 32, spr: 7, rac: 25 },
+            { total: 20, spr: 7, rac: 13 },
+            { total: 12, spr: 12, rac: 0 },
+            { total: 37, spr: 12, rac: 25 },
+            { total: 26, spr: 6, rac: 20 },
+            { total: 16, spr: 0, rac: 16 },
+            { total: 29, spr: 9, rac: 20 },
+            { total: 12, spr: 12, rac: 0 },
+            { total: 29, spr: 9, rac: 20 },
+            { total: 29, spr: 9, rac: 20 },
+            { total: 29, spr: 9, rac: 20 },
+            { total: 13, spr: 12, rac: 20 },
             // Add remaining race data with SPR and RAC points
         ],
     },
@@ -18,8 +32,19 @@ const riderData = [
         rider: "BAGNAIA Francesco [ITA]",
         points: 305,
         races: [
-            { total: 12, spr: 6, rac: 6 },
-            { total: 18, spr: 7, rac: 11 },
+            { total: 31, spr: 6, rac: 25 },
+            { total: 6, spr: 6, rac: 0 },
+            { total: 13, spr: 2, rac: 11 },
+            { total: 25, spr: 0, rac: 25 },
+            { total: 16, spr: 0, rac: 16 },
+            { total: 25, spr: 0, rac: 25 },
+            { total: 37, spr: 12, rac: 25 },
+            { total: 37, spr: 12, rac: 25 },
+            { total: 32, spr: 7, rac: 25 },
+            { total: 16, spr: 0, rac: 16 },
+            { total: 37, spr: 12, rac: 25 },
+            { total: 1, spr: 1, rac: 0 },
+            { total: 29, spr: 9, rac: 20 },
             // Add remaining race data with SPR and RAC points
         ],
     },
@@ -41,51 +66,74 @@ const ReviewPDF = () => {
     };
     return (
         <>
-            <div className="table-container" id="pdf-content">
-                <Table className="rider-table">
-                    <thead>
-                        <tr>
-                            <th>Rider</th>
-                            <th>Points</th>
-                            <th>QAT</th>
-                            <th>POR</th>
-                            <th>AME</th>
-                            <th>SPA</th>
-                            <th>FRA</th>
-                            <th>CAT</th>
-                            <th>ITA</th>
-                            <th>NED</th>
-                            <th>GER</th>
-                            <th>GBR</th>
-                            <th>AUT</th>
-                            <th>ARA</th>
-                            <th>RSM</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {riderData.map((rider, index) => (
-                            <tr key={index}>
-                                <td>{rider.rider}</td>
-                                <td>{rider.points}</td>
-                                {rider.races.map((race, i) => (
-                                    <td key={i}>
-                                        <div>{race.total}</div>
-                                        <div style={{ fontSize: 'smaller' }}>
-                                            <span>SPR: {race.spr}</span>
-                                            <br />
-                                            <span>RAC: {race.rac}</span>
-                                        </div>
-                                    </td>
-                                ))}
+            <div id="pdf-content">
+                <div className="mb-4">
+                    <div className="container-fluid review__container">
+                        <div className="review__header-container d-flex justify-content-between">
+                            <div>
+                                <h1 className="review__sponcor">Results and timing service provided by<img src={logotissot} alt="Logo" style={{ width: '150px', height: '50px', marginRight: '5px' }} class="img-logo"></img></h1>
+                                <div class="d-flex justify-content-between w-50">
+                                    <img src={logomotorgp} alt="Logo" style={{ width: '200px', height: '80px', marginRight: '5px' }} class="img-logo"></img>
+                                    <img src={logofim} alt="Logo" style={{ width: '150px', height: '80px', marginRight: '5px' }} class="img-logo"></img>
+                                </div>
+                            </div>
+                            <h1 className="review__logo">MotoGP™</h1>
+                        </div>
+                        <div className="review__header d-flex justify-content-center">
+                            <h1 className="review__title">World Championship Classification</h1>
+                        </div>
+                    </div>
+                </div>
+                <div className="table-container">
+                    <Table className="rider-table">
+                        <thead>
+                            <tr>
+                                <th>Rider</th>
+                                <th>Points</th>
+                                <th>QAT</th>
+                                <th>POR</th>
+                                <th>AME</th>
+                                <th>SPA</th>
+                                <th>FRA</th>
+                                <th>CAT</th>
+                                <th>ITA</th>
+                                <th>NED</th>
+                                <th>GER</th>
+                                <th>GBR</th>
+                                <th>AUT</th>
+                                <th>ARA</th>
+                                <th>RSM</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </Table>
+                        </thead>
+                        <tbody>
+                            {riderData.map((rider, index) => (
+                                <tr key={index}>
+                                    <td>{rider.rider}</td>
+                                    <td>{rider.points}</td>
+                                    {rider.races.map((race, i) => (
+                                        <td key={i}>
+                                            <div>{race.total}</div>
+                                            <div style={{ fontSize: 'smaller' }}>
+                                                <span>SPR: {race.spr}</span>
+                                                <br />
+                                                <span>RAC: {race.rac}</span>
+                                            </div>
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                </div>
             </div>
             <div>
-                <Button onClick={generatePDF} style={{ marginTop: '20px' }}>
-                    Export to PDF
-                </Button>
+                <button class="button-82-pushable" onClick={generatePDF} style={{ margin: '20px 200px 20px 100px' }}>
+                    <span class="button-82-shadow"></span>
+                    <span class="button-82-edge"></span>
+                    <span class="button-82-front text">
+                        Export to PDF
+                    </span>
+                </button>
             </div>
         </>
     );
