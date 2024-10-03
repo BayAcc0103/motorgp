@@ -1,5 +1,6 @@
 
 
+
 import Select from 'react-select';  // Importing react-select
 import React, { useState, useEffect } from 'react'; // Importing React and hooks
 import { Button, Modal, Dropdown, Table, Alert, Form } from 'react-bootstrap'; // Importing components from react-bootstrap
@@ -216,6 +217,9 @@ const ResultAdmin = () => {
             body: JSON.stringify(session),
           });
         }
+        console.log('Data saved!'); // Replace with actual save logic
+        setShowSaveAlert(true);
+        setTimeout(() => setShowSaveAlert(false), 3000); // Hide alert after 3 seconds
       }
       // re-fetch the updated list of sessions from the backend after save
       const response = await fetch('http://localhost:3002/api/sessions');
@@ -344,16 +348,15 @@ const ResultAdmin = () => {
           Save successful!
         </Alert>
       )}
-
+  
       {/* Dropdown for Events */}
       <Dropdown className="mb-4">
         <Dropdown.Toggle variant="info" id="dropdown-basic">
           {currentEventId && currentCategory
             ? `${events.find(session => session.id === currentEventId)?.name} - ${currentCategory}`
-            : 'Select an session and Category'}
+            : 'Select a session and Category'}
         </Dropdown.Toggle>
-
-
+  
         <Dropdown.Menu>
           {events.map((session, index) => (
             <Dropdown.Item key={index} onClick={() => handleShowCategoryModal(session.id)}>
@@ -362,7 +365,7 @@ const ResultAdmin = () => {
           ))}
         </Dropdown.Menu>
       </Dropdown>
-
+  
       {/* Category Modal */}
       <Modal show={showCategoryModal} onHide={handleCloseCategoryModal}>
         <Modal.Header closeButton>
@@ -381,7 +384,7 @@ const ResultAdmin = () => {
           ))}
         </Modal.Body>
       </Modal>
-
+  
       {/* Session Modal */}
       <Modal show={showSessionModal} onHide={() => setShowSessionModal(false)}>
         <Modal.Header closeButton>
@@ -434,14 +437,14 @@ const ResultAdmin = () => {
             </Form.Group>
           </Form>
         </Modal.Body>
-
+  
         <Modal.Footer>
           <Button variant="primary" onClick={handleSessionSubmit}>
             {isEditing ? 'Save Changes' : 'Save Session'}
           </Button>
         </Modal.Footer>
       </Modal>
-
+  
       {/* Rider Modal */}
       <Modal show={showRiderModal} onHide={() => setShowRiderModal(false)}>
         <Modal.Header closeButton>
@@ -449,15 +452,6 @@ const ResultAdmin = () => {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            {/* <Form.Group>
-              <Form.Label>RiderID</Form.Label>
-              <Form.Control
-                type="text"
-                name="riderID"
-                value={riderResultFormData.riderID}
-                onChange={handleRiderInputChange}
-              />
-            </Form.Group> */}
             <Form.Group>
               <Form.Label>Position</Form.Label>
               <Form.Control
@@ -485,7 +479,7 @@ const ResultAdmin = () => {
                 onChange={handleRiderInputChange}
               />
             </Form.Group>
-
+  
             <Form.Group>
               <Form.Label>Full Name</Form.Label>
               <Select
@@ -504,7 +498,7 @@ const ResultAdmin = () => {
                 placeholder="Select a rider"
               />
             </Form.Group>
-
+  
             <Form.Group>
               <Form.Label>Flag</Form.Label>
               <Form.Control
@@ -531,7 +525,7 @@ const ResultAdmin = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-
+  
       {/* Sessions Table */}
       <Table striped bordered hover className="mt-4">
         <thead>
@@ -569,10 +563,8 @@ const ResultAdmin = () => {
             );
           })}
         </tbody>
-
-
       </Table>
-
+  
       {/* Rider Data Table */}
       <Table striped bordered hover className="mt-4">
         <thead>
@@ -622,74 +614,19 @@ const ResultAdmin = () => {
           {console.log(riderResults)}
         </tbody>
       </Table>
-
+  
       {/* Action Buttons */}
       <div className="mt-3">
-        <Button
-          variant="primary"
-          className="m-2"
-          onClick={handleSave}
-        >
+        <Button variant="primary" className="m-2" onClick={handleSave}>
           Save
         </Button>
-        <Button
-          variant="secondary"
-          className="m-2"
-          onClick={() => {
-            setShowRiderModal(true);
-            setisEditingResult(false);
-          }}
-          disabled={!selectedSession}
-        >
-          Add
-        </Button>
-      </div>
-
-      {/* Other Action Buttons */}
-      <div className="mt-3">
-        <Button
-          variant="warning"
-          className="m-2"
-          onClick={handleEditSession}
-          disabled={!selectedSession}
-        >
-          Edit Session
-        </Button>
-        <Button
-          variant="danger"
-          className="m-2"
-          onClick={deleteSelectedSessions} // Change the function name here
-          disabled={selectedSessions.length === 0} // Disable if no sessions are selected
-        >
-          Delete Session
-        </Button>
-        <Button
-          variant="danger"
-          className="m-2"
-          onClick={deleteSelectedriderResults}
-          disabled={selectedriderResults.length === 0}
-        >
-          Delete Result
-        </Button>
-        <Button
-          variant="secondary"
-          className="m-2"
-          onClick={handleClearSelection}
-          disabled={!selectedSession}
-        >
+        <Button variant="secondary" className="m-2" onClick={handleClearSelection}>
           Clear Selection
-        </Button>
-        <Button
-          variant="warning"
-          className="m-2"
-          onClick={handleEditRider}
-          disabled={!selectedRiderResult}
-        >
-          Edit Rider
         </Button>
       </div>
     </div>
   );
+  
 };
 
 export default ResultAdmin; // Exporting the ResultAdmin component
