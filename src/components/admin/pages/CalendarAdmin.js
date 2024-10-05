@@ -123,7 +123,7 @@ const CalendarAdmin = () => {
 
     if (onEdit) {
       // Editing an existing event
-      setEvents(events.map((event) => (event.id === currentEventId ? { ...event, ...eventData } : event)));
+      setEvents(events.map((event) => (event.id === currentEventId ? { ...event, ...eventData, isEdited: true } : event)));
 
     } else {
       // Adding a new event
@@ -171,7 +171,7 @@ const CalendarAdmin = () => {
             method: 'DELETE',
           });
         }
-        else {
+        else if (event.isEdited){
           // Otherwise, update the event via PUT using its UUID
           await fetch(`http://localhost:3002/api/calendar/${event.id}`, {
             method: 'PUT',

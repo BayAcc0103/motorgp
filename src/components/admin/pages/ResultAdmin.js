@@ -111,7 +111,7 @@ const ResultAdmin = () => {
         const data = await response.json(); // Parse the JSON response
         setSessions(data) // Update the sessions state with the fetched data
       }
-      catch(error){
+      catch (error) {
         error.console("Error fetching sessions: " + error)
       }
     }
@@ -160,7 +160,7 @@ const ResultAdmin = () => {
       }
     } else {
       const updatedSessions = sessions.map((session) =>
-        session.id === selectedSession.id ? { ...sessionData, id: selectedSession.id } : session
+        session.id === selectedSession.id ? { ...sessionData, id: selectedSession.id, isEdited: true } : session
       );
       setSessions(updatedSessions);
       setIsEditing(false);
@@ -208,7 +208,7 @@ const ResultAdmin = () => {
             method: 'DELETE',
           });
         }
-        else {
+        else if (session.isEdited){
           // Otherwise, update the session via PUT using its UUID
           await fetch(`http://localhost:3002/api/sessions/${session.id}`, {
             method: 'PUT',
@@ -240,7 +240,7 @@ const ResultAdmin = () => {
             method: 'DELETE',
           });
         }
-        else {
+        else if(riderResult.isEdited){
           // Otherwise, update the riderResult via PUT using its UUID
           await fetch(`http://localhost:3002/api/result/${riderResult.id}`, {
             method: 'PUT',
@@ -268,19 +268,19 @@ const ResultAdmin = () => {
   // Function to add or update rider information
   const handleAddResult = () => {
     const filteredRider = riders.filter(rider => rider.rider_full_name === riderResultFormData.fullName)[0];
-
+    const formattedTime = `${riderResultFormData.minutes}:${riderResultFormData.seconds}:${riderResultFormData.milliseconds}`;
 
     if (isEditingResult) {
       // Update existing riderResult
       const updatedriderResults = riderResults.map((riderResult) =>
-        riderResult.id === selectedRiderResult.id ? { ...riderResultFormData, id: selectedRiderResult.id, riderID: filteredRider ? filteredRider.id : '' } : riderResult
+        riderResult.id === selectedRiderResult.id ? { ...riderResultFormData, id: selectedRiderResult.id, riderID: filteredRider ? filteredRider.id : '', time: formattedTime, isEdited: true } : riderResult
       );
       setriderResults(updatedriderResults);
       setisEditingResult(false);
       setSelectedRiderResult(null);
     } else {
       // Add new rider
-      setriderResults([...riderResults, { ...riderResultFormData, id: uuidv4(), sessionId: selectedSession.id, isNew: true, riderID: filteredRider ? filteredRider.id : '' }]); // Generate unique ID for new rider
+      setriderResults([...riderResults, { ...riderResultFormData, id: uuidv4(), sessionId: selectedSession.id, isNew: true, riderID: filteredRider ? filteredRider.id : '', time: formattedTime }]); // Generate unique ID for new rider
     }
     setShowRiderModal(false);
     setriderResultFormData({
@@ -458,24 +458,47 @@ const ResultAdmin = () => {
                 onChange={handleRiderInputChange}
               />
             </Form.Group> */}
-            <Form.Group>
-              <Form.Label>Position</Form.Label>
-              <Form.Control
-                type="text"
-                name="position"
-                value={riderResultFormData.position}
-                onChange={handleRiderInputChange}
-              />
-            </Form.Group>
+            
             <Form.Group>
               <Form.Label>Time</Form.Label>
-              <Form.Control
-                type="text"
-                name="time"
-                value={riderResultFormData.time}
-                onChange={handleRiderInputChange}
-              />
+              <div className="d-flex">
+                <Form.Control
+                  type="text"
+                  name="minutes"
+                  value={riderResultFormData.minutes}
+                  onChange={(e) => {
+                    setriderResultFormData({ ...riderResultFormData, minutes: e.target.value });
+                    handleRiderInputChange(e);
+                  }}
+                  placeholder="Minutes"
+                  style={{ width: '100px', marginRight: '5px' }}
+                />
+                <Form.Control
+                  type="text"
+                  name="seconds"
+                  value={riderResultFormData.seconds}
+                  onChange={(e) => {setriderResultFormData({
+                    ...riderResultFormData,
+                    seconds: e.target.value
+                  }); handleRiderInputChange(e)}}
+                  placeholder="Seconds"
+                  style={{ width: '100px', marginRight: '5px' }}
+                />
+                <Form.Control
+                  type="text"
+                  name="milliseconds"
+                  value={riderResultFormData.milliseconds}
+                  onChange={(e) => {setriderResultFormData({
+                    ...riderResultFormData,
+                    milliseconds: e.target.value
+                  });handleRiderInputChange(e)}}
+                  placeholder="Milliseconds"
+                  style={{ width: '100px' }}
+                />
+              </div>
             </Form.Group>
+
+
             <Form.Group>
               <Form.Label>Number</Form.Label>
               <Form.Control
@@ -562,7 +585,8 @@ const ResultAdmin = () => {
                 </td>
                 <td>{session.id}</td>
                 <td>{session ? session.name : 'Unknown session'}</td>
-                <td>{sessionItem.sessionDate}</td> {/* Use sessionItem.sessionDate */}
+                <td>{new Date(sessionItem.sessionDate).toLocaleDateString()}</td>
+
                 <td>{sessionItem.category}</td> {/* Keep using sessionItem.category */}
                 <td>{sessionItem.sessionName}</td>
               </tr>
@@ -591,34 +615,35 @@ const ResultAdmin = () => {
         <tbody>
           {riderResults
             .filter((rider) => rider.sessionId === selectedSession?.id)
-            .map((rider) => { 
-                const riderData = riders.find(r => r.rider_full_name === rider.fullName); // Find the rider by full name
-              return(
-              <tr
-                key={rider.id}
-                onClick={() => {
-                  setSelectedRiderResult(rider);
-                  setisEditingResult(true);
-                }}
-                style={{ cursor: "pointer", backgroundColor: rider.isDeleted ? 'red' : (rider === selectedRiderResult ? '#f0f8ff' : '') }}
-              >
-                <td>
-                  <input
-                    type="checkbox"
-                    checked={selectedriderResults.includes(rider.id)}
-                    onChange={() => handleSelectriderResults(rider.id)}
-                  />
-                </td>
-                <td>{rider.id}</td>
-                <td>{rider.riderID}</td>
-                <td>{rider.position}</td>
-                <td>{rider.time}</td>
-                <td>{rider.number}</td>
-                <td>{rider.fullName}</td>
-                <td>{rider.flag}</td>
-                <td>{rider.team}</td>
-              </tr>
-            )})}
+            .map((rider) => {
+              const riderData = riders.find(r => r.rider_full_name === rider.fullName); // Find the rider by full name
+              return (
+                <tr
+                  key={rider.id}
+                  onClick={() => {
+                    setSelectedRiderResult(rider);
+                    setisEditingResult(true);
+                  }}
+                  style={{ cursor: "pointer", backgroundColor: rider.isDeleted ? 'red' : (rider === selectedRiderResult ? '#f0f8ff' : '') }}
+                >
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={selectedriderResults.includes(rider.id)}
+                      onChange={() => handleSelectriderResults(rider.id)}
+                    />
+                  </td>
+                  <td>{rider.id}</td>
+                  <td>{rider.riderID}</td>
+                  <td>{rider.position}</td>
+                  <td>{rider.time}</td>
+                  <td>{rider.number}</td>
+                  <td>{rider.fullName}</td>
+                  <td>{rider.flag}</td>
+                  <td>{rider.team}</td>
+                </tr>
+              )
+            })}
           {console.log(riderResults)}
         </tbody>
       </Table>
