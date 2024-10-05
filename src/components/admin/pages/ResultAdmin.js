@@ -651,6 +651,39 @@ const ResultAdmin = () => {
   
       {/* Action Buttons */}
       <div className="mt-3">
+      <Button
+          variant="warning"
+          className="m-2"
+          onClick={handleEditSession}
+          disabled={!selectedSession}
+        >
+          Edit Session
+        </Button>
+        <Button
+          variant="danger"
+          className="m-2"
+          onClick={deleteSelectedSessions} // Change the function name here
+          disabled={selectedSessions.length === 0} // Disable if no sessions are selected
+        >
+          Delete Session
+        </Button>
+        <Button
+          variant="danger"
+          className="m-2"
+          onClick={deleteSelectedriderResults}
+          disabled={selectedriderResults.length === 0}
+        >
+          Delete Result
+        </Button>
+        
+      <Button
+          variant="warning"
+          className="m-2"
+          onClick={handleEditRider}
+          disabled={!selectedRiderResult}
+        >
+          Edit Rider
+        </Button>
         <Button variant="primary" className="m-2" onClick={handleSave}>
           Save
         </Button>
