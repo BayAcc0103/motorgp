@@ -1,39 +1,95 @@
-/* .schedule-container {
-    padding: 20px;
-  }
-  
-  .days-tab {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .days-tab button {
-    padding: 10px 20px;
-    background-color: #f0f0f0;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .days-tab .active {
-    background-color: #333;
-    color: white;
-  }
-  
-  .schedule-content {
-    margin-top: 20px;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  table, th, td {
-    border: 1px solid black;
-  }
-  
-  th, td {
-    padding: 10px;
-    text-align: left;
-  } */
+.schedule-container {
+  padding: 20px;
+}
+
+.days-tab {
+  display: flex;
+  gap: 10px;
+}
+
+
+.days-tab button {
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+.days-tab button ::before {
+  content: "";
+  height: 100%;
+  position: absolute;
+  background-color: #171c21;
+  left: -4rem;
+  top: 0;
+  width: 21rem;
+  border-radius: 0 0 1.5rem;
+  transform: skewX(30deg);
+
+}
+
+
+.days-tab .active {
+  background-color: #333;
+  color: white;
+}
+
+.schedule-content {
+  margin-top: 20px;
+  position: relative;
+}
+
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+}
+
+.event-schedule__content-time {
+  color: #000;
+  font-size: 2rem;
+  line-height: 1.33;
+  margin-right: 0;
+  min-width: 8rem;
+}
+
+.event-schedule__content-time::before {
+  content: "";
+  height: 100%;
+  position: absolute;
+  background-color: #171c21;
+  left: -4rem;
+  top: 0;
+  width: 21rem;
+  border-radius: 0 0 1.5rem;
+  transform: skew(-31deg);
+}
+.event-schedule__content-time-wrapper {
+  margin-top: 1.6rem;
+  left: 1.7rem;
+  position: absolute;
+  top: 0;
+  color: #fff;
+}
+
+.event-schedule__content-item {
+  padding: 1.8rem 3.2rem;
+}
+.event-schedule__content-item {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(4.2rem, -4rem + 9.77vw, 10.1rem);
+}
+.event-schedule__content-item--finished {
+  position: relative;
+  overflow: hidden;
+  border-bottom: .1rem solid #ededed;
+}
+

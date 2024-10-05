@@ -74,6 +74,7 @@ const TeamGrid = () => {
           </div>
         ))}
       </div>
+      
     </>
   );
 };
