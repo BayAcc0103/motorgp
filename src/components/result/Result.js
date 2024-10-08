@@ -181,54 +181,71 @@ const eventsData = [{
 
 const Result = () => {
 
-    const [selectedEventName, setSelectedEventName] = useState(null);
+    const [selectedEventId, setSelectedEventId] = useState(null);
     const [selectedSessionName, setSelectedSessionName] = useState("RAC");
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
     const [selectedCategory, setSelectedCategory] = useState("MotoGP");
+    const [events, setEvents] = useState([]);
+    const [results, setResults] = useState([]);
 
+    function convertTime(time) {
+        const timeParts = time.split(':');
+        if (timeParts.length !== 2) {
+            throw new Error('Invalid time format. Expected format: m:s');
+        }
+    
+        const minutes = parseInt(timeParts[0], 10);
+        const seconds = parseFloat(timeParts[1], 10);
+    
+        // Convert total time to seconds
+        const totalSeconds = minutes * 60 + seconds;
+    
+        return totalSeconds
+    }
 
-
-    //Listening for changes in the selected year and updating the selected event name accordingly
     useEffect(() => {
-        setSelectedEventName(filteredEventsbyYear[0]?.name);
-    }, [selectedYear]);
+        const fetchEvents = async () => {
+            try {
+                const response = await fetch('http://localhost:3002/api/calendar');
+                const data = await response.json();
+                setEvents(data);
+            } catch (error) {
+                console.error('Error fetching events:', error)
+            }
+        }
+        fetchEvents();
 
-    const filteredEventsbyYear = eventsData.filter(event => {
-        const eventYear = new Date(event.date).getFullYear().toString(); // Extracting year from the event date
-        return eventYear === selectedYear;
-    });
+    }, [])
 
-    // Function to filter events based on the selected year and category
-    const filteredEvents = eventsData.filter(event => {
-        const eventDate = new Date(event.date);
-        const eventYear = eventDate.getFullYear();
+    useEffect(() => {
+        const filteredEventsByYear = events.filter(event => new Date(event.date_start).getFullYear().toString() === selectedYear);
 
-        // Check if the year matches
-        const yearMatches = selectedYear ? eventYear.toString() === selectedYear : true;
-
-        // Check if the event name matches
-        const eventNameMatches = selectedEventName ? event.name.toLowerCase() === selectedEventName.toLowerCase() : true;
-
-        // Filter sessions within the event
-        const sessionsFiltered = event.sessions.filter(session => {
-            // Check if the category matches
-            const categoryMatches = selectedCategory ? session?.category?.toLowerCase() === selectedCategory.toLowerCase() : true;
-
-            // Check if the session name matches
-            const sessionNameMatches = selectedSessionName ? session.sessionName.toLowerCase() === selectedSessionName.toLowerCase() : true;
-
-            return categoryMatches && sessionNameMatches;
-        });
-
-        // Retain the event if it matches year and name, and has at least one session meeting the criteria
-        return yearMatches && eventNameMatches && sessionsFiltered.length > 0;
-    });
+        if (filteredEventsByYear.length > 0) {
+            setSelectedEventId(filteredEventsByYear[0].id);
+        }
+    }, [selectedYear, events]);
 
 
-    const filteredYear = eventsData.map(event => new Date(event.date).getFullYear().toString());
+    useEffect(() => {
+        const fetchResults = async () => {
+            if (!selectedEventId || !selectedSessionName) return;
 
-    // const selectedEvent = filteredEvents.find(event => event._id === selectedEventId);
-    // const selectedSession = selectedEvent ? selectedEvent.sessions[selectedSessionIndex] : null;
+            try {
+                const response = await fetch(`http://localhost:3002/api/result?eventId=${selectedEventId}&sessionName=${selectedSessionName}&category=${selectedCategory}`);
+
+                const data = await response.json();
+                setResults(data);
+            } catch (error) {
+                console.error('Error fetching results:', error);
+            }
+        }
+
+        fetchResults();
+        console.log(results)
+
+    }, [selectedEventId, selectedSessionName, selectedCategory]);
+
+    const filteredYears = [...new Set(events.map(event => new Date(event.date_start).getFullYear().toString()))];
 
     return (
         <div>
@@ -239,26 +256,22 @@ const Result = () => {
                         <select
                             className={`text-white bg-transparent border-0 w-100 m-0 ${styles.filter_select} ${styles.custom_select}`}
                             value={selectedYear}
-                            onChange={e => {
-                                setSelectedYear(e.target.value);
-                                setSelectedEventName(filteredEventsbyYear[0]?.name); // Reset to first event on year change
-                            }}
+                            onChange={e => setSelectedYear(e.target.value)}
                         >
-                            {[...new Set(filteredYear)].map(year => (
-                                <option className={`text-dark ${styles.custom_option}`} value={year}>{year}</option>))}
-                            {/* <option className={`text-dark ${styles.custom_option}`} value="2024">2024</option>
-                            <option className={`text-dark ${styles.custom_option}`} value="2023">2023</option> */}
+                            {filteredYears.map(year => (
+                                <option className={`text-dark ${styles.custom_option}`} key={year} value={year}>{year}</option>
+                            ))}
                         </select>
                     </div>
                     <div className={`d-flex position-relative align-items-center ${styles.filter_container}`}>
                         <div className={`position-absolute pe-none ${styles.filter_label}`}>Event</div>
                         <select
                             className={`text-white bg-transparent border-0 w-100 m-0 ${styles.filter_select} ${styles.custom_select}`}
-                            onClick={e => setSelectedEventName(e.target.value)}
-                            value={selectedEventName}
+                            value={selectedEventId}
+                            onChange={e => setSelectedEventId(e.target.value)}
                         >
-                            {filteredEventsbyYear.map(event => (
-                                <option key={event._id} className={`text-dark ${styles.custom_option}`} value={event.name}>
+                            {events.filter(event => new Date(event.date_start).getFullYear().toString() === selectedYear).map(event => (
+                                <option key={event.id} className={`text-dark ${styles.custom_option}`} value={event.id}>
                                     {event.name}
                                 </option>
                             ))}
@@ -282,7 +295,7 @@ const Result = () => {
                     <div className={`d-flex position-relative align-items-center ${styles.filter_container}`}>
                         <div className={`position-absolute pe-none ${styles.filter_label}`}>Session</div>
                         <select
-                            className={`text-white bg-transparent border-0 w-100                             m-0 ${styles.filter_select} ${styles.custom_select}`}
+                            className={`text-white bg-transparent border-0 w-100 m-0 ${styles.filter_select} ${styles.custom_select}`}
                             onChange={e => setSelectedSessionName(e.target.value)}
                             value={selectedSessionName}
                         >
@@ -298,74 +311,72 @@ const Result = () => {
                     </div>
                 </div>
 
-                {filteredEvents[0]?.sessions[0] && (
-                    <div className={`d-flex flex-column justify-content-between position-relative w-100 h-auto bg-dark ${styles.hero_container}`}>
-                        <div class={`position-absolute w-100 h-100 bg-dark ${styles.hero_image}`}>
-                            <img alt="Misano MotoGP™ Official Test" src="https://photos.motogp.com/2024/events/background/RSM.png" class={`${styles.hero_image_img}`}></img>
-                        </div>
-                        <div className={`text-white w-75 position-relative ${styles.hero_text}`}>
-                            {selectedEventName} - {filteredEvents[0]?.sessions[0].sessionName}
-                        </div>
-                        <div className={`d-flex align-items-center z-1 ${styles.hero_details_container}`}>
-                            <img
-                                src={filteredEvents[0]?.location === "Circuito de Jerez"
-                                    ? "https://static-files.motogp.pulselive.com/assets/flags/es.svg"
-                                    : "https://static-files.motogp.pulselive.com/assets/flags/it.svg"} // Conditional flag based on location
-                                alt="Event Flag"
-                                className={`${styles.hero_details_flag}`}
-                            />
-                            <div className={`text-white d-flex align-items-center ${styles.hero_details_location}`}>
-                                {filteredEvents[0]?.location}
-                            </div>
-                        </div>
-                    </div>
-                )}
+                {selectedSessionName && (
+    <div className={`d-flex flex-column justify-content-between position-relative w-100 h-auto bg-dark ${styles.hero_container}`}>
+        <div className={`position-absolute w-100 h-100 bg-dark ${styles.hero_image}`}>
+            <img alt="Misano MotoGP™ Official Test" src="https://photos.motogp.com/2024/events/background/RSM.png" className={styles.hero_image_img} />
+        </div>
+        <div className={`text-white w-75 position-relative ${styles.hero_text}`}>
+            {events.find(event => event.id === selectedEventId)?.sponsored_name} - {selectedSessionName}
+        </div>
+        <div className={`d-flex align-items-center z-1 ${styles.hero_details_container}`}>
+            <img
+                src={events.find(event => event.id === selectedEventId)?.circuit_name === "Circuito de Jerez"
+                    ? "https://static-files.motogp.pulselive.com/assets/flags/es.svg"
+                    : "https://static-files.motogp.pulselive.com/assets/flags/it.svg"}
+                alt="Event Flag"
+                className={styles.hero_details_flag}
+            />
+            <div className={`text-white d-flex align-items-center ${styles.hero_details_location}`}>
+                {events.find(event => event.id === selectedEventId)?.circuit_name}
+            </div>
+        </div>
+    </div>
+)}
 
-                {filteredEvents[0]?.sessions[0] && (
-                    <section className={`${styles.table}`}>
-                        <table className={`${styles.table__table}`}>
-                            <thead>
-                                <tr>
-                                    <th className={`${styles.table__header_cell} ${styles.table__header_cell__pos}`}>Pos.</th>
-                                    <th className={`${styles.table__header_cell} ${styles.table__header_cell__points}`}>pts</th>
-                                    <th className={`${styles.table__header_cell} ${styles.table__header_cell__rider}`}>Rider</th>
-                                    <th className={`${styles.table__header_cell} ${styles.table__header_cell__team}`}>Team</th>
-                                    <th className={`${styles.table__header_cell} ${styles.table__header_cell__time}`}>Time</th>
-                                </tr>
-                            </thead>
-                            <tbody className={`${styles.table__tbody}`}>
-                                {filteredEvents[0]?.sessions[0]?.results.map(result => (
-                                    <tr key={result.riderId} className={`${styles.table__body_row}`}>
-                                        <td className={`${styles.table__body_cell} ${styles.table__body_cell__pos}`}>{result.position}</td>
-                                        <td class={`text-black-50 fw-bolder ${styles.table__body_cell} ${styles.table__body_cell__pos} u-hide-tablet`}>25</td>
-                                        <td className={`${styles.table__body_cell} ${styles.table__body_cell__rider}`}>
-                                            <div className={`d-flex justify-content-start align-items-center`}>
-                                                <div className={`${styles.rider_image_container}`}>
-                                                    <img src="https://resources.motogp.pulselive.com/photo-resources/2024/02/19/986b0e12-1db0-49d8-ae13-fd556286237a/93_Marc_MarquezFullbodyGresini.png?height=300&amp;width=200"
-                                                        alt="rider-bio_marcmarquez" loading="lazy"></img>
-                                                </div>
-                                                <div className={`d-flex align-items-center justify-content-start ms-auto ${styles.table__rider_name_wrapper}`}>
-                                                    <div className={`${styles.table__rider_name}`}>
-                                                        <span className={`text-danger ${styles.table__body_cell} ${styles.table__body_cell__number}`}>{result.number}</span>
-                                                        <span className={`${styles.table__body_cell} ${styles.table__body_cell__full_name}`}>{result.fullname}</span>
-                                                    </div>
-                                                    <img
-                                                        src={result.flag}
-                                                        alt={`Rider ${result.fullname}`}
-                                                        loading="lazy"
-                                                        class={`${styles.table__body_cell_flag}`}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td className={`${styles.table__body_cell} ${styles.table__body_cell__team}`}>{result.team}</td>
-                                        <td className={`${styles.table__body_cell} ${styles.table__body_cell__time}`}>{result.time}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </section>
-                )}
+
+
+{selectedSessionName && results.length > 0 && (
+    <section className={styles.table}>
+        <table className={styles.table__table}>
+            <thead>
+                <tr>
+                    <th className={`${styles.table__header_cell} ${styles.table__header_cell__pos}`}>Pos.</th>
+                    <th className={`${styles.table__header_cell} ${styles.table__header_cell__points}`}>pts</th>
+                    <th className={`${styles.table__header_cell} ${styles.table__header_cell__rider}`}>Rider</th>
+                    <th className={`${styles.table__header_cell} ${styles.table__header_cell__team}`}>Team</th>
+                    <th className={`${styles.table__header_cell} ${styles.table__header_cell__time}`}>Time</th>
+                </tr>
+            </thead>
+            <tbody className={styles.table__tbody}>
+                {results.slice().sort((a, b) => convertTime(a.time) - convertTime(b.time)).map(result => (
+                    <tr key={result.riderId} className={styles.table__body_row}>
+                        <td className={`${styles.table__body_cell} ${styles.table__body_cell__pos}`}>{result.position}</td>
+                        <td className={`text-black-50 fw-bolder ${styles.table__body_cell} ${styles.table__body_cell__pos} u-hide-tablet`}>{result.points}</td>
+                        <td className={`${styles.table__body_cell} ${styles.table__body_cell__rider}`}>
+                            <div className={`d-flex justify-content-start align-items-center`}>
+                                <div className={styles.rider_image_container}>
+                                    <img src="https://resources.motogp.pulselive.com/photo-resources/2024/02/19/986b0e12-1db0-49d8-ae13-fd556286237a/93_Marc_MarquezFullbodyGresini.png?height=300&amp;width=200" alt="rider-bio_marcmarquez" loading="lazy" />
+                                </div>
+                                <div className={`d-flex align-items-center justify-content-start ms-auto ${styles.table__rider_name_wrapper}`}>
+                                    <div className={styles.table__rider_name}>
+                                        <span className={`text-danger ${styles.table__body_cell} ${styles.table__body_cell__number}`}>{result.number}</span>
+                                        <span className={`${styles.table__body_cell} ${styles.table__body_cell__full_name}`}>{result.fullname}</span>
+                                    </div>
+                                    <img src={result.flag} alt={`Rider ${result.fullname}`} loading="lazy" className={styles.table__body_cell_flag} />
+                                </div>
+                            </div>
+                        </td>
+                        <td className={`${styles.table__body_cell} ${styles.table__body_cell__team}`}>{result.team}</td>
+                        <td className={`${styles.table__body_cell} ${styles.table__body_cell__time}`}>{result.time}</td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    </section>
+)}
+
+
                 <Link to="/reviewpdf" className="nav-link" aria-current="page">
                     <Button variant="primary">
                         Export Admin Results to PDF
