@@ -67,57 +67,52 @@ const ResultAdmin = () => {
   //   // console.log(riderResults)
   // }, [riderResults])  
 
+  // State to manage loading state
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    const fetchEvents = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3002/api/calendar'); // Update with your base URL if needed
-        const data = await response.json(); // Parse the JSON response
-        setEvents(data);
+        console.log('Fetching data from APIs...');
+        
+        const [eventsResponse, ridersResponse, riderResultsResponse, sessionsResponse] = await Promise.all([
+          fetch('http://localhost:3002/api/calendar'),
+          fetch('http://localhost:3002/api/riders'),
+          fetch('http://localhost:3002/api/result'),
+          fetch('http://localhost:3002/api/sessions'),
+        ]);
 
-      }
-      catch (error) {
-        console.error('Error fetching events:', error)
-      }
+        console.log('Responses received:');
+        console.log('Events response:', eventsResponse);
+        console.log('Riders response:', ridersResponse);
+        console.log('Rider results response:', riderResultsResponse);
+        console.log('Sessions response:', sessionsResponse);
 
-    }
-    fetchEvents();
+        const eventsData = await eventsResponse.json();
+        const ridersData = await ridersResponse.json();
+        const riderResultsData = await riderResultsResponse.json();
+        const sessionsData = await sessionsResponse.json();
 
-    const fetchRiders = async () => {
-      try {
-        const response = await fetch('http://localhost:3002/api/riders'); // Update with your base URL if needed
-        const data = await response.json(); // Parse the JSON response
-        setRiders(data) // Update the riders state with the fetched data
+        console.log('Parsed data:');
+        console.log('Events data:', eventsData);
+        console.log('Riders data:', ridersData);
+        console.log('Rider results data:', riderResultsData);
+        console.log('Sessions data:', sessionsData);
+
+        setEvents(eventsData);
+        setRiders(ridersData);
+        setriderResults(riderResultsData);
+        setSessions(sessionsData);
       } catch (error) {
-        error.console("Error fetching riders: " + error)
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false); // Set loading to false when done
+        console.log('Data fetching complete.');
       }
-    }
-    fetchRiders();
+    };
 
-    const fetchRiderResults = async () => {
-      try {
-        const response = await fetch('http://localhost:3002/api/result'); // Update with your base URL if needed
-        const data = await response.json(); // Parse the JSON response
-        setriderResults(data) // Update the riders state with the fetched data
-
-
-      } catch (error) {
-        error.console("Error fetching riderResults: " + error)
-      }
-    }
-    fetchRiderResults();
-
-    const fetchSessions = async () => {
-      try {
-        const response = await fetch('http://localhost:3002/api/sessions'); // Update with your base URL if needed
-        const data = await response.json(); // Parse the JSON response
-        setSessions(data) // Update the sessions state with the fetched data
-      }
-      catch (error) {
-        error.console("Error fetching sessions: " + error)
-      }
-    }
-    fetchSessions();
-  }, [])
+    fetchData();
+  }, []);
   // useEffect(() => {
 
   // }, [])
@@ -339,6 +334,9 @@ const ResultAdmin = () => {
     setSelectedriderResults([]); // Clear the selected riderResults after deletion
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   // Rendering the component
   return (
     <div className="account-container d-flex flex-column justify-content-center align-items-center min-vh-100">
@@ -385,15 +383,15 @@ const ResultAdmin = () => {
         </Modal.Body>
       </Modal>
   
-      {/* Session Modal */}
+      {/* session Modal */}
       <Modal show={showSessionModal} onHide={() => setShowSessionModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>{isEditing ? 'Edit Session' : 'Enter Session'}</Modal.Title>
+          <Modal.Title>{isEditing ? 'Edit session' : 'Enter session'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group>
-              <Form.Label>Session Name</Form.Label>
+              <Form.Label>session Name</Form.Label>
               <Form.Control
                 type="text"
                 name="sessionName"
@@ -427,7 +425,7 @@ const ResultAdmin = () => {
               </Form.Control>
             </Form.Group>
             <Form.Group>
-              <Form.Label>Session Date</Form.Label>
+              <Form.Label>session Date</Form.Label>
               <Form.Control
                 type="date"
                 name="sessionDate"
@@ -440,7 +438,7 @@ const ResultAdmin = () => {
   
         <Modal.Footer>
           <Button variant="primary" onClick={handleSessionSubmit}>
-            {isEditing ? 'Save Changes' : 'Save Session'}
+            {isEditing ? 'Save Changes' : 'Save session'}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -565,37 +563,37 @@ const ResultAdmin = () => {
             <th></th>
             <th>ID</th>
             <th>Event</th>
-            <th>Session Date</th>
+            <th>session Date</th>
             <th>Category</th>
-            <th>Session</th>
+            <th>session</th>
           </tr>
         </thead>
         <tbody>
-          {sessions.map((sessionItem) => { // Change 'session' to 'sessionItem'
-            const session = events.find(event => event.id === sessionItem.eventId); // Find the session by ID
-            return (
-              <tr
-                key={sessionItem.id} // Use 'sessionItem.id' instead of 'session.id' for the key property
-                onClick={() => setSelectedSession(sessionItem)}
-                style={{ cursor: "pointer", backgroundColor: sessionItem.isDeleted ? 'red' : (sessionItem === selectedSession ? '#f0f8ff' : '') }}
-              >
-                <td>
-                  <input
-                    type="checkbox"
-                    checked={selectedSessions.includes(sessionItem.id)}
-                    onChange={() => handleSelectSessions(sessionItem.id)} // Use sessionItem.id here
-                  />
-                </td>
-                <td>{session.id}</td>
-                <td>{session ? session.name : 'Unknown session'}</td>
-                <td>{new Date(sessionItem.sessionDate).toLocaleDateString()}</td>
+  {sessions.map((sessionItem) => {
+    const session = events.find(event => event.id === sessionItem.eventId); // Find the session by ID
+    return (
+      <tr
+        key={sessionItem.id}
+        onClick={() => setSelectedSession(sessionItem)}
+        style={{ cursor: "pointer", backgroundColor: sessionItem.isDeleted ? 'red' : (sessionItem === selectedSession ? '#f0f8ff' : '') }}
+      >
+        <td>
+          <input
+            type="checkbox"
+            checked={selectedSessions.includes(sessionItem.id)}
+            onChange={() => handleSelectSessions(sessionItem.id)}
+          />
+        </td>
+        <td>{session ? session.id : 'N/A'}</td>
+        <td>{session ? session.name : 'Unknown session'}</td>
+        <td>{new Date(sessionItem.sessionDate).toLocaleDateString()}</td>
+        <td>{sessionItem.category}</td>
+        <td>{sessionItem.sessionName}</td>
+      </tr>
+    );
+  })}
+</tbody>
 
-                <td>{sessionItem.category}</td> {/* Keep using sessionItem.category */}
-                <td>{sessionItem.sessionName}</td>
-              </tr>
-            );
-          })}
-        </tbody>
       </Table>
   
       {/* Rider Data Table */}
@@ -657,7 +655,7 @@ const ResultAdmin = () => {
           onClick={handleEditSession}
           disabled={!selectedSession}
         >
-          Edit Session
+          Edit session
         </Button>
         <Button
           variant="danger"
@@ -665,7 +663,7 @@ const ResultAdmin = () => {
           onClick={deleteSelectedSessions} // Change the function name here
           disabled={selectedSessions.length === 0} // Disable if no sessions are selected
         >
-          Delete Session
+          Delete session
         </Button>
         <Button
           variant="danger"
