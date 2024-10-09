@@ -187,6 +187,7 @@ const Result = () => {
     const [selectedCategory, setSelectedCategory] = useState("MotoGP");
     const [events, setEvents] = useState([]);
     const [results, setResults] = useState([]);
+    const [riders, setRiders] = useState([]);
 
     function convertTime(time) {
         const timeParts = time.split(':');
@@ -214,6 +215,20 @@ const Result = () => {
             }
         }
         fetchEvents();
+
+    }, [])
+
+    useEffect(() => {
+        const fetchRiders = async () => {
+            try {
+                const response = await fetch('http://localhost:3002/api/riders');
+                const data = await response.json();
+                setRiders(data);
+            } catch (error) {
+                console.error('Error fetching events:', error)
+            }
+        }
+        fetchRiders();
 
     }, [])
 
@@ -349,32 +364,41 @@ const Result = () => {
                 </tr>
             </thead>
             <tbody className={styles.table__tbody}>
-                {results.slice().sort((a, b) => convertTime(a.time) - convertTime(b.time)).map(result => (
-                    <tr key={result.riderId} className={styles.table__body_row}>
-                        <td className={`${styles.table__body_cell} ${styles.table__body_cell__pos}`}>{result.position}</td>
-                        <td className={`text-black-50 fw-bolder ${styles.table__body_cell} ${styles.table__body_cell__pos} u-hide-tablet`}>{result.points}</td>
-                        <td className={`${styles.table__body_cell} ${styles.table__body_cell__rider}`}>
-                            <div className={`d-flex justify-content-start align-items-center`}>
-                                <div className={styles.rider_image_container}>
-                                    <img src="https://resources.motogp.pulselive.com/photo-resources/2024/02/19/986b0e12-1db0-49d8-ae13-fd556286237a/93_Marc_MarquezFullbodyGresini.png?height=300&amp;width=200" alt="rider-bio_marcmarquez" loading="lazy" />
-                                </div>
-                                <div className={`d-flex align-items-center justify-content-start ms-auto ${styles.table__rider_name_wrapper}`}>
-                                    <div className={styles.table__rider_name}>
-                                        <span className={`text-danger ${styles.table__body_cell} ${styles.table__body_cell__number}`}>{result.number}</span>
-                                        <span className={`${styles.table__body_cell} ${styles.table__body_cell__full_name}`}>{result.fullname}</span>
+                {results.slice().sort((a, b) => convertTime(a.time) - convertTime(b.time)).map(result => {
+                    const rider = riders.find(rider => rider.riderId === result.riderId);
+                    return (
+                        <tr key={result.riderId} className={styles.table__body_row}>
+                            <td className={`${styles.table__body_cell} ${styles.table__body_cell__pos}`}>{result.position}</td>
+                            <td className={`text-black-50 fw-bolder ${styles.table__body_cell} ${styles.table__body_cell__pos} u-hide-tablet`}>{result.points}</td>
+                            <td className={`${styles.table__body_cell} ${styles.table__body_cell__rider}`}>
+                                <div className={`d-flex justify-content-start align-items-center`}>
+                                    <div className={styles.rider_image_container}>
+                                        {/* Use the image from the rider object */}
+                                        {rider ? (
+                                            <img src={rider.imageUrl} alt={`Rider ${rider.rider_full_name}`} loading="lazy" />
+                                        ) : (
+                                            <img src="path/to/placeholder-image.png" alt="Placeholder" loading="lazy" />
+                                        )}
                                     </div>
-                                    <img src={result.flag} alt={`Rider ${result.fullname}`} loading="lazy" className={styles.table__body_cell_flag} />
+                                    <div className={`d-flex align-items-center justify-content-start ms-auto ${styles.table__rider_name_wrapper}`}>
+                                        <div className={styles.table__rider_name}>
+                                            <span className={`text-danger ${styles.table__body_cell} ${styles.table__body_cell__number}`}>{result.number}</span>
+                                            <span className={`${styles.table__body_cell} ${styles.table__body_cell__full_name}`}>{result.fullname}</span>
+                                        </div>
+                                        <img src={result.flag} alt={`Rider ${result.fullname}`} loading="lazy" className={styles.table__body_cell_flag} />
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td className={`${styles.table__body_cell} ${styles.table__body_cell__team}`}>{result.team}</td>
-                        <td className={`${styles.table__body_cell} ${styles.table__body_cell__time}`}>{result.time}</td>
-                    </tr>
-                ))}
+                            </td>
+                            <td className={`${styles.table__body_cell} ${styles.table__body_cell__team}`}>{result.team}</td>
+                            <td className={`${styles.table__body_cell} ${styles.table__body_cell__time}`}>{result.time}</td>
+                        </tr>
+                    );
+                })}
             </tbody>
         </table>
     </section>
 )}
+
 
 
                 <Link to="/reviewpdf" className="nav-link" aria-current="page">
