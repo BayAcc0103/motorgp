@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Review.css';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -6,6 +6,7 @@ import { Button, Table } from 'react-bootstrap';
 import logofim from './asset/logofim.png';
 import logomotorgp from './asset/logomotorgp.png';
 import logotissot from './asset/logotissot.png';
+import { useLocation } from 'react-router-dom';
 
 const riderData = [
     {
@@ -52,6 +53,7 @@ const riderData = [
 ];
 
 const ReviewPDF = () => {
+    const [events, setEvents] = useState([]);
     const generatePDF = () => {
         const input = document.getElementById('pdf-content');
         html2canvas(input).then((canvas) => {
@@ -64,6 +66,26 @@ const ReviewPDF = () => {
             pdf.save('schedule.pdf');
         });
     };
+    const location = useLocation();
+    const { selectedYear } = location.state || {}; // Default to undefined if state is not passed
+
+    console.log(selectedYear); // Now you can use the selectedYear in this component
+
+    useEffect(() => {
+        const fetchEvents = async () => {
+            try {
+                const response = await fetch('http://localhost:3002/api/calendar');
+                const data = await response.json();
+                setEvents(data);
+            } catch (error) {
+                console.error('Error fetching events:', error)
+            }
+        }
+        fetchEvents();
+
+    }, [])
+
+
     return (
         <>
             <div id="pdf-content">
@@ -90,19 +112,10 @@ const ReviewPDF = () => {
                             <tr>
                                 <th>Rider</th>
                                 <th>Points</th>
-                                <th>QAT</th>
-                                <th>POR</th>
-                                <th>AME</th>
-                                <th>SPA</th>
-                                <th>FRA</th>
-                                <th>CAT</th>
-                                <th>ITA</th>
-                                <th>NED</th>
-                                <th>GER</th>
-                                <th>GBR</th>
-                                <th>AUT</th>
-                                <th>ARA</th>
-                                <th>RSM</th>
+                                {events.map(event => (
+                                    <th key={event._id}>{event.short_name}</th>
+                                ))}
+
                             </tr>
                         </thead>
                         <tbody>
