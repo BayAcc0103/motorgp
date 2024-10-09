@@ -28,6 +28,7 @@ const CalendarAdmin = () => {
     sponsored_img: '', // New image fields
     circuit_track_img: '',
     flag_img: '',
+    short_name:''
   });
   const [changesSaved, setChangesSaved] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
@@ -101,7 +102,8 @@ const CalendarAdmin = () => {
         circuit_img: selectedEvent.circuit_img, // New image fields
         sponsored_img: selectedEvent.sponsored_img,
         circuit_track_img: selectedEvent.circuit_track_img,
-        flag_img: selectedEvent.flag_img
+        flag_img: selectedEvent.flag_img,
+        short_name: selectedEvent.short_name
       });
       setOnEdit(true);
       setShowModal(true);
@@ -328,10 +330,12 @@ const CalendarAdmin = () => {
             <th>Season_id</th>
             <th>Circuit name</th>
             <th>Country name</th>
+            <th>Country's short name</th> 
             <th>Image flag</th>
             <th>Image background</th>
             <th>Image track</th>
             <th>Image sponcor</th>
+            
           </tr>
         </thead>
         <tbody>
@@ -356,6 +360,7 @@ const CalendarAdmin = () => {
               <td>{event.season_id}</td>
               <td>{event.circuit_name}</td>
               <td>{event.country_name}</td>
+              <td>{event.short_name}</td>
               <td>{event.flag_img && <img src={event.flag_img} alt="Image 1" style={{ width: '50px', height: 'auto' }} />}</td>
               <td>{event.circuit_img && <img src={event.circuit_img} alt="Image 2" style={{ width: '50px', height: 'auto' }} />}</td>
               <td>{event.circuit_track_img && <img src={event.circuit_track_img} alt="Image 3" style={{ width: '50px', height: 'auto' }} />}</td>
@@ -465,6 +470,16 @@ const CalendarAdmin = () => {
                 type="text"
                 name="country_name"
                 value={eventData.country_name}
+                onChange={handleInputChange}
+                required
+              />
+            </Form.Group>
+            <Form.Group controlId="formcountryname" className="mb-3">
+              <Form.Label>Country's short name</Form.Label>
+              <Form.Control
+                type="text"
+                name="short_name"
+                value={eventData.short_name}
                 onChange={handleInputChange}
                 required
               />

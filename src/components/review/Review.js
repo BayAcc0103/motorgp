@@ -7,6 +7,7 @@ import logofim from './asset/logofim.png';
 import logomotorgp from './asset/logomotorgp.png';
 import logotissot from './asset/logotissot.png';
 import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const riderData = [
     {

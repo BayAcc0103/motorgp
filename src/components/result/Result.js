@@ -401,11 +401,17 @@ const Result = () => {
 
 
 
-                <Link to="/reviewpdf" className="nav-link" aria-current="page">
-                    <Button variant="primary">
-                        Export Admin Results to PDF
-                    </Button>
-                </Link>
+                <Link 
+    to="/reviewpdf" 
+    className="nav-link" 
+    aria-current="page" 
+    state={{ selectedYear }}  // Pass selectedYear here
+>
+    <Button variant="primary">
+        Export Admin Results to PDF
+    </Button>
+</Link>
+
             </div>
         </div>
     );
