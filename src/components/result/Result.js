@@ -405,7 +405,7 @@ const Result = () => {
     to="/reviewpdf" 
     className="nav-link" 
     aria-current="page" 
-    state={{ selectedYear }}  // Pass selectedYear here
+    state={{ selectedYear, selectedCategory }}  // Pass selectedYear here
 >
     <Button variant="primary">
         Export Admin Results to PDF

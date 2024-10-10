@@ -211,6 +211,12 @@ const ResultAdmin = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(session),
           });
+          await fetch(`http://localhost:3002/api/updatePoints/${session.id}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(session),
+          });
+          
         }
         console.log('Data saved!'); // Replace with actual save logic
         setShowSaveAlert(true);

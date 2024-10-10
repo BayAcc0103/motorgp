@@ -2,59 +2,21 @@ import React, { useState, useEffect } from 'react';
 import './Review.css';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
-import { Button, Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import logofim from './asset/logofim.png';
 import logomotorgp from './asset/logomotorgp.png';
 import logotissot from './asset/logotissot.png';
 import { useLocation } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
-
-const riderData = [
-    {
-        rider: "MARTIN Jorge [SPA]",
-        points: 312,
-        races: [
-            { total: 28, spr: 12, rac: 16 },
-            { total: 32, spr: 7, rac: 25 },
-            { total: 20, spr: 7, rac: 13 },
-            { total: 12, spr: 12, rac: 0 },
-            { total: 37, spr: 12, rac: 25 },
-            { total: 26, spr: 6, rac: 20 },
-            { total: 16, spr: 0, rac: 16 },
-            { total: 29, spr: 9, rac: 20 },
-            { total: 12, spr: 12, rac: 0 },
-            { total: 29, spr: 9, rac: 20 },
-            { total: 29, spr: 9, rac: 20 },
-            { total: 29, spr: 9, rac: 20 },
-            { total: 13, spr: 12, rac: 20 },
-            // Add remaining race data with SPR and RAC points
-        ],
-    },
-    {
-        rider: "BAGNAIA Francesco [ITA]",
-        points: 305,
-        races: [
-            { total: 31, spr: 6, rac: 25 },
-            { total: 6, spr: 6, rac: 0 },
-            { total: 13, spr: 2, rac: 11 },
-            { total: 25, spr: 0, rac: 25 },
-            { total: 16, spr: 0, rac: 16 },
-            { total: 25, spr: 0, rac: 25 },
-            { total: 37, spr: 12, rac: 25 },
-            { total: 37, spr: 12, rac: 25 },
-            { total: 32, spr: 7, rac: 25 },
-            { total: 16, spr: 0, rac: 16 },
-            { total: 37, spr: 12, rac: 25 },
-            { total: 1, spr: 1, rac: 0 },
-            { total: 29, spr: 9, rac: 20 },
-            // Add remaining race data with SPR and RAC points
-        ],
-    },
-    // Add more riders as per your data
-];
 
 const ReviewPDF = () => {
     const [events, setEvents] = useState([]);
+    const [riders, setRiders] = useState([]);
+    const [riderResults, setRiderResults] = useState([]);
+    const [sessions, setSessions] = useState([]);
+
+    const location = useLocation();
+    const { selectedYear, selectedCategory } = location.state || {};
+
     const generatePDF = () => {
         const input = document.getElementById('pdf-content');
         html2canvas(input).then((canvas) => {
@@ -67,30 +29,49 @@ const ReviewPDF = () => {
             pdf.save('schedule.pdf');
         });
     };
-    const location = useLocation();
-    const { selectedYear } = location.state || {}; // Default to undefined if state is not passed
-
-    console.log(selectedYear); // Now you can use the selectedYear in this component
 
     useEffect(() => {
-        const fetchEvents = async () => {
+        const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:3002/api/calendar');
-                const data = await response.json();
-                setEvents(data);
+                const [eventsResponse, ridersResponse, riderResultsResponse, sessionsResponse] = await Promise.all([
+                    fetch('http://localhost:3002/api/calendar'),
+                    fetch('http://localhost:3002/api/riders'),
+                    fetch('http://localhost:3002/api/result'),
+                    fetch('http://localhost:3002/api/sessions'),
+                ]);
+
+                const eventsData = await eventsResponse.json();
+                const ridersData = await ridersResponse.json();
+                const riderResultsData = await riderResultsResponse.json();
+                const sessionsData = await sessionsResponse.json();
+
+                setEvents(eventsData);
+                setRiders(ridersData);
+                setRiderResults(riderResultsData);
+                setSessions(sessionsData);
             } catch (error) {
-                console.error('Error fetching events:', error)
+                console.error('Error fetching data:', error);
             }
-        }
-        fetchEvents();
+        };
 
-    }, [])
+        fetchData();
+    }, []);
 
+    // Filter events based on selectedYear
+    const filteredEvents = events.filter(event => new Date(event.date_start).getFullYear().toString() === selectedYear);
+    
+    // Find all riders that have results in the selected year and category
+    const filteredRiders = riders.filter(rider => {
+        return riderResults.some(result => {
+            const session = sessions.find(s => s.id === result.sessionId);
+            return session && session.category === selectedCategory && session.eventId && filteredEvents.some(evt => evt.id === session.eventId);
+        });
+    });
 
     return (
         <>
             <div id="pdf-content">
-                <div className="mb-4">
+            <div className="mb-4">
                     <div className="container-fluid review__container">
                         <div className="review__header-container d-flex justify-content-between">
                             <div>
@@ -113,43 +94,77 @@ const ReviewPDF = () => {
                             <tr>
                                 <th>Rider</th>
                                 <th>Points</th>
-                                {events.map(event => (
+                                {filteredEvents.map(event => (
                                     <th key={event._id}>{event.short_name}</th>
                                 ))}
-
                             </tr>
                         </thead>
                         <tbody>
-                            {riderData.map((rider, index) => (
-                                <tr key={index}>
-                                    <td>{rider.rider}</td>
-                                    <td>{rider.points}</td>
-                                    {rider.races.map((race, i) => (
-                                        <td key={i}>
-                                            <div>{race.total}</div>
-                                            <div style={{ fontSize: 'smaller' }}>
-                                                <span>SPR: {race.spr}</span>
-                                                <br />
-                                                <span>RAC: {race.rac}</span>
-                                            </div>
-                                        </td>
-                                    ))}
+                            {filteredRiders.map((rider, index) => {
+                                const results = riderResults.filter(result => result.riderID === rider.id);
+                                const racesResults = {};
+
+                                results.forEach(result => {
+                                    const session = sessions.find(s => s.id === result.sessionId);
+                                    if (session && session.category === selectedCategory) {
+                                        const sessionName = session.sessionName; // e.g., "RAC", "SPR"
+                                        const eventKey = filteredEvents.find(event => event.id === session.eventId)?.short_name; // Get the short name from the session's eventId
+
+                                        if (eventKey) {
+                                            if (!racesResults[eventKey]) {
+                                                racesResults[eventKey] = { RAC: 0, SPR: 0 };
+                                            }
+
+                                            // Map points based on session type
+                                            if (sessionName === 'RAC') {
+                                                racesResults[eventKey].RAC = result.points ?? 0;
+                                            } else if (sessionName === 'SPR') {
+                                                racesResults[eventKey].SPR = result.points ?? 0;
+                                            }
+                                        }
+                                    }
+                                });
+                                 // Access yearlyPoints for the selected year
+                                 const yearlyPoints = rider.yearlyPoints ? rider.yearlyPoints[selectedYear] || 0 : 0;
+
+
+
+                                return (
+                                    <tr key={                                    index}>
+                                    <td>{rider.name}</td>
+                                    <td>{yearlyPoints}</td>
+                                    {filteredEvents.map(event => {
+                                        const eventResults = racesResults[event.short_name] || { RAC: 0, SPR: 0 };
+
+                                        // Log results for each event
+                                        console.log(`Event: ${event.short_name}, RAC Points: ${eventResults.RAC}, SPR Points: ${eventResults.SPR}`);
+
+                                        // Display both RAC and SPR points in the same cell
+                                        return (
+                                            <td key={event._id}>
+                                                <div>{eventResults.RAC} / {eventResults.SPR}</div>
+                                            </td>
+                                        );
+                                    })}
                                 </tr>
-                            ))}
-                        </tbody>
-                    </Table>
-                </div>
+                            );
+                        })}
+                    </tbody>
+                </Table>
             </div>
-            <div>
-                <button class="button-82-pushable" onClick={generatePDF} style={{ margin: '20px 200px 20px 100px' }}>
-                    <span class="button-82-shadow"></span>
-                    <span class="button-82-edge"></span>
-                    <span class="button-82-front text">
-                        Export to PDF
-                    </span>
-                </button>
-            </div>
-        </>
-    );
+        </div>
+        <div>
+            <button className="button-82-pushable" onClick={generatePDF} style={{ margin: '20px 200px 20px 100px' }}>
+                <span className="button-82-shadow"></span>
+                <span className="button-82-edge"></span>
+                <span className="button-82-front text">
+                    Export to PDF
+                </span>
+            </button>
+        </div>
+    </>
+);
 };
+
 export default ReviewPDF;
+
