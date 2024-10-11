@@ -63,7 +63,7 @@ const RiderAdmin = () => {
         // Extract imageUrl from the response and set the respective state
         const urls = imagesData.map(image => image.imageUrl); // Map to get imageUrl
         switch (category) {
-          case 'riderUrl':
+          case 'riderImage':
             setRiderUrl(urls); // Lù mé chỉnh nhiều vãi
             break;
           case 'imageUrl':
@@ -77,7 +77,7 @@ const RiderAdmin = () => {
         console.error('Error fetching images:', error);
       }
     };
-    fetchImages('riderUrl');
+    fetchImages('riderImage');
     fetchImages('imageUrl');
   }, []);
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import ProtectedRoute from './context/ProtectedRoute';
 import Navbar from './components/navbar/Navbar';
 import Homepage from './components/news/Homepage';
 import LoginForm from './components/loginform/Loginform';
@@ -28,7 +29,10 @@ const App = () => {
         <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/calendar" element={<Calendar />} />
-        <Route path="/result" element={<Result />} />
+        {/* <Route exact path='/' element={<ProtectedRoute/>}>
+      <Route exact path='/result' element={<Result/>}/>
+</Route> */}
+        <Route path='/result' element={<Result/>}/>
         <Route path="/standing" element={<Standing />} />
         <Route path="/rider" element={<Rider />} />
         <Route path="/team" element={<Team />} />

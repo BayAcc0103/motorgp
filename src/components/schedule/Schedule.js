@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
+
+import { useLocation } from 'react-router-dom';
 import './Schedule.css'; // Ensure that the styling is handled in this CSS file
 
 const Schedule = () => {
     // Example data
-    const events = [
-        { date: '2024-01-03', time: '15:00-15:05', category: 'MotoGP™', event: 'Practice Nr. 2' },
-        { date: '2024-01-03', time: '16:00-16:35', category: 'MotoGP™', event: 'Qualifying Nr. 1' },
-        { date: '2024-01-04', time: '15:00-15:05', category: 'MotoGP™', event: 'Tissot Sprint' },
-        { date: '2024-01-04', time: '16:00-16:35', category: 'MotoGP™', event: 'Best of' },
-        // Add more events for different dates
+    const sessions = [
+        { date: '2024-01-03', time: '15:00-15:05', category: 'MotoGP™', session: 'Practice Nr. 2' },
+        { date: '2024-01-03', time: '16:00-16:35', category: 'MotoGP™', session: 'Qualifying Nr. 1' },
+        { date: '2024-01-04', time: '15:00-15:05', category: 'MotoGP™', session: 'Tissot Sprint' },
+        { date: '2024-01-04', time: '16:00-16:35', category: 'MotoGP™', session: 'Best of' },
+        // Add more sessions for different dates
     ];
 
     // Extract unique dates
-    const uniqueDates = [...new Set(events.map(event => event.date))];
-
+    const uniqueDates = [...new Set(sessions.map(session => session.date))];
+    const location = useLocation();
+    const selectedEvent = location.state?.selectedEvent;
+    console.log(selectedEvent)
     const [selectedDate, setSelectedDate] = useState(uniqueDates[0]); // Initially select the first date
 
     // Add Saturday, Sunday similarly
@@ -42,8 +46,8 @@ const Schedule = () => {
                 <div className="schedule-content">
                     <table>
                         <tbody>
-                            {events
-                                .filter(event => event.date === selectedDate)
+                            {sessions
+                                .filter(session => session.date === selectedDate)
                                 .map((item, index) => (
                                     <tr key={index} class="event-schedule__content-item event-schedule__content-item--finished">
                                         <td>
@@ -54,7 +58,7 @@ const Schedule = () => {
                                             </div>
                                         </td>
                                         <td>{item.category}</td>
-                                        <td>{item.event}</td>
+                                        <td>{item.session}</td>
                                     </tr>
                                 ))}
                         </tbody>

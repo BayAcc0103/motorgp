@@ -211,6 +211,9 @@
     height: 1.3rem;
 }
 
+.event-block {
+    cursor: pointer; /* Changes cursor to a pointer when hovering */
+}
 /* (Có thể dùng đến)
 .object-fit-cover-picture__img {
     width: 100%;
