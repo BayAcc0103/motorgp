@@ -25,7 +25,9 @@ const ResultAdmin = () => {
     eventId: '',
     category: '',
     sessionName: '',
-    sessionDate: ''
+    sessionDate: '',
+    time_start: '',
+    time_end: ''
   });
   const [timedata, setTimedata] = useState({
     sessionTime: '', // This will hold the time formatted as "HH:mm"
@@ -210,8 +212,7 @@ const ResultAdmin = () => {
       setShowSessionModal(true);
     }
   };
-
-
+  
 
 
   // Function to clear selection of session
@@ -469,47 +470,37 @@ const ResultAdmin = () => {
               </Form.Control>
             </Form.Group>
             <Form.Group>
-              <Form.Label>Session Date & Time</Form.Label>
-              <div className="d-flex">
-                <Form.Control
-                  type="date"
-                  name="sessionDate"
-                  value={sessionData.sessionDate ? sessionData.sessionDate.split('T')[0] : ''}
-                  onChange={(e) => {
-                    const newDate = new Date(e.target.value);
-                    setSessionData({
-                      ...sessionData,
-                      sessionDate: newDate.toISOString() // Set the date as ISO string
-                    });
-                  }}
-                  min={new Date(selectedEvent ? selectedEvent.date_start : new Date()).toISOString().split('T')[0]} // Min to event start date
-                  max={new Date(selectedEvent ? selectedEvent.date_end : new Date()).toISOString().split('T')[0]} // Max to event end date  
-                  placeholder="Date"
-                  style={{ width: '200px', marginRight: '5px' }} // Adjust width as needed
-                />
-                <Form.Control
-  type="time"
-  name="sessionTime" // This won't directly affect the sessionData but will be combined with sessionDate
-  value={timedata.sessionTime || ''} // Use the time state for showing input
-  onChange={(e) => {
-    const timeParts = e.target.value.split(':');
-    const currentDate = new Date(sessionData.sessionDate);
-    currentDate.setHours(parseInt(timeParts[0]));
-    currentDate.setMinutes(parseInt(timeParts[1]));
-    setSessionData({
-      ...sessionData,
-      sessionDate: currentDate.toISOString() // Merge time into sessionDate
-    });
-    setTimedata({
-      sessionTime: e.target.value // Update time state
-    });
-  }}
-  style={{ width: '100px' }}
-/>
 
-              </div>
+              <Form.Label>Session Date</Form.Label>
+
+              <Form.Control
+                type="date"
+                name="sessionDate"
+                value={sessionData.sessionDate ? sessionData.sessionDate.split('T')[0] : ''}
+                onChange={handleSessionInputChange}
+                min={new Date(selectedEvent ? selectedEvent.date_start : new Date()).toISOString().split('T')[0]} // Min to event start date
+                max={new Date(selectedEvent ? selectedEvent.date_end : new Date()).toISOString().split('T')[0]} // Max to event end date
+              />
+
+
             </Form.Group>
-
+            <Form.Group>
+              <Form.Label>Session Start Time</Form.Label>
+              <div className="d-flex"></div>
+                 <Form.Control
+                 type="time"
+                 name="time_start"
+                 value={sessionData.time_start}
+                 onChange={handleSessionInputChange} />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Session End Time</Form.Label>
+                 <Form.Control
+                 type="time"
+                 name="time_end"
+                 value={sessionData.time_end}
+                 onChange={handleSessionInputChange} />
+            </Form.Group>
           </Form>
         </Modal.Body>
 
@@ -644,7 +635,9 @@ const ResultAdmin = () => {
             <th></th>
             <th>ID</th>
             <th>Event</th>
-            <th>session Date</th>
+            <th>Session Date</th>
+            <th>Session Time Start</th>
+            <th>Session Time End</th>
             <th>Category</th>
             <th>session</th>
           </tr>
@@ -667,8 +660,9 @@ const ResultAdmin = () => {
                 </td>
                 <td>{session ? session.id : 'N/A'}</td>
                 <td>{session ? session.name : 'Unknown session'}</td>
-                <td>{new Date(sessionItem.sessionDate).toLocaleString({ dateStyle: 'short', timeStyle: 'short' })}</td>
-
+                <td>{new Date(sessionItem.sessionDate).toLocaleDateString()}</td>
+                <td>{sessionItem.time_start}</td>
+                <td>{sessionItem.time_end}</td>
                 <td>{sessionItem.category}</td>
                 <td>{sessionItem.sessionName}</td>
               </tr>
