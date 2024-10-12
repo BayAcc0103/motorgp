@@ -13,11 +13,12 @@
   text-transform: capitalize;
   font-family: "Bangers", system-ui;
 }
-/* Rider grid layout similar to team-grid */
+
+/* Rider grid layout */
 .rider-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Creates a flexible grid with consistent sizing */
-  gap: 30px; /* Matches the gap in the team grid */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Flexible grid */
+  gap: 30px; /* Gap between grid items */
   justify-content: center;
   padding: 20px;
 }
@@ -26,53 +27,58 @@
   background-color: #fff;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for a lifted look */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
-  transition: transform 0.3s ease; /* Adds a smooth hover effect */
+  transition: transform 0.3s ease;
 }
 
 .rider-card:hover {
-  transform: translateY(-10px); /* Lifts the card on hover, similar to the team-card */
+  transform: translateY(-10px);
 }
 
 .rider-card__image {
   width: 100%;
-  height: auto; /* Ensures the image maintains aspect ratio */
-  border-bottom: 1px solid #ddd; /* Adds a separator line between the image and content */
+  height: auto;
+  border-bottom: 1px solid #ddd;
 }
 
 .rider-card__info {
   padding: 15px;
+  text-align: left; /* Align text to the left */
 }
 
 .rider-card__id {
   font-size: 0.85rem;
   font-weight: bold;
   color: #555;
+  margin-bottom: 5px; /* Add some bottom margin for spacing */
 }
 
 .rider-card__name {
-  font-size: 1.5rem; /* Increases the size for better readability, similar to team card name */
-  margin: 10px 0;
+  font-size: 1.5rem;
+  margin: 5px 0; /* Simplify margins for better alignment */
   font-weight: bold;
   color: #333;
 }
 
-.rider-card__country,
-.rider-card__team {
-  font-size: 1rem; /* Standardizes font size for country and team info */
-  color: #777;
+.rider-card__country {
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Center vertically */
+}
+
+.rider-card__flag {
+  width: 35px; /* Set flag width */
+  height: auto; /* Maintain aspect ratio */
+  margin-right: 5px; /* Space between flag and country text */
+  border-radius: 20%; /* Make the flag image round */
+}
+
+.vertical-line {
+  margin: 0 5px; /* Space around the vertical line */
+  color: #000; /* Vertical line color */
+  font-size: 20px; /* Vertical line size */
 }
 
 .rider-card__team {
-  margin-top: 5px;
-  display: block;
-  font-weight: 500;
-}
-
-/* Optional media query to adjust image height on smaller screens */
-@media (max-width: 768px) {
-  .rider-card__image {
-    height: 200px;
-  }
+  margin-left: 5px; /* Space added between vertical line and team name */
 }

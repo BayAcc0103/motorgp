@@ -18,4 +18,30 @@
     width: 100%;
     max-width: 800px;
   }
+
+.floating-button-group {
+  position: fixed; /* Fixes the position to the screen */
+  bottom: 20px; /* Position from the bottom */
+  left: 50%; /* Position from the left edge of the viewport */
+  transform: translateX(-50%); /* Center the buttons horizontally */
+  display: flex; /* Display button group in a row */
+  flex-direction: column; /* Stack buttons vertically */
+  align-items: center; /* Center the buttons in the column */
+  gap: 10px; /* Space between buttons */
+}
+
+.button-group {
+  display: flex; /* Ensure buttons are displayed in a row */
+  justify-content: center; /* Center the buttons in the group */
+}
+
+.button-group {
+  display: flex; /* Ensure buttons are displayed in a row */
+  justify-content: center; /* Center vertically */
+}
+
+.button-group .btn {
+  min-width: 120px; /* Optional: Set minimum width for buttons */
+}
+
   
