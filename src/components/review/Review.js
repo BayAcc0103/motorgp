@@ -8,6 +8,50 @@ import logomotorgp from './asset/logomotorgp.png';
 import logotissot from './asset/logotissot.png';
 import { useLocation } from 'react-router-dom';
 
+const riderData = [
+    {
+        rider: "MARTIN Jorge [SPA]",
+        points: 312,
+        races: [
+            { total: 28, spr: 12, rac: 16 },
+            { total: 32, spr: 7, rac: 25 },
+            { total: 20, spr: 7, rac: 13 },
+            { total: 12, spr: 12, rac: 0 },
+            { total: 37, spr: 12, rac: 25 },
+            { total: 26, spr: 6, rac: 20 },
+            { total: 16, spr: 0, rac: 16 },
+            { total: 29, spr: 9, rac: 20 },
+            { total: 12, spr: 12, rac: 0 },
+            { total: 29, spr: 9, rac: 20 },
+            { total: 29, spr: 9, rac: 20 },
+            { total: 29, spr: 9, rac: 20 },
+            { total: 13, spr: 12, rac: 20 },
+            // Add remaining race data with SPR and RAC points
+        ],
+    },
+    {
+        rider: "BAGNAIA Francesco [ITA]",
+        points: 305,
+        races: [
+            { total: 31, spr: 6, rac: 25 },
+            { total: 6, spr: 6, rac: 0 },
+            { total: 13, spr: 2, rac: 11 },
+            { total: 25, spr: 0, rac: 25 },
+            { total: 16, spr: 0, rac: 16 },
+            { total: 25, spr: 0, rac: 25 },
+            { total: 37, spr: 12, rac: 25 },
+            { total: 37, spr: 12, rac: 25 },
+            { total: 32, spr: 7, rac: 25 },
+            { total: 16, spr: 0, rac: 16 },
+            { total: 37, spr: 12, rac: 25 },
+            { total: 1, spr: 1, rac: 0 },
+            { total: 29, spr: 9, rac: 20 },
+            // Add remaining race data with SPR and RAC points
+        ],
+    },
+    // Add more riders as per your data
+];
+
 const ReviewPDF = () => {
     const [events, setEvents] = useState([]);
     const [riders, setRiders] = useState([]);

@@ -63,11 +63,11 @@ const RiderAdmin = () => {
         // Extract imageUrl from the response and set the respective state
         const urls = imagesData.map(image => image.imageUrl); // Map to get imageUrl
         switch (category) {
-          case 'riderUrl':
+          case 'riderImage':
             setRiderUrl(urls); // Lù mé chỉnh nhiều vãi
             break;
-          case 'imageUrl':
-            setImageUrl(urls); // Lù mé chỉnh nhiều vãi
+          case 'flagImage':
+            setImageUrl(urls); // Lù mé chỉnh nhiều 
             break;
           default:
             console.warn(`Unknown image category: ${category}`);
@@ -77,8 +77,8 @@ const RiderAdmin = () => {
         console.error('Error fetching images:', error);
       }
     };
-    fetchImages('riderUrl');
-    fetchImages('imageUrl');
+    fetchImages('riderImage');
+    fetchImages('flagImage');
   }, []);
 
   //Getting all team data from backend for dropdown list
@@ -353,7 +353,9 @@ const RiderAdmin = () => {
               <td>{rider.year}</td>
               <td>{rider.totalPoints}</td>
               <td>{rider.position}</td>
-              <td>{rider.riderUrl}</td>
+              <td>
+                <img src={rider.riderUrl} alt={rider.name} style={{ width: '150px', height: 'auto' }} />
+              </td>
               <td>
                 <img src={rider.imageUrl} alt={rider.name} style={{ width: '50px', height: 'auto' }} />
               </td>
@@ -364,7 +366,7 @@ const RiderAdmin = () => {
       </Table>
 
       {/* Buttons */}
-      <div className="button-group mt-4 d-flex justify-content-center">
+      {/* <div className="button-group mt-4 d-flex justify-content-center">
         <Button variant="primary" onClick={handleShowAdd}>Add</Button>
         <Button
           variant="success"
@@ -386,7 +388,35 @@ const RiderAdmin = () => {
           disabled={!hasUnsavedChanges}>
           Save
         </Button>
+      </div> */}
+
+      {/* Buttons */}
+      <div className="floating-button-group">
+        <div className="button-group mt-4">
+          <Button variant="primary" onClick={handleShowAdd}>Add</Button>
+          <Button
+            variant="success"
+            className="mx-2"
+            disabled={!currentRiderId}
+            onClick={handleShowEdit}>
+            Edit
+          </Button>
+          <Button
+            variant="danger"
+            disabled={!currentRiderId}
+            onClick={deleteSelectedRiders}>
+            Delete
+          </Button>
+          <Button
+            variant="info"
+            className="mx-2"
+            onClick={handleSave}
+            disabled={!hasUnsavedChanges}>
+            Save
+          </Button>
+        </div>
       </div>
+
 
       {/* Add/Edit Rider Modal */}
       <Modal show={showModal} onHide={handleClose}>

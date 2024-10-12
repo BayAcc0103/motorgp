@@ -3,8 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { Button, Table, Form, Modal, Alert } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid'; // Import UUID for unique IDs
 import './Account.css';
+import { Dialog, DialogTitle, DialogContent, Grid, DialogActions } from "@mui/material";
 
 const TeamAdmin = () => {
+  const [bikeUrl, setBikeUrl] = useState(''); // State for bike URL
   const [error, setError] = useState(''); // State for error messages
   const [teams, setTeams] = useState([]); // State for teams
   const [showModal, setShowModal] = useState(false);
@@ -23,6 +25,7 @@ const TeamAdmin = () => {
     technicalDirector: '',
     engineSupplier: '',
     tyreSupplier: '',
+    bikeUrl: '',
   });
   const [changesSaved, setChangesSaved] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
@@ -42,8 +45,30 @@ const TeamAdmin = () => {
         console.error('Error fetching teams:', error);
       }
     };
-    
     fetchTeams();
+
+     // Fetching image to useState for storing
+     const fetchImages = async (category) => {
+      try {
+        const response = await fetch(`http://localhost:3002/api/defaultImages/${category}`); // Fetch images from category
+        const imagesData = await response.json(); // Parse the JSON response
+
+        // Extract imageUrl from the response and set the respective state
+        const urls = imagesData.map(image => image.imageUrl); // Map to get imageUrl
+        switch (category) {
+          case 'teamImage':
+            setBikeUrl(urls); // Lù mé chỉnh nhiều vãi
+            break;
+          default:
+            console.warn(`Unknown image category: ${category}`);
+            break;
+        }
+      } catch (error) {
+        console.error('Error fetching images:', error);
+      }
+    };
+    fetchImages('teamImage');
+
   }, []);
 
   // Handle showing the modal for adding a team
@@ -64,6 +89,7 @@ const TeamAdmin = () => {
       technicalDirector: '',
       engineSupplier: '',
       tyreSupplier: '',
+      //bikeUrl: '',
     });
   };
 
@@ -170,13 +196,76 @@ const TeamAdmin = () => {
       console.error('Error saving teams:', error);
     }
   };
+
+  //xử lí ảnh 
+  const [open, setOpen] = useState(false);
+  const handleCloseDialog = () => {
+    setOpen(false);
+  };
+  const handleClose1 = () => {
+    setOpen(false);
+  };
+  const [currentImageSet, setCurrentImageSet] = useState([]); // Initialize as an empty array
+  const [selectedImage1] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(null);
+
+   // Image sets
+   const imagesSet1 = bikeUrl;
+   const handleOpen = (images, index) => {
+     setCurrentImageSet(images);
+     setCurrentImageIndex(index);
+     setOpen(true);
+   };
+ 
+   //error
+  //    // Modal form for image selection
+  // const handleImageSelect = (image) => {
+  //   const updatedTeamData = { ...teamData };  // Create a copy of riderData
+  //   if (currentImageIndex === 0) {
+  //     updatedTeamData.riderUrl = image; // Save image1
+  //   }
+  //   setTeamData(updatedTeamData);
+  //   handleClose1();
+  // };
   
+      const handleImageSelect = (image) => {
+        const updatedTeamData = { ...teamData };  // Create a copy of teamData
+        updatedTeamData.bikeUrl = image; // Save selected image to bikeUrl
+        setTeamData(updatedTeamData); // Update state with new team data
+        handleClose1(); // Close the dialog
+      };
+
 
   return (
     <div className="account-container d-flex flex-column justify-content-center align-items-center min-vh-100">
       <div>
         {error && <Alert variant="danger">{error}</Alert>}
       </div>
+
+      {/* Image selection dialog */}
+      <Dialog open={open} onClose={handleCloseDialog} style={{ backgroundImage: 'url(https://motogpvideogame.com/wp-content/uploads/it-only-happens-in-motogp24.webp)', backgroundSize: "cover" }}>
+        <DialogTitle style={{ backgroundColor: "grey" }}>Select an Image</DialogTitle>
+        <DialogContent style={{ backgroundColor: "grey", color: "white" }}>
+          <Grid container spacing={2}>
+            {Array.isArray(currentImageSet) && currentImageSet.map((image, index) => (  // Check if currentImageSet is an array
+              <Grid item xs={3} key={index}>
+                <img
+                  src={image}
+                  alt={`img-${index}`}
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    cursor: "pointer",
+                    // border: (currentImageIndex === 0 && selectedImage1 === image) || (currentImageIndex === 1 && selectedImage2 === image) || (currentImageIndex === 2 && selectedImage3 === image) || (currentImageIndex === 3 && selectedImage4 === image) ? "2px solid blue" : "none",
+                  }}
+                  onClick={() => handleImageSelect(image)}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </DialogContent>
+      </Dialog>
+
 
       {changesSaved && (
         <Alert variant="success" onClose={() => setChangesSaved(false)} dismissible>
@@ -192,6 +281,7 @@ const TeamAdmin = () => {
       <Table striped bordered hover className="text-center">
         <thead>
           <tr>
+            <th></th>
             <th>#</th>
             <th>Name</th>
             <th>Description</th>
@@ -200,6 +290,7 @@ const TeamAdmin = () => {
             <th>Podiums</th>
             <th>Total Points</th>
             <th>Team Principal</th>
+            <th>Image</th>
           </tr>
         </thead>
         <tbody>
@@ -227,6 +318,9 @@ const TeamAdmin = () => {
               <td>{team.podiums}</td>
               <td>{team.totalPoints}</td>
               <td>{team.teamPrincipal}</td>
+              <td>
+                <img src={team.bikeUrl} alt={team.name} style={{ width: '50px', height: 'auto' }} />
+              </td>
             </tr>
           ))}
         </tbody>
@@ -355,6 +449,18 @@ const TeamAdmin = () => {
                 value={teamData.tyreSupplier}
                 onChange={handleInputChange}
               />
+            </Form.Group>
+
+            {/* Display selected images in the form */}
+            <Form.Group controlId="formriderurl" className="mb-3">
+              <Button variant="primary" className="me-2 mt-2" onClick={() => handleOpen(imagesSet1, 0)}>Add Team Bike</Button>
+              {teamData.bikeUrl && (
+                <img
+                  src={teamData.bikeUrl}
+                  alt="riderUrl"
+                  style={{ width: '125px', height: '212px' }}
+                />
+              )}
             </Form.Group>
 
             <Button variant="primary" type="submit">
