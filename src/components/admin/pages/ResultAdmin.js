@@ -8,6 +8,8 @@ import { v4 as uuidv4 } from 'uuid'; // Importing uuid for generating unique IDs
 const ResultAdmin = () => {
   // State variables for events and categories
   const [events, setEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+
   const [categories] = useState(['MotoGP', 'Moto2', 'Moto3']);
 
   // State for current selections and modal visibility
@@ -23,8 +25,14 @@ const ResultAdmin = () => {
     eventId: '',
     category: '',
     sessionName: '',
-    sessionDate: ''
+    sessionDate: '',
+    time_start: '',
+    time_end: ''
   });
+  const [timedata, setTimedata] = useState({
+    sessionTime: '', // This will hold the time formatted as "HH:mm"
+  });
+
   const [sessions, setSessions] = useState([]);
 
 
@@ -71,10 +79,26 @@ const ResultAdmin = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (selectedSession) {
+      const event = events.find(event => event.id === selectedSession.eventId);
+      // Set the selected event
+      setSelectedEvent(event)
+    }
+  }, [selectedSession]);
+
+  useEffect(() => {
+    if (sessionData) {
+      console.log('session data: ', sessionData)
+    }
+  }, [sessionData]);
+
+
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         console.log('Fetching data from APIs...');
-        
+
         const [eventsResponse, ridersResponse, riderResultsResponse, sessionsResponse] = await Promise.all([
           fetch('http://localhost:3002/api/calendar'),
           fetch('http://localhost:3002/api/riders'),
@@ -82,22 +106,22 @@ const ResultAdmin = () => {
           fetch('http://localhost:3002/api/sessions'),
         ]);
 
-        console.log('Responses received:');
-        console.log('Events response:', eventsResponse);
-        console.log('Riders response:', ridersResponse);
-        console.log('Rider results response:', riderResultsResponse);
-        console.log('Sessions response:', sessionsResponse);
+        // console.log('Responses received:');
+        // console.log('Events response:', eventsResponse);
+        // console.log('Riders response:', ridersResponse);
+        // console.log('Rider results response:', riderResultsResponse);
+        // console.log('Sessions response:', sessionsResponse);
 
         const eventsData = await eventsResponse.json();
         const ridersData = await ridersResponse.json();
         const riderResultsData = await riderResultsResponse.json();
         const sessionsData = await sessionsResponse.json();
 
-        console.log('Parsed data:');
-        console.log('Events data:', eventsData);
-        console.log('Riders data:', ridersData);
-        console.log('Rider results data:', riderResultsData);
-        console.log('Sessions data:', sessionsData);
+        // console.log('Parsed data:');
+        // console.log('Events data:', eventsData);
+        // console.log('Riders data:', ridersData);
+        // console.log('Rider results data:', riderResultsData);
+        // console.log('Sessions data:', sessionsData);
 
         setEvents(eventsData);
         setRiders(ridersData);
@@ -119,8 +143,10 @@ const ResultAdmin = () => {
 
 
   // Function to show category modal
-  const handleShowCategoryModal = (session) => {
+  const handleShowCategoryModal = async (session) => {
     setcurrentEventId(session);
+    const event = events.find(event => event.id === session);
+    setSelectedEvent(event); // Set the selected event
     setShowCategoryModal(true);
   };
 
@@ -148,7 +174,8 @@ const ResultAdmin = () => {
         (session) =>
           session.eventId === sessionData.eventId &&
           session.category === sessionData.category &&
-          session.sessionName === sessionData.sessionName
+          session.sessionName === sessionData.sessionName &&
+          new Date(session.sessionDate).getTime() === new Date(sessionData.sessionDate).getTime() // Compare as date if needed
       );
 
       if (!isSessionExist) {
@@ -170,11 +197,22 @@ const ResultAdmin = () => {
   const handleEditSession = () => {
     if (selectedSession) {
       setIsEditing(true);
-      setSessionData(selectedSession);
+      setSessionData(selectedSession); // Set the entire session data
+
+      // Extracting the existing time from sessionDate
+      const existingDate = new Date(selectedSession.sessionDate);
+      const hours = existingDate.getHours().toString().padStart(2, '0'); // Pad with zeros if necessary
+      const minutes = existingDate.getMinutes().toString().padStart(2, '0'); // Pad with zeros if necessary
+
+      // Set the time correctly to show in the input fields when editing
+      setTimedata({
+        sessionTime: `${hours}:${minutes}` // Initialize time value
+      });
+
       setShowSessionModal(true);
     }
   };
-
+  
 
 
   // Function to clear selection of session
@@ -204,7 +242,7 @@ const ResultAdmin = () => {
             method: 'DELETE',
           });
         }
-        else if (session.isEdited){
+        else if (session.isEdited) {
           // Otherwise, update the session via PUT using its UUID
           await fetch(`http://localhost:3002/api/sessions/${session.id}`, {
             method: 'PUT',
@@ -216,7 +254,7 @@ const ResultAdmin = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(session),
           });
-          
+
         }
         console.log('Data saved!'); // Replace with actual save logic
         setShowSaveAlert(true);
@@ -245,7 +283,7 @@ const ResultAdmin = () => {
             method: 'DELETE',
           });
         }
-        else if(riderResult.isEdited){
+        else if (riderResult.isEdited) {
           // Otherwise, update the riderResult via PUT using its UUID
           await fetch(`http://localhost:3002/api/result/${riderResult.id}`, {
             method: 'PUT',
@@ -307,6 +345,7 @@ const ResultAdmin = () => {
       setShowRiderModal(true);
     }
   };
+
   // Function to handle selection of Sessions
   const handleSelectSessions = (id) => {
     setSelectedSessions((prevSelected) =>
@@ -352,7 +391,7 @@ const ResultAdmin = () => {
           Save successful!
         </Alert>
       )}
-  
+
       {/* Dropdown for Events */}
       <Dropdown className="mb-4">
         <Dropdown.Toggle variant="info" id="dropdown-basic">
@@ -360,7 +399,7 @@ const ResultAdmin = () => {
             ? `${events.find(session => session.id === currentEventId)?.name} - ${currentCategory}`
             : 'Select a session and Category'}
         </Dropdown.Toggle>
-  
+
         <Dropdown.Menu>
           {events.map((session, index) => (
             <Dropdown.Item key={index} onClick={() => handleShowCategoryModal(session.id)}>
@@ -369,7 +408,7 @@ const ResultAdmin = () => {
           ))}
         </Dropdown.Menu>
       </Dropdown>
-  
+
       {/* Category Modal */}
       <Modal show={showCategoryModal} onHide={handleCloseCategoryModal}>
         <Modal.Header closeButton>
@@ -388,7 +427,7 @@ const ResultAdmin = () => {
           ))}
         </Modal.Body>
       </Modal>
-  
+
       {/* session Modal */}
       <Modal show={showSessionModal} onHide={() => setShowSessionModal(false)}>
         <Modal.Header closeButton>
@@ -431,24 +470,47 @@ const ResultAdmin = () => {
               </Form.Control>
             </Form.Group>
             <Form.Group>
-              <Form.Label>session Date</Form.Label>
+
+              <Form.Label>Session Date</Form.Label>
+
               <Form.Control
                 type="date"
                 name="sessionDate"
-                value={sessionData.sessionDate}
+                value={sessionData.sessionDate ? sessionData.sessionDate.split('T')[0] : ''}
                 onChange={handleSessionInputChange}
+                min={new Date(selectedEvent ? selectedEvent.date_start : new Date()).toISOString().split('T')[0]} // Min to event start date
+                max={new Date(selectedEvent ? selectedEvent.date_end : new Date()).toISOString().split('T')[0]} // Max to event end date
               />
+
+
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Session Start Time</Form.Label>
+              <div className="d-flex"></div>
+                 <Form.Control
+                 type="time"
+                 name="time_start"
+                 value={sessionData.time_start}
+                 onChange={handleSessionInputChange} />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Session End Time</Form.Label>
+                 <Form.Control
+                 type="time"
+                 name="time_end"
+                 value={sessionData.time_end}
+                 onChange={handleSessionInputChange} />
             </Form.Group>
           </Form>
         </Modal.Body>
-  
+
         <Modal.Footer>
           <Button variant="primary" onClick={handleSessionSubmit}>
             {isEditing ? 'Save Changes' : 'Save session'}
           </Button>
         </Modal.Footer>
       </Modal>
-  
+
       {/* Rider Modal */}
       <Modal show={showRiderModal} onHide={() => setShowRiderModal(false)}>
         <Modal.Header closeButton>
@@ -465,7 +527,7 @@ const ResultAdmin = () => {
                 onChange={handleRiderInputChange}
               />
             </Form.Group> */}
-            
+
             <Form.Group>
               <Form.Label>Time</Form.Label>
               <div className="d-flex">
@@ -484,10 +546,12 @@ const ResultAdmin = () => {
                   type="text"
                   name="seconds"
                   value={riderResultFormData.seconds}
-                  onChange={(e) => {setriderResultFormData({
-                    ...riderResultFormData,
-                    seconds: e.target.value
-                  }); handleRiderInputChange(e)}}
+                  onChange={(e) => {
+                    setriderResultFormData({
+                      ...riderResultFormData,
+                      seconds: e.target.value
+                    }); handleRiderInputChange(e)
+                  }}
                   placeholder="Seconds"
                   style={{ width: '100px', marginRight: '5px' }}
                 />
@@ -495,10 +559,12 @@ const ResultAdmin = () => {
                   type="text"
                   name="milliseconds"
                   value={riderResultFormData.milliseconds}
-                  onChange={(e) => {setriderResultFormData({
-                    ...riderResultFormData,
-                    milliseconds: e.target.value
-                  });handleRiderInputChange(e)}}
+                  onChange={(e) => {
+                    setriderResultFormData({
+                      ...riderResultFormData,
+                      milliseconds: e.target.value
+                    }); handleRiderInputChange(e)
+                  }}
                   placeholder="Milliseconds"
                   style={{ width: '100px' }}
                 />
@@ -515,7 +581,7 @@ const ResultAdmin = () => {
                 onChange={handleRiderInputChange}
               />
             </Form.Group>
-  
+
             <Form.Group>
               <Form.Label>Full Name</Form.Label>
               <Select
@@ -534,7 +600,7 @@ const ResultAdmin = () => {
                 placeholder="Select a rider"
               />
             </Form.Group>
-  
+
             <Form.Group>
               <Form.Label>Flag</Form.Label>
               <Form.Control
@@ -561,7 +627,7 @@ const ResultAdmin = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-  
+
       {/* Sessions Table */}
       <Table striped bordered hover className="mt-4">
         <thead>
@@ -569,39 +635,43 @@ const ResultAdmin = () => {
             <th></th>
             <th>ID</th>
             <th>Event</th>
-            <th>session Date</th>
+            <th>Session Date</th>
+            <th>Session Time Start</th>
+            <th>Session Time End</th>
             <th>Category</th>
             <th>session</th>
           </tr>
         </thead>
         <tbody>
-  {sessions.map((sessionItem) => {
-    const session = events.find(event => event.id === sessionItem.eventId); // Find the session by ID
-    return (
-      <tr
-        key={sessionItem.id}
-        onClick={() => setSelectedSession(sessionItem)}
-        style={{ cursor: "pointer", backgroundColor: sessionItem.isDeleted ? 'red' : (sessionItem === selectedSession ? '#f0f8ff' : '') }}
-      >
-        <td>
-          <input
-            type="checkbox"
-            checked={selectedSessions.includes(sessionItem.id)}
-            onChange={() => handleSelectSessions(sessionItem.id)}
-          />
-        </td>
-        <td>{session ? session.id : 'N/A'}</td>
-        <td>{session ? session.name : 'Unknown session'}</td>
-        <td>{new Date(sessionItem.sessionDate).toLocaleDateString()}</td>
-        <td>{sessionItem.category}</td>
-        <td>{sessionItem.sessionName}</td>
-      </tr>
-    );
-  })}
-</tbody>
+          {sessions.map((sessionItem) => {
+            const session = events.find(event => event.id === sessionItem.eventId); // Find the session by ID
+            return (
+              <tr
+                key={sessionItem.id}
+                onClick={() => setSelectedSession(sessionItem)}
+                style={{ cursor: "pointer", backgroundColor: sessionItem.isDeleted ? 'red' : (sessionItem === selectedSession ? '#f0f8ff' : '') }}
+              >
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={selectedSessions.includes(sessionItem.id)}
+                    onChange={() => handleSelectSessions(sessionItem.id)}
+                  />
+                </td>
+                <td>{session ? session.id : 'N/A'}</td>
+                <td>{session ? session.name : 'Unknown session'}</td>
+                <td>{new Date(sessionItem.sessionDate).toLocaleDateString()}</td>
+                <td>{sessionItem.time_start}</td>
+                <td>{sessionItem.time_end}</td>
+                <td>{sessionItem.category}</td>
+                <td>{sessionItem.sessionName}</td>
+              </tr>
+            );
+          })}
+        </tbody>
 
       </Table>
-  
+
       {/* Rider Data Table */}
       <Table striped bordered hover className="mt-4">
         <thead>
@@ -649,13 +719,12 @@ const ResultAdmin = () => {
                 </tr>
               )
             })}
-          {console.log(riderResults)}
         </tbody>
       </Table>
-  
+
       {/* Action Buttons */}
       <div className="mt-3">
-      <Button
+        <Button
           variant="warning"
           className="m-2"
           onClick={handleEditSession}
@@ -679,8 +748,8 @@ const ResultAdmin = () => {
         >
           Delete Result
         </Button>
-        
-      <Button
+
+        <Button
           variant="warning"
           className="m-2"
           onClick={handleEditRider}
@@ -697,7 +766,7 @@ const ResultAdmin = () => {
       </div>
     </div>
   );
-  
+
 };
 
 export default ResultAdmin; // Exporting the ResultAdmin component

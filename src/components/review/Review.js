@@ -103,7 +103,7 @@ const ReviewPDF = () => {
 
     // Filter events based on selectedYear
     const filteredEvents = events.filter(event => new Date(event.date_start).getFullYear().toString() === selectedYear);
-    
+
     // Find all riders that have results in the selected year and category
     const filteredRiders = riders.filter(rider => {
         return riderResults.some(result => {
@@ -115,7 +115,7 @@ const ReviewPDF = () => {
     return (
         <>
             <div id="pdf-content">
-            <div className="mb-4">
+                <div className="mb-4">
                     <div className="container-fluid review__container">
                         <div className="review__header-container d-flex justify-content-between">
                             <div>
@@ -168,46 +168,46 @@ const ReviewPDF = () => {
                                         }
                                     }
                                 });
-                                 // Access yearlyPoints for the selected year
-                                 const yearlyPoints = rider.yearlyPoints ? rider.yearlyPoints[selectedYear] || 0 : 0;
+                                // Access yearlyPoints for the selected year
+                                const yearlyPoints = rider.yearlyPoints ? rider.yearlyPoints[selectedYear] || 0 : 0;
 
 
 
                                 return (
-                                    <tr key={                                    index}>
-                                    <td>{rider.name}</td>
-                                    <td>{yearlyPoints}</td>
-                                    {filteredEvents.map(event => {
-                                        const eventResults = racesResults[event.short_name] || { RAC: 0, SPR: 0 };
+                                    <tr key={index}>
+                                        <td>{rider.name}</td>
+                                        <td>{yearlyPoints}</td>
+                                        {filteredEvents.map(event => {
+                                            const eventResults = racesResults[event.short_name] || { RAC: 0, SPR: 0 };
 
-                                        // Log results for each event
-                                        console.log(`Event: ${event.short_name}, RAC Points: ${eventResults.RAC}, SPR Points: ${eventResults.SPR}`);
+                                            // Log results for each event
+                                            console.log(`Event: ${event.short_name}, RAC Points: ${eventResults.RAC}, SPR Points: ${eventResults.SPR}`);
 
-                                        // Display both RAC and SPR points in the same cell
-                                        return (
-                                            <td key={event._id}>
-                                                <div>{eventResults.RAC} / {eventResults.SPR}</div>
-                                            </td>
-                                        );
-                                    })}
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </Table>
+                                            // Display both RAC and SPR points in the same cell
+                                            return (
+                                                <td key={event._id}>
+                                                    <div>{eventResults.RAC} / {eventResults.SPR}</div>
+                                                </td>
+                                            );
+                                        })}
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </Table>
+                </div>
             </div>
-        </div>
-        <div>
-            <button className="button-82-pushable" onClick={generatePDF} style={{ margin: '20px 200px 20px 100px' }}>
-                <span className="button-82-shadow"></span>
-                <span className="button-82-edge"></span>
-                <span className="button-82-front text">
-                    Export to PDF
-                </span>
-            </button>
-        </div>
-    </>
-);
+            <div>
+                <button className="button-82-pushable" onClick={generatePDF} style={{ margin: '20px 200px 20px 100px' }}>
+                    <span className="button-82-shadow"></span>
+                    <span className="button-82-edge"></span>
+                    <span className="button-82-front text">
+                        Export to PDF
+                    </span>
+                </button>
+            </div>
+        </>
+    );
 };
 
 export default ReviewPDF;

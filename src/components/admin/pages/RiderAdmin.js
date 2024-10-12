@@ -78,7 +78,7 @@ const RiderAdmin = () => {
       }
     };
     fetchImages('riderImage');
-    fetchImages('flagImage');
+    fetchImages('imageUrl');
   }, []);
 
   //Getting all team data from backend for dropdown list
