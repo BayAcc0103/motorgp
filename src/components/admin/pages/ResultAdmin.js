@@ -1,6 +1,3 @@
-
-
-
 import Select from 'react-select';  // Importing react-select
 import React, { useState, useEffect } from 'react'; // Importing React and hooks
 import { Button, Modal, Dropdown, Table, Alert, Form } from 'react-bootstrap'; // Importing components from react-bootstrap
@@ -212,7 +209,7 @@ const ResultAdmin = () => {
       setShowSessionModal(true);
     }
   };
-  
+
 
 
   // Function to clear selection of session
@@ -323,6 +320,7 @@ const ResultAdmin = () => {
       setSelectedRiderResult(null);
     } else {
       // Add new rider
+
       setriderResults([...riderResults, { ...riderResultFormData, id: uuidv4(), sessionId: selectedSession.id, isNew: true, riderID: filteredRider ? filteredRider.id : '', time: formattedTime }]); // Generate unique ID for new rider
     }
     setShowRiderModal(false);
@@ -487,19 +485,19 @@ const ResultAdmin = () => {
             <Form.Group>
               <Form.Label>Session Start Time</Form.Label>
               <div className="d-flex"></div>
-                 <Form.Control
-                 type="time"
-                 name="time_start"
-                 value={sessionData.time_start}
-                 onChange={handleSessionInputChange} />
+              <Form.Control
+                type="time"
+                name="time_start"
+                value={sessionData.time_start}
+                onChange={handleSessionInputChange} />
             </Form.Group>
             <Form.Group>
               <Form.Label>Session End Time</Form.Label>
-                 <Form.Control
-                 type="time"
-                 name="time_end"
-                 value={sessionData.time_end}
-                 onChange={handleSessionInputChange} />
+              <Form.Control
+                type="time"
+                name="time_end"
+                value={sessionData.time_end}
+                onChange={handleSessionInputChange} />
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -514,7 +512,7 @@ const ResultAdmin = () => {
       {/* Rider Modal */}
       <Modal show={showRiderModal} onHide={() => setShowRiderModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>{isEditingResult ? 'Edit Rider Information' : 'Add Rider Information'}</Modal.Title>
+          <Modal.Title>{isEditingResult ? 'Edit Result Information' : 'Add Result Information'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -755,7 +753,27 @@ const ResultAdmin = () => {
           onClick={handleEditRider}
           disabled={!selectedRiderResult}
         >
-          Edit Rider
+          Edit Result
+        </Button>
+
+        <Button
+          variant="primary"
+          className="m-2"
+          onClick={() => {
+            setisEditingResult(false); // Reset editing state
+            setriderResultFormData({
+              riderID: '',
+              position: '',
+              time: '',
+              number: '',
+              fullName: '',
+              flag: '',
+              team: ''
+            });
+            setShowRiderModal(true); // Show rider modal
+          }}
+        >
+          Add Result
         </Button>
         <Button variant="primary" className="m-2" onClick={handleSave}>
           Save
