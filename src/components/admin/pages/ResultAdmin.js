@@ -38,6 +38,7 @@ const ResultAdmin = () => {
   const [riderResults, setriderResults] = useState([]);
   const [selectedSession, setSelectedSession] = useState(null);
   const [selectedSessions, setSelectedSessions] = useState([]);
+  const [teams, setTeams] = useState([]);
   const [riderResultFormData, setriderResultFormData] = useState({
     riderID: '',
     position: '',
@@ -96,11 +97,13 @@ const ResultAdmin = () => {
       try {
         console.log('Fetching data from APIs...');
 
-        const [eventsResponse, ridersResponse, riderResultsResponse, sessionsResponse] = await Promise.all([
+        const [eventsResponse, ridersResponse, riderResultsResponse, sessionsResponse, teamsResponse] = await Promise.all([
           fetch('http://localhost:3002/api/calendar'),
           fetch('http://localhost:3002/api/riders'),
           fetch('http://localhost:3002/api/result'),
           fetch('http://localhost:3002/api/sessions'),
+          fetch('http://localhost:3002/api/teams'),
+        
         ]);
 
         // console.log('Responses received:');
@@ -113,6 +116,7 @@ const ResultAdmin = () => {
         const ridersData = await ridersResponse.json();
         const riderResultsData = await riderResultsResponse.json();
         const sessionsData = await sessionsResponse.json();
+        const teamData = await teamsResponse.json();
 
         // console.log('Parsed data:');
         // console.log('Events data:', eventsData);
@@ -124,6 +128,7 @@ const ResultAdmin = () => {
         setRiders(ridersData);
         setriderResults(riderResultsData);
         setSessions(sessionsData);
+        setTeams(teamData);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -307,7 +312,7 @@ const ResultAdmin = () => {
 
   // Function to add or update rider information
   const handleAddResult = () => {
-    const filteredRider = riders.filter(rider => rider.rider_full_name === riderResultFormData.fullName)[0];
+    const filteredRider = riders.filter(rider => rider.name === riderResultFormData.fullName)[0];
     const formattedTime = `${riderResultFormData.minutes}:${riderResultFormData.seconds}:${riderResultFormData.milliseconds}`;
 
     if (isEditingResult) {
@@ -320,19 +325,25 @@ const ResultAdmin = () => {
       setSelectedRiderResult(null);
     } else {
       // Add new rider
-
-      setriderResults([...riderResults, { ...riderResultFormData, id: uuidv4(), sessionId: selectedSession.id, isNew: true, riderID: filteredRider ? filteredRider.id : '', time: formattedTime }]); // Generate unique ID for new rider
+      setriderResults([...riderResults, 
+        { ...riderResultFormData, 
+          id: uuidv4(), 
+          sessionId: selectedSession.id, 
+          isNew: true, 
+          riderID: filteredRider ? filteredRider.id : '', 
+          number: filteredRider ? filteredRider.driverNb : '',
+          time: formattedTime }]); // Generate unique ID for new rider
     }
     setShowRiderModal(false);
-    setriderResultFormData({
-      riderID: '',
-      position: '',
-      time: '',
-      number: '',
-      fullName: '',
-      flag: '',
-      team: ''
-    });
+    // setriderResultFormData({
+    //   riderID: '',
+    //   position: '',
+    //   time: '',
+    //   number: '',
+    //   fullName: '',
+    //   flag: '',
+    //   team: ''
+    // });
   };
 
   // Function to handle editing of rider
@@ -584,8 +595,8 @@ const ResultAdmin = () => {
               <Form.Label>Full Name</Form.Label>
               <Select
                 options={riders.map(rider => ({
-                  value: rider.rider_full_name,
-                  label: rider.rider_full_name
+                  value: rider.name,
+                  label: rider.name
                 }))} // Create options from riders
                 onChange={(selectedOption) => {
                   setriderResultFormData({
@@ -611,11 +622,17 @@ const ResultAdmin = () => {
             <Form.Group>
               <Form.Label>Team</Form.Label>
               <Form.Control
-                type="text"
+                as="select"
                 name="team"
                 value={riderResultFormData.team}
                 onChange={handleRiderInputChange}
-              />
+                required
+              >
+                <option value="">Select Team</option>
+                {teams.map((team) => (
+                  <option key={team._id} value={team._id}>{team.name}</option> 
+                ))}
+              </Form.Control>
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -690,6 +707,7 @@ const ResultAdmin = () => {
             .filter((rider) => rider.sessionId === selectedSession?.id)
             .map((rider) => {
               const riderData = riders.find(r => r.rider_full_name === rider.fullName); // Find the rider by full name
+              const team = teams.find(team => team._id === rider.team);
               return (
                 <tr
                   key={rider.id}
@@ -713,7 +731,7 @@ const ResultAdmin = () => {
                   <td>{rider.number}</td>
                   <td>{rider.fullName}</td>
                   <td>{rider.flag}</td>
-                  <td>{rider.team}</td>
+                  <td>{team ? team.name : 'Unknown Team'}</td>
                 </tr>
               )
             })}
