@@ -134,7 +134,7 @@ const eventsData = [{
                 {
                     "riderId": "650ab8d3f0a21345678901245",
                     "position": 1,
-                    "time": "01:30.901",
+                    "time": "01:30901",
                     "number": "12",
                     "fullname": "Luca Marini",
                     "flag": "https://static-files.motogp.pulselive.com/assets/flags/it.svg",
@@ -143,7 +143,7 @@ const eventsData = [{
                 {
                     "riderId": "650ab8d3f0a21345678901267",
                     "position": 2,
-                    "time": "01:31.234",
+                    "time": "01:31234",
                     "number": "45",
                     "fullname": "Johann Zarco",
                     "flag": "https://static-files.motogp.pulselive.com/assets/flags/fr.svg",
@@ -159,7 +159,7 @@ const eventsData = [{
                 {
                     "riderId": "650ab8d3f0a21345678901289",
                     "position": 1,
-                    "time": "01:29.567",
+                    "time": "01:29567",
                     "number": "23",
                     "fullname": "Enea Bastianini",
                     "flag": "https://static-files.motogp.pulselive.com/assets/flags/it.svg",
@@ -168,7 +168,7 @@ const eventsData = [{
                 {
                     "riderId": "650ab8d3f0a21345678901201",
                     "position": 2,
-                    "time": "01:30.234",
+                    "time": "01:30234",
                     "number": "5",
                     "fullname": "Fabio Quartararo",
                     "flag": "https://static-files.motogp.pulselive.com/assets/flags/fr.svg",
@@ -190,18 +190,22 @@ const Result = () => {
     const [riders, setRiders] = useState([]);
 
     function convertTime(time) {
+        console.log(time);
         const timeParts = time.split(':');
-        if (timeParts.length !== 2) {
-            throw new Error('Invalid time format. Expected format: m:s');
+    
+        // Check if the provided time format is correct
+        if (timeParts.length !== 3) {
+            throw new Error('Invalid time format. Expected format: m:s:ms');
         }
     
-        const minutes = parseInt(timeParts[0], 10);
-        const seconds = parseFloat(timeParts[1], 10);
+        const minutes = parseInt(timeParts[0], 10); // Get minutes
+        const seconds = parseFloat(timeParts[1], 10); // Get seconds
+        const milliseconds = parseFloat(timeParts[2], 10); // Get milliseconds
     
-        // Convert total time to seconds
-        const totalSeconds = minutes * 60 + seconds;
+        // Convert total time to milliseconds
+        const totalMilliseconds = (minutes * 60 * 1000) + (seconds * 1000) + milliseconds;
     
-        return totalSeconds
+        return totalMilliseconds;
     }
 
     useEffect(() => {
