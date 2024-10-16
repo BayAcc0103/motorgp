@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Table, Form, Modal, Alert } from 'react-bootstrap';
 import './Account.css';
 
 const Accounts = () => {
   const [accounts, setAccounts] = useState([
-    { id: 1, name: 'Account 1', email: 'account1@example.com', role: 'Admin' },
-    { id: 2, name: 'Account 2', email: 'account2@example.com', role: 'User' },
+    { _id: 1, name: 'Account 1', email: 'account1@example.com', role: 'Admin' },
+    { _id: 2, name: 'Account 2', email: 'account2@example.com', role: 'User' },
   ]);
 
   const [showModal, setShowModal] = useState(false);
@@ -14,6 +14,77 @@ const Accounts = () => {
   const [accountData, setAccountData] = useState({ name: '', email: '', role: '' });
   const [changesSaved, setChangesSaved] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+        try {
+            const response = await fetch('http://localhost:3002/api/users');
+            const data = await response.json();
+            setAccounts(data);
+        } catch (error) {
+            console.error("Error fetching event data:", error);
+        }
+    };
+
+    fetchUsers();
+}, []);
+
+  useEffect(() => {
+    if(accounts){
+      console.log(accounts)
+    }
+  },[accounts])
+
+  
+  
+  // Handle saving changes
+  const handleSave = async () => {
+    try {
+      // Loop through all events and send updates to the backend
+      for (const account of accounts) {
+        if (account.isNew) {
+          // If the event is new, POST it to the backend
+          await fetch('http://localhost:3002/api/calendar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(account),
+          });
+        } else if (account.isDeleted) {
+          // If the event is deleted, delete it from the backend
+          await fetch(`http://localhost:3002/api/users/${account._id}`, {
+            method: 'DELETE',
+          });
+        }
+        else if (account.isEdited){
+          // Otherwise, update the event via PUT using its UUID
+          await fetch(`http://localhost:3002/api/users/${account._id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(account),
+          });
+        }
+      }
+
+      // re-fetch the updated list of events from the backend after save
+      const response = await fetch('http://localhost:3002/api/users');
+      const updatedUsers = await response.json();
+      setAccounts(updatedUsers);
+
+      setChangesSaved(true);
+      setHasUnsavedChanges(false); // Reset the unsaved changes flag
+    } catch (error) {
+      console.error('Error saving events:', error);
+    }
+  };
+
+const handleSelectUser = (_id) => {
+  setSelectedUsers((prevSelected) =>
+    prevSelected.includes(_id)
+      ? prevSelected.filter((userId) => userId !== _id)
+      : [...prevSelected, _id]
+  );
+};
 
   // Handle showing the modal
   const handleShowAdd = () => {
@@ -24,7 +95,7 @@ const Accounts = () => {
 
   const handleShowEdit = () => {
     if (currentAccountId) {
-      const selectedAccount = accounts.find((account) => account.id === currentAccountId);
+      const selectedAccount = accounts.find((account) => account._id === currentAccountId);
       setAccountData({
         name: selectedAccount.name,
         email: selectedAccount.email,
@@ -48,30 +119,26 @@ const Accounts = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (onEdit) {
-      setAccounts(accounts.map((account) => (account.id === currentAccountId ? { ...account, ...accountData } : account)));
+      setAccounts(accounts.map((account) => (account._id === currentAccountId ? { ...account, ...accountData, isEdited: true } : account)));
     } else {
-      setAccounts([...accounts, { ...accountData, id: accounts.length + 1 }]);
+      setAccounts([...accounts, { ...accountData, isNew: true }]);
     }
     handleClose();
     setHasUnsavedChanges(true);
   };
 
   const handleRowClick = (account) => {
-    setCurrentAccountId(account.id); 
+    setCurrentAccountId(account._id); 
   };
 
-  const deleteAccount = () => {
-    if (currentAccountId) {
-      setAccounts(accounts.filter((account) => account.id !== currentAccountId));
-      setCurrentAccountId(null);
-      setHasUnsavedChanges(true);
-    }
-  };
 
-  // Handle saving changes
-  const handleSave = () => {
-    setChangesSaved(true);
-    setHasUnsavedChanges(false);
+
+  const deleteSelectedUsers = () => {
+    setAccounts(accounts.map(account =>
+      selectedUsers.includes(account._id) ? { ...account, isDeleted: true } : account
+    ));
+    setSelectedUsers([]); // Clear the selected events after deletion
+    setHasUnsavedChanges(true);
   };
 
   return (
@@ -101,11 +168,18 @@ const Accounts = () => {
         <tbody>
           {accounts.map((account) => (
             <tr 
-              key={account.id} 
+              key={account._id} 
               onClick={() => handleRowClick(account)} 
-              style={{ cursor: 'pointer', backgroundColor: account.id === currentAccountId ? '#f0f8ff' : '' }} 
+              style={{ cursor: 'pointer', backgroundColor: account._id === currentAccountId ? '#f0f8ff' : '' }} 
             >
-              <td>{account.id}</td>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selectedUsers.includes(account._id)}
+                  onChange={() => handleSelectUser(account._id)}
+                />
+              </td>
+              <td>{account._id}</td>
               <td>{account.name}</td>
               <td>{account.email}</td>
               <td>{account.role}</td>
@@ -127,7 +201,7 @@ const Accounts = () => {
         <Button 
           variant="danger" 
           disabled={!currentAccountId} 
-          onClick={deleteAccount}>
+          onClick={deleteSelectedUsers}>
           Delete
         </Button>
         <Button 
@@ -170,13 +244,23 @@ const Accounts = () => {
 
             <Form.Group controlId="formRole" className="mb-3">
               <Form.Label>Role</Form.Label>
-              <Form.Control 
+              {/* <Form.Control 
                 type="text" 
                 name="role" 
                 value={accountData.role} 
                 onChange={handleInputChange} 
                 required 
-              />
+              /> */}
+              <Form.Control
+                as="select"
+                name="role"
+                value={accountData.role}
+                onChange={handleInputChange}
+              >
+                <option value="">Select a role</option>
+                <option value="admin">Admin</option>/
+                <option value="user">User</option>/
+              </Form.Control>
             </Form.Group>
 
             <Button variant="primary" type="submit">

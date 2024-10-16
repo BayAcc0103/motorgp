@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import "./Navbar.css"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from './asset/motogp-logo.jpg'
 import logo1 from './asset/helmet.png'
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
-const Navbar = () => {
+
+const Navbar = ({ userName, onUserLogin }) => {
   const [currentDate, setCurrentDate] = useState('');
+  const navigate = useNavigate()
 
   useEffect(() => {
     const updateDate = () => {
@@ -25,6 +27,13 @@ const Navbar = () => {
     const interval = setInterval(updateDate, 1000 * 60); // Cập nhật mỗi phút
     return () => clearInterval(interval); // Dọn dẹp interval khi component unmount
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login'); // Chuyển hướng đến trang đăng nhập sau khi đăng xuất
+    onUserLogin(null); // Reset username on logout
+  };
+
 
   return (
     <>
@@ -87,11 +96,19 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          <div class="d-flex gap-2 justify-content-center custom-gap">
-            <Link to="./admin">
-              <button class="btn btn-outline-danger text-white" type="login" style={{ fontFamily: '"Playwrite DE Grund", cursive' }}>
-                <span class="bi-person-circle" ></span>Admin</button>
-            </Link>
+          <div className="d-flex gap-2 justify-content-center custom-gap">
+            {userName ? ( // Render username if logged in
+              <NavDropdown title={userName} id="user-dropdown" menuVariant="dark">
+                <NavDropdown.Item as={Link} to="/change-password">Change Password</NavDropdown.Item>
+                <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+              </NavDropdown>
+            ) : (
+              <Link to="./login">
+                <button className="btn btn-outline-danger text-white" type="button" style={{ fontFamily: '"Playwrite DE Grund", cursive' }}>
+                  <span className="bi-person-circle"></span> Login
+                </button>
+              </Link>
+            )}
             <img src={logo1} alt='racing-helmet'></img>
           </div>
           {/* thời tiết */}

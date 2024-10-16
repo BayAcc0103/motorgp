@@ -85,7 +85,7 @@ const CalendarAdmin = () => {
   const handleShowAdd = () => {
     setShowModal(true);
     setOnEdit(false);
-    setEventData({ sponsored_name: '', date_start: '', date_end: '', name: '', season_id: '', circuit_name: '', country_name: '' });
+    setEventData({ sponsored_name: '', date_start: '', date_end: '', name: '', season_id: uuidv4().toString(), circuit_name: '', country_name: '' });
   };
 
   const handleShowEdit = () => {
@@ -129,7 +129,7 @@ const CalendarAdmin = () => {
 
     } else {
       // Adding a new event
-      setEvents([...events, { ...eventData, id: uuidv4(), isNew: true }]); // Generate UUID here
+      setEvents([...events, { ...eventData, id: uuidv4(), isNew: true}]); // Generate UUID here
     }
 
     handleClose();

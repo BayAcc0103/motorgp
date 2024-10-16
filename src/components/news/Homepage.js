@@ -18,34 +18,7 @@ import Carousel from 'react-bootstrap/Carousel';
 
 const Homepage = () => {
   const [slidesToShow, setSlidesToShow] = useState(getSlidesToShow());
-  // Xử lí slide tin tức: Nếu chiều rộng màn hình < 1300 => hiển thị 3 slide, <1130 => hiển thị 2 slide, <770 => hiển thị 1 slide
-  function getSlidesToShow() {
-    const width = window.innerWidth;
-    if (width < 400) {
-      return 0;
-    } else if (width < 770) {
-      return 1;
-    } else if (width < 1130) {
-      return 2;
-    } else if (width < 1300) {
-      return 3;
-    } else {
-      return 4;
-    }
-  }
-
-  useEffect(() => {
-    const handleResize = () => {
-      setSlidesToShow(getSlidesToShow());
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  const news = [
+  const [news, setNews] = useState([
     {
       link: 'https://www.motogp.com/en/news/2024/09/29/guidotti-to-conclude-ktm-tenure-at-the-end-of-2024/509503 ',
       image: 'https://resources.motogp.pulselive.com/photo-resources/2024/09/29/20ac4afd-7065-4a1d-8653-d2b78afd81c9/544959_Francesco-Guidotti_Red-Bull-KTM_MotoGP_RC16_Red-Bull-Ring-Spielberg-_AUT_10th-Rnd.-MotoGP-2023-Red-Bull-Ring-Spielberg-_AUT_.jpg?width=400&height=225',
@@ -88,7 +61,92 @@ const Homepage = () => {
       title: 'Can Bagnaia join the history books with an eighth win on Sunday?',
       date: '28 Sep 2024'
     }
-  ]
+  ])
+  // Xử lí slide tin tức: Nếu chiều rộng màn hình < 1300 => hiển thị 3 slide, <1130 => hiển thị 2 slide, <770 => hiển thị 1 slide
+  function getSlidesToShow() {
+    const width = window.innerWidth;
+    if (width < 400) {
+      return 0;
+    } else if (width < 770) {
+      return 1;
+    } else if (width < 1130) {
+      return 2;
+    } else if (width < 1300) {
+      return 3;
+    } else {
+      return 4;
+    }
+  }
+
+  useEffect(() => {
+    const handleResize = () => {
+      setSlidesToShow(getSlidesToShow());
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const fetchNews = async () => {
+        try {
+            const response = await fetch('http://localhost:3002/api/scrape');
+            const data = await response.json();
+            setNews(data);
+        } catch (error) {
+            console.error("Error fetching news:", error);
+        }
+    };
+
+    fetchNews();
+}, []);
+
+  // const news = [
+  //   {
+  //     link: 'https://www.motogp.com/en/news/2024/09/29/guidotti-to-conclude-ktm-tenure-at-the-end-of-2024/509503 ',
+  //     image: 'https://resources.motogp.pulselive.com/photo-resources/2024/09/29/20ac4afd-7065-4a1d-8653-d2b78afd81c9/544959_Francesco-Guidotti_Red-Bull-KTM_MotoGP_RC16_Red-Bull-Ring-Spielberg-_AUT_10th-Rnd.-MotoGP-2023-Red-Bull-Ring-Spielberg-_AUT_.jpg?width=400&height=225',
+  //     title: 'Guidotti to conclude KTM tenure at the end of 2024',
+  //     date: '29 Sep 2024'
+  //   },
+  //   {
+  //     link: 'https://www.motogp.com/en/news/2024/09/29/martin-makes-sunday-statement-as-bagnaias-late-surge-salvages-podium/509109',
+  //     image: 'https://resources.motogp.pulselive.com/photo-resources/2024/09/29/94849a97-91f6-4d1a-bd00-8373a64f8f7b/Report-MGP-RACE.jpg?width=400&height=225',
+  //     title: 'Martin makes Sunday statement as Bagnaia’s late surge salvages podium',
+  //     date: '29 Sep 2024'
+  //   },
+  //   {
+  //     link: 'https://www.motogp.com/en/news/2024/09/29/what-a-race-social-media-reacts-to-a-thrilling-indonesian-gp/509112',
+  //     image: 'https://resources.motogp.pulselive.com/photo-resources/2024/09/29/9fe6d612-b010-4010-8817-513dcc2b6b78/_DS_0423-1-.jpg?width=400&height=225',
+  //     title: '"WHAT A RACE" - Social media reacts to a thrilling Indonesian GP',
+  //     date: '29 Sep 2024'
+  //   },
+  //   {
+  //     link: 'https://www.motogp.com/en/news/2024/09/29/canet-converts-pole-to-p1-as-ogura-extends-title-advantage/509100',
+  //     image: 'https://resources.motogp.pulselive.com/photo-resources/2024/09/29/ab2048cc-d59b-4fec-bcf3-a5e7aeea8418/Report-M2-RACE.jpg?width=400&height=225',
+  //     title: 'Canet converts pole to P1 as Ogura extends title advantage',
+  //     date: '26 Sep 2024'
+  //   },
+  //   {
+  //     link: 'https://www.motogp.com/en/news/2024/09/29/alonso-steals-victory-from-fernandez-as-veijer-crashes-in-indonesia/509099',
+  //     image: 'https://resources.motogp.pulselive.com/photo-resources/2024/09/29/faf89cc6-3f8d-4e40-a39e-4d8e5e91d9c1/Report-M3-RACE.jpg?width=400&height=225',
+  //     title: 'Alonso steals victory from Fernandez as Veijer crashes in Indonesia',
+  //     date: '29 Sep 2024'
+  //   },
+  //   {
+  //     link: 'https://www.motogp.com/en/news/2024/09/29/martin-lands-top-honours-in-warm-up/509103',
+  //     image: 'https://resources.motogp.pulselive.com/photo-resources/2024/09/29/dc7ffeaa-e5d5-4e1b-b989-d006ffa76a54/Report-MGP-WUP.jpg?width=400&height=225',
+  //     title: 'Martin lands top honours in Warm Up',
+  //     date: '29 Sep 2024'
+  //   },
+  //   {
+  //     link: 'https://www.motogp.com/en/news/2024/09/28/can-bagnaia-join-the-history-books-with-an-eighth-win-on-sunday/509364',
+  //     image: 'https://resources.motogp.pulselive.com/photo-resources/2024/09/28/68c57878-1cab-4282-a36b-221b8c96cdd6/10_things-EN.jpg?width=400&height=225',
+  //     title: 'Can Bagnaia join the history books with an eighth win on Sunday?',
+  //     date: '28 Sep 2024'
+  //   }
+  // ]
 
   // Cài đặt các thuộc tính cho slider
   const settings = {

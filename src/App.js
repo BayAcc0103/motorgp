@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './context/ProtectedRoute';
 import Navbar from './components/navbar/Navbar';
@@ -20,14 +20,26 @@ import StandingAdmin from './components/admin/pages/StandingAdmin';
 import Footer from './components/footer/Footer';
 import Schedule from './components/schedule/Schedule';
 import ReviewPDF from './components/review/Review';
-
+import {jwtDecode} from 'jwt-decode'
 const App = () => {
+  const [userName, setUserName] = useState(null);
+
+  const handleUserLogin = (name) => {
+    setUserName(name);
+  };
+  
+  useEffect(() => {
+    // Check if user is logged in and set userName accordingly
+    const token = localStorage.getItem('token');
+    setUserName(token ? jwtDecode(token).user.name : null)
+  }, [])
+
   return (
     <Router>
-      <Navbar />
+      <Navbar userName={userName} onUserLogin={handleUserLogin} />
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route path="/login" element={<LoginForm />} />
+        <Route path="/login" element={<LoginForm onUserLogin={handleUserLogin} />} />
         <Route path="/calendar" element={<Calendar />} />
         {/* <Route exact path='/' element={<ProtectedRoute/>}>
       <Route exact path='/result' element={<Result/>}/>

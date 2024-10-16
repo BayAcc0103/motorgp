@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import logo from "./asset/36-1.png"
 import "./Loginform.css"
-import { useAuth } from '../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
 
-const LoginForm = () => {
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode'; // Use named import
+
+const LoginForm = ({ onUserLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [name, setName] = useState(''); // New name state
     const [message, setMessage] = useState('');
     const [isLogin, setIsLogin] = useState(true); // toggle between login and registration
-    const { getlogin } = useAuth();
     const navigate = useNavigate();
     const login = async (email, password) => {
         try {
@@ -22,19 +22,28 @@ const LoginForm = () => {
                 },
                 body: JSON.stringify({ email, password }),
             });
-            if (!response.ok) {
+            if (response.status !== 302) {
                 throw new Error('Login failed');
             }
-            const token = await response.json();
-            localStorage.setItem('token', token);
+            const user = await response.json();
+            // console.log(token)
+            // localStorage.setItem('token', token);
 
-            const userData = { email, password, token}; // replace with actual API call
-        
-        // Simulate login
-        if (email && password) { // you should validate these values
-            login(userData);
-            navigate('/result'); // Redirect to result page
-        }
+            // const userData = { email, password, token}; // replace with actual API call
+
+            // Simulate login
+            if (email && password) { // you should validate these values
+                // Decode the token to get the user's name
+                localStorage.setItem('token', user.token);
+                const decodedToken = jwtDecode(user.token);
+                const userName = decodedToken.user.name;
+                
+
+                navigate('/'); // Redirect to result page
+                // Update the username in the App component
+                onUserLogin(userName);
+                
+            }
         } catch (error) {
             console.error(error);
             setMessage('Login failed. Please check your credentials.');
@@ -82,7 +91,7 @@ const LoginForm = () => {
         setName(''); // Reset name field
         setMessage('');
     };
-    
+
     return (
         <div className="bg-fullscreen py-3 py-md-5">
             <div className="container">
@@ -114,7 +123,7 @@ const LoginForm = () => {
                                     </div>
                                     {!isLogin && (
                                         <>
-                                        <div className="col-12">
+                                            <div className="col-12">
                                                 <label htmlFor="confirmPassword" className="form-label text-light">Confirm Password <span className="text-danger">*</span></label>
                                                 <div className="input-group">
                                                     <input type="password" className="form-control" name="confirmPassword" id="confirmPassword" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
@@ -125,8 +134,8 @@ const LoginForm = () => {
                                                 <div className="input-group">
                                                     <input type="text" className="form-control" name="name" id="name" required value={name} onChange={(e) => setName(e.target.value)} />
                                                 </div>
-                                                </div>
-                                            
+                                            </div>
+
                                         </>
                                     )}
                                     <div className="col-12">
