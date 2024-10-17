@@ -1,4 +1,4 @@
-/* CSS cho FILTER */
+
 .primary_filter {
   background-color: #000;
   background-image: radial-gradient(96.8% 493.26% at 100% 93.41%, rgba(148, 4, 1, .23) 0, rgba(148, 4, 1, 0) 100%);
@@ -157,11 +157,17 @@
   }
   
   .rider_image_container {
-    height: 7rem;
-    overflow: hidden;
-    width: 10rem;
+    height: rem; /* Adjust height as needed */
+    width: 10rem; /* Ensure a fixed width */
+    overflow: hidden; /* Ensure overflow handling */
     position: relative;
-    margin-right: 5rem;
+    margin-right: 5rem; /* Add margin for spacing */
+}
+
+  .rider_image_container img {
+    width: 130%; /* Ensure the image takes full width of the container */
+    height: auto; /* Maintain its aspect ratio */
+    object-fit: cover; /* Ensure the image covers the container */
   }
   
   .table__rider_name_wrapper {

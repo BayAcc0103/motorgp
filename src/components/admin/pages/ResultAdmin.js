@@ -267,6 +267,7 @@ const ResultAdmin = () => {
       const updatedSessions = await response.json();
       setSessions(updatedSessions);
     } catch (error) {
+      alert('Error saving data:', error); // Handle error appropriately
       console.error('Error saving data:', error)
     }
     try {
@@ -299,8 +300,8 @@ const ResultAdmin = () => {
       const updatedRiderResults = await response.json();
       setriderResults(updatedRiderResults)
 
-    } catch (error) {
-
+    } catch (error) { 
+      alert('Error saving data:', error); // Handle error appropriately
     }
   };
 
