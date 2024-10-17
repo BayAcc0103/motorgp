@@ -57,18 +57,18 @@ const RiderGrid = () => {
   useEffect(() => {
     const fetchRidersAndTeams = async () => {
       try {
-        const ridersResponse = await fetch('http://localhost:3002/api/riders');
+        const ridersResponse = await fetch("http://localhost:3002/api/riders");
         if (!ridersResponse.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         const ridersData = await ridersResponse.json(); // Parse the JSON response
         setRiders(ridersData); // Update the state with fetched riders
 
-        const teamsResponse = await fetch('http://localhost:3002/api/teams');
+        const teamsResponse = await fetch("http://localhost:3002/api/teams");
         const teamsData = await teamsResponse.json(); // Parse the JSON response
         setTeams(teamsData); // Update the state with fetched teams
       } catch (error) {
-        setError('Error fetching data: ' + error.message); // Handle fetch errors
+        setError("Error fetching data: " + error.message); // Handle fetch errors
       }
     };
 
@@ -77,15 +77,16 @@ const RiderGrid = () => {
 
   // Mapping of ISO country codes to full country names
   const countryNames = {
-    'IT': 'Italy',
-    'FR': 'France',
-    'ES': 'Spain',
+    IT: "Italy",
+    FR: "France",
+    ES: "Spain",
     // Add more mappings as needed
   };
 
   return (
     <>
-      {error && <div className="error">{error}</div>} {/* Display error if exists */}
+      {error && <div className="error">{error}</div>}{" "}
+      {/* Display error if exists */}
       <div className="mb-4">
         <div className="container-fluid rider__container">
           <div className="rider__header-container">
@@ -96,20 +97,30 @@ const RiderGrid = () => {
       <div className="rider-grid">
         {riders.map((rider) => {
           // Find the corresponding team name based on teamId
-          const team = teams.find(team => team._id === rider.teamId); // Adjust your field names if needed
+          const team = teams.find((team) => team._id === rider.teamId); // Adjust your field names if needed
 
           return (
             <div className="rider-card" key={rider.id}>
-              <img className="rider-card__image" src={rider.riderUrl} alt={rider.name} />
+              <img
+                className="rider-card__image"
+                src={rider.riderUrl}
+                alt={rider.name}
+              />
               <div className="rider-card__info">
                 <span className="rider-card__id">{rider.driverNb}</span>
                 <h3 className="rider-card__name">{rider.name}</h3>
                 <span className="rider-card__country">
-                  <img className="rider-card__flag" src={rider.imageUrl} alt={rider.name} />
-                  {countryNames[rider.rider_country_iso] || 'Unknown Country'}
+                  <img
+                    className="rider-card__flag"
+                    src={rider.imageUrl}
+                    alt={rider.name}
+                  />
+                  {countryNames[rider.rider_country_iso] || "Unknown Country"}
                   {/* Separator */}
                   <span className="vertical-line">|</span>
-                  <span className="rider-card__team">{team ? team.name : 'Unknown Team'}</span>
+                  <span className="rider-card__team">
+                    {team ? team.name : "Unknown Team"}
+                  </span>
                 </span>
               </div>
             </div>
