@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from "./asset/36-1.png"
+import logo from "./asset/motogp-logo.jpg"
 import "./Loginform.css"
 
 import { useNavigate } from 'react-router-dom';
@@ -95,7 +95,7 @@ const LoginForm = ({ onUserLogin }) => {
     return (
         <div className="bg-fullscreen py-3 py-md-5">
             <div className="container">
-                <div className="row justify-content-md-center">
+                <div className="row justify-content-md-end">
                     <div className="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-6">
                         <div className="p-4 p-md-5 rounded shadow-sm custom-color">
                             <div className="row">
