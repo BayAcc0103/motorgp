@@ -51,12 +51,12 @@ const SlideBar = ({ isOpen, onClose }) => {
                         </div>
 
                         {/* Schedule Section */}
-                        <div className="list-group list-group-flush">
+                        {/* <div className="list-group list-group-flush">
                             <Link to="/admin/scheduleadmin" className="list-group-item py-2 my-1 custom-sidebar-item">
                                 <img src={calend} alt="calendar logo" style={{ width: '30px' }} />
                                 <span className="fs-5 ms-2">Schedule</span>
                             </Link>
-                        </div>
+                        </div> */}
 
                         {/* Rider Section */}
                         {/* <div className="list-group list-group-flush">
@@ -90,12 +90,12 @@ const SlideBar = ({ isOpen, onClose }) => {
                         </div>
 
                         {/* Standing Section */}
-                        <div className="list-group list-group-flush">
+                        {/* <div className="list-group list-group-flush">
                             <Link to="/admin/standingadmin" className="list-group-item py-2 my-1 custom-sidebar-item">
                                 <img src={cup} alt="standing logo" style={{ width: '30px' }} />
                                 <span className="fs-5 ms-2">Standing</span>
                             </Link>
-                        </div>
+                        </div> */}
                             
                         {/* Logout Section */}
                         <div className="list-group list-group-flush">

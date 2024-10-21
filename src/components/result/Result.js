@@ -379,7 +379,7 @@ const Result = () => {
                                     <div className={styles.rider_image_container}>
                                         {/* Use the image from the rider object */}
                                         {rider ? (
-                                            <img src={rider.imageUrl} alt={`Rider ${rider.rider_full_name}`} loading="lazy" />
+                                            <img src={rider.imageUrl} alt={`Rider ${rider.name}`} className={`w-100 h-100`} loading="lazy" />
                                         ) : (
                                             <img src="path/to/placeholder-image.png" alt="Placeholder" loading="lazy" />
                                         )}
@@ -387,9 +387,9 @@ const Result = () => {
                                     <div className={`d-flex align-items-center justify-content-start ms-auto ${styles.table__rider_name_wrapper}`}>
                                         <div className={styles.table__rider_name}>
                                             <span className={`text-danger ${styles.table__body_cell} ${styles.table__body_cell__number}`}>{result.number}</span>
-                                            <span className={`${styles.table__body_cell} ${styles.table__body_cell__full_name}`}>{result.fullname}</span>
+                                            <span className={`${styles.table__body_cell} ${styles.table__body_cell__full_name}`}>{result.fullName}</span>
                                         </div>
-                                        <img src={result.flag} alt={`Rider ${result.fullname}`} loading="lazy" className={styles.table__body_cell_flag} />
+                                        <img src={result.flag} alt={`Rider ${result.name}`} loading="lazy" className={styles.table__body_cell_flag} />
                                     </div>
                                 </div>
                             </td>

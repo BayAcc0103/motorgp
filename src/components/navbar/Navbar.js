@@ -99,6 +99,7 @@ const Navbar = ({ userName, onUserLogin }) => {
           <div className="d-flex gap-2 justify-content-center custom-gap">
             {userName ? ( // Render username if logged in
               <NavDropdown title={userName} id="user-dropdown" menuVariant="dark">
+                <NavDropdown.Item as={Link} to="./admin">Admin</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/change-password">Change Password</NavDropdown.Item>
                 <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
               </NavDropdown>
