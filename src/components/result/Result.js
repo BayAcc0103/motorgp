@@ -4,180 +4,7 @@ import styles from "./Result.module.css";
 import { Link } from "react-router-dom";
 import { Button } from 'react-bootstrap';
 
-const eventsData = [{
-    "_id": "650ab8d3f0a2134567890abc",
-    "name": "Spanish Grand Prix",
-    "location": "Circuito de Jerez",
-    "date": "2024-05-01T00:00:00.000Z",
-    "sessions": [
-        {
-            "sessionName": "RAC",
-            "sessionDate": "2024-05-01T10:00:00.000Z",
-            "category": "MotoGP",
-            "results": [
-                {
-                    "riderId": "650ab8d3f0a2134567890def",
-                    "position": 1,
-                    "time": "01:32.456",
-                    "number": "93",
-                    "fullname": "Marc Marquez",
-                    "flag": "https://static-files.motogp.pulselive.com/assets/flags/es.svg",
-                    "team": "Repsol Honda Team",
-                },
-                {
-                    "riderId": "650ab8d3f0a2134567890ghi",
-                    "position": 2,
-                    "time": "01:33.789",
-                    "number": "46",
-                    "fullname": "Valentino Rossi",
-                    "flag": "https://static-files.motogp.pulselive.com/assets/flags/it.svg",
-                    "team": "Petronas Yamaha SRT",
-                }
-            ]
-        },
-        {
-            "sessionName": "WUP",
-            "sessionDate": "2024-05-02T14:00:00.000Z",
-            "category": "MotoGP",
-            "results": [
-                {
-                    "riderId": "650ab8d3f0a2134567890jkl",
-                    "position": 1,
-                    "time": "01:31.123",
-                    "number": "36",
-                    "fullname": "Francesco Bagnaia",
-                    "flag": "https://static-files.motogp.pulselive.com/assets/flags/it.svg",
-                    "team": "Ducati Lenovo Team",
-                },
-                {
-                    "riderId": "650ab8d3f0a2134567890mno",
-                    "position": 2,
-                    "time": "01:31.789",
-                    "number": "42",
-                    "fullname": "Alex Marquez",
-                    "flag": "https://static-files.motogp.pulselive.com/assets/flags/es.svg",
-                    "team": "LCR Honda",
-                }
-            ]
-        }
-    ]
-},
-{
-    "_id": "650ab8d3f0a2134567890xyz",
-    "name": "Italian Grand Prix",
-    "location": "Autodromo Nazionale Monza",
-    "date": "2024-07-01T00:00:00.000Z",
-    "sessions": [
-        {
-            "sessionName": "SPR",
-            "sessionDate": "2024-07-01T10:00:00.000Z",
-            "category": "MotoGP",
-            "results": [
-                {
-                    "riderId": "650ab8d3f0a2134567890aaa",
-                    "position": 1,
-                    "time": "01:35.123",
-                    "number": "94",
-                    "fullname": "Fabio Quartararo",
-                    "flag": "https://static-files.motogp.pulselive.com/assets/flags/fr.svg",
-                    "team": "Yamaha Factory Racing",
-                },
-                {
-                    "riderId": "650ab8d3f0a2134567890bbb",
-                    "position": 2,
-                    "time": "01:36.456",
-                    "number": "5",
-                    "fullname": "Johann Zarco",
-                    "flag": "https://static-files.motogp.pulselive.com/assets/flags/fr.svg",
-                    "team": "Pramac Racing",
-                }
-            ]
-        },
-        {
-            "sessionName": "RAC",
-            "sessionDate": "2024-07-02T14:00:00.000Z",
-            "category": "Moto2",
-            "results": [
-                {
-                    "riderId": "650ab8d3f0a2134567890ccc",
-                    "position": 1,
 
-                    "time": "01:34.123",
-                    "number": "21",
-                    "fullname": "Franco Morbidelli",
-                    "flag": "https://static-files.motogp.pulselive.com/assets/flags/it.svg",
-                    "team": "Yamaha Factory Racing",
-                },
-                {
-                    "riderId": "650ab8d3f0a2134567890ddd",
-                    "position": 2,
-                    "time": "01:35.789",
-                    "number": "73",
-                    "fullname": "Enea Bastianini",
-                    "flag": "https://static-files.motogp.pulselive.com/assets/flags/it.svg",
-                    "team": "Gresini Racing MotoGP",
-                }
-            ]
-        }
-    ]
-}, {
-    "_id": "650ab8d3f0a21345678901234",
-    "name": "Argentine Grand Prix",
-    "location": "Termas de Rio Hondo Circuit",
-    "date": "2023-03-01T00:00:00.000Z",
-    "sessions": [
-        {
-            "sessionName": "RAC",
-            "sessionDate": "2023-03-01T10:00:00.000Z",
-            "category": "MotoGP",
-            "results": [
-                {
-                    "riderId": "650ab8d3f0a21345678901245",
-                    "position": 1,
-                    "time": "01:30901",
-                    "number": "12",
-                    "fullname": "Luca Marini",
-                    "flag": "https://static-files.motogp.pulselive.com/assets/flags/it.svg",
-                    "team": "Mooney VR46 Racing Team"
-                },
-                {
-                    "riderId": "650ab8d3f0a21345678901267",
-                    "position": 2,
-                    "time": "01:31234",
-                    "number": "45",
-                    "fullname": "Johann Zarco",
-                    "flag": "https://static-files.motogp.pulselive.com/assets/flags/fr.svg",
-                    "team": "Pramac Racing"
-                }
-            ]
-        },
-        {
-            "sessionName": "WUP",
-            "sessionDate": "2023-03-02T14:00:00.000Z",
-            "category": "MotoGP",
-            "results": [
-                {
-                    "riderId": "650ab8d3f0a21345678901289",
-                    "position": 1,
-                    "time": "01:29567",
-                    "number": "23",
-                    "fullname": "Enea Bastianini",
-                    "flag": "https://static-files.motogp.pulselive.com/assets/flags/it.svg",
-                    "team": "Gresini Racing MotoGP"
-                },
-                {
-                    "riderId": "650ab8d3f0a21345678901201",
-                    "position": 2,
-                    "time": "01:30234",
-                    "number": "5",
-                    "fullname": "Fabio Quartararo",
-                    "flag": "https://static-files.motogp.pulselive.com/assets/flags/fr.svg",
-                    "team": "Yamaha Factory Racing"
-                }
-            ]
-        }
-    ]
-},];
 
 const Result = () => {
 
@@ -188,6 +15,7 @@ const Result = () => {
     const [events, setEvents] = useState([]);
     const [results, setResults] = useState([]);
     const [riders, setRiders] = useState([]);
+    const [teams, setTeams] = useState([])
 
     function convertTime(time) {
         const timeParts = time.split(':');
@@ -232,6 +60,21 @@ const Result = () => {
             }
         }
         fetchRiders();
+
+    }, [])
+
+    useEffect(() => {
+        const fetchTeams = async () => {
+            try {
+                const response = await fetch('http://localhost:3002/api/teams');
+                const data = await response.json();
+                console.log(data)
+                setTeams(data);
+            } catch (error) {
+                console.error('Error fetching events:', error)
+            }
+        }
+        fetchTeams();
 
     }, [])
 
@@ -388,11 +231,11 @@ const Result = () => {
                                             <span className={`text-danger ${styles.table__body_cell} ${styles.table__body_cell__number}`}>{result.number}</span>
                                             <span className={`${styles.table__body_cell} ${styles.table__body_cell__full_name}`}>{result.fullName}</span>
                                         </div>
-                                        <img src={result.flag} alt={`Rider ${result.name}`} loading="lazy" className={styles.table__body_cell_flag} />
+                                        {/* <img src={result.flag} alt={`Rider ${result.name}`} loading="lazy" className={styles.table__body_cell_flag} /> */}
                                     </div>
                                 </div>
                             </td>
-                            <td className={`${styles.table__body_cell} ${styles.table__body_cell__team}`}>{result.team}</td>
+                            <td className={`${styles.table__body_cell} ${styles.table__body_cell__team}`}>{teams.find(each => each._id === result.team).name}</td>
                             <td className={`${styles.table__body_cell} ${styles.table__body_cell__time}`}>{result.time}</td>
                         </tr>
                     );
