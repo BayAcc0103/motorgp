@@ -182,9 +182,7 @@ const Result = () => {
         </div>
         <div className={`d-flex align-items-center z-1 ${styles.hero_details_container}`}>
             <img
-                src={events.find(event => event.id === selectedEventId)?.circuit_name === "Circuito de Jerez"
-                    ? "https://static-files.motogp.pulselive.com/assets/flags/es.svg"
-                    : "https://static-files.motogp.pulselive.com/assets/flags/it.svg"}
+                src={events.find(event => event.id === selectedEventId)?.flag_img}
                 alt="Event Flag"
                 className={styles.hero_details_flag}
             />
