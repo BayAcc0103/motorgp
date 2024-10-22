@@ -105,6 +105,22 @@ const TeamGrid = () => {
   const [teams, setTeams] = useState([]); // State to hold fetched teams
   const [riders, setRiders] = useState([]); // State to hold fetched riders
   const [error, setError] = useState(null); // State for any potential errors
+  function getRandomGradient() {
+    const getRandomColor = () => {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    };
+  
+    // Generate two random colors for the gradient
+    const color1 = '#000000';
+    const color2 = getRandomColor();
+  
+    return `linear-gradient(450deg, ${color1}, ${color2})`;
+  }
 
   // Fetch teams from the API on component mount
   // useEffect(() => {
@@ -160,8 +176,8 @@ const TeamGrid = () => {
       {/* Team grid layout */}
       <div className="team-grid">
         {teams.map((team) => (
-          <div className="team-card" key={team.id}>
-            <img className="team-card__image" src={team.bikeUrl} alt={team.name} />
+          <div className="team-card" key={team.id} >
+            <img className="team-card__image" src={team.bikeUrl} alt={team.name} style={{ background: getRandomGradient() }} />
             <div className="team-card__info">
               <h3 className="team-card__name">
                 {team.name} {team.flag} {/* Display team name along with flag */}
