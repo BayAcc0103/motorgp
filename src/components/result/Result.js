@@ -190,7 +190,6 @@ const Result = () => {
     const [riders, setRiders] = useState([]);
 
     function convertTime(time) {
-        console.log(time);
         const timeParts = time.split(':');
     
         // Check if the provided time format is correct
@@ -369,7 +368,7 @@ const Result = () => {
             </thead>
             <tbody className={styles.table__tbody}>
                 {results.slice().sort((a, b) => convertTime(a.time) - convertTime(b.time)).map(result => {
-                    const rider = riders.find(rider => rider.riderId === result.riderId);
+                    const rider = riders.find(rider => rider.id === result.riderID);
                     return (
                         <tr key={result.riderId} className={styles.table__body_row}>
                             <td className={`${styles.table__body_cell} ${styles.table__body_cell__pos}`}>{result.position}</td>
@@ -379,7 +378,7 @@ const Result = () => {
                                     <div className={styles.rider_image_container}>
                                         {/* Use the image from the rider object */}
                                         {rider ? (
-                                            <img src={rider.imageUrl} alt={`Rider ${rider.name}`} className={`w-100 h-100`} loading="lazy" />
+                                            <img src={rider.riderUrl} alt={`Rider ${rider.name}`} className={`w-100 h-100`} loading="lazy" />
                                         ) : (
                                             <img src="path/to/placeholder-image.png" alt="Placeholder" loading="lazy" />
                                         )}
