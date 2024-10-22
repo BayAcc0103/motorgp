@@ -16,7 +16,7 @@ const Schedule = () => {
     useEffect(() => {
         const fetchSessions = async () => {
             try {
-                const response = await fetch('http://localhost:3002/api/sessions');
+                const response = await fetch('/api/sessions');
                 const data = await response.json();
                 const filteredSessions = data.filter(session => session.eventId === selectedEvent.id)
                 setSessions(filteredSessions);

@@ -15,7 +15,7 @@ const LoginForm = ({ onUserLogin }) => {
     const navigate = useNavigate();
     const login = async (email, password) => {
         try {
-            const response = await fetch('http://localhost:3002/users/login', {
+            const response = await fetch('/users/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const LoginForm = ({ onUserLogin }) => {
 
     const register = async (name, email, password) => {
         try {
-            const response = await fetch('http://localhost:3002/users/registration', {
+            const response = await fetch('/users/registration', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

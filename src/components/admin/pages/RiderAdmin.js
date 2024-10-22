@@ -37,7 +37,7 @@ const RiderAdmin = () => {
     const fetchRiders = async () => {
       try {
         // Send a GET request to the backend to fetch riders data
-        const response = await fetch('http://localhost:3002/api/riders');
+        const response = await fetch('/api/riders');
         // Parse the JSON response from the server
         const ridersData = await response.json();
         // Set the fetched riders data into the state
@@ -57,7 +57,7 @@ const RiderAdmin = () => {
     // Fetching image to useState for storing
     const fetchImages = async (category) => {
       try {
-        const response = await fetch(`http://localhost:3002/api/defaultImages/${category}`); // Fetch images from category
+        const response = await fetch(`/api/defaultImages/${category}`); // Fetch images from category
         const imagesData = await response.json(); // Parse the JSON response
 
         // Extract imageUrl from the response and set the respective state
@@ -85,7 +85,7 @@ const RiderAdmin = () => {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const response = await fetch('http://localhost:3002/api/teams');
+        const response = await fetch('/api/teams');
         const data = await response.json();
         setTeams(data);
       } catch (error) {
@@ -196,7 +196,7 @@ const RiderAdmin = () => {
       for (const rider of riders) {
         if (rider.isNew) {
           // If the rider is new, POST it to the backend
-          await fetch('http://localhost:3002/api/riders', {
+          await fetch('/api/riders', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(rider),
@@ -204,13 +204,13 @@ const RiderAdmin = () => {
             //alert('New rider added:', rider);
         } else if (rider.isDeleted) {
           // If the rider is marked as deleted, DELETE it from the backend
-          await fetch(`http://localhost:3002/api/riders/${rider.id}`, {
+          await fetch(`/api/riders/${rider.id}`, {
             method: 'DELETE',
           });
           //alert('Rider deleted:', rider);
         } else if(rider.isEdited) { // Check if the rider has been edited
           // Otherwise, update the rider using a PUT request
-          await fetch(`http://localhost:3002/api/riders/${rider.id}`, {
+          await fetch(`/api/riders/${rider.id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(rider),
@@ -220,7 +220,7 @@ const RiderAdmin = () => {
       }
 
       // Re-fetch the updated list of riders from the backend after saving
-      const response = await fetch('http://localhost:3002/api/riders');
+      const response = await fetch('/api/riders');
       const updatedRiders = await response.json();
       setRiders(updatedRiders);
 

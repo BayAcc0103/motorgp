@@ -12,14 +12,14 @@ const Standing = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://localhost:3002/api/riderswithpoints/${year}/${category}/${champ}`);
+                const response = await fetch(`/api/riderswithpoints/${year}/${category}/${champ}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
                 setStandingData(data);
 
-                const teamsResponse = await fetch("http://localhost:3002/api/teams");
+                const teamsResponse = await fetch("/api/teams");
                 const teamsData = await teamsResponse.json();
                 setTeams(teamsData);
             } catch (error) {

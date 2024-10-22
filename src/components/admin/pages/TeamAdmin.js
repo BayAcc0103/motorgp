@@ -35,7 +35,7 @@ const TeamAdmin = () => {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const response = await fetch('http://localhost:3002/api/teams');
+        const response = await fetch('/api/teams');
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
         setTeams(data);
@@ -50,7 +50,7 @@ const TeamAdmin = () => {
      // Fetching image to useState for storing
      const fetchImages = async (category) => {
       try {
-        const response = await fetch(`http://localhost:3002/api/defaultImages/${category}`); // Fetch images from category
+        const response = await fetch(`/api/defaultImages/${category}`); // Fetch images from category
         const imagesData = await response.json(); // Parse the JSON response
 
         // Extract imageUrl from the response and set the respective state

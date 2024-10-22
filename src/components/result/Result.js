@@ -38,7 +38,7 @@ const Result = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await fetch('http://localhost:3002/api/calendar');
+                const response = await fetch('/api/calendar');
                 const data = await response.json();
                 setEvents(data);
             } catch (error) {
@@ -52,7 +52,7 @@ const Result = () => {
     useEffect(() => {
         const fetchRiders = async () => {
             try {
-                const response = await fetch('http://localhost:3002/api/riders');
+                const response = await fetch('/api/riders');
                 const data = await response.json();
                 setRiders(data);
             } catch (error) {
@@ -66,7 +66,7 @@ const Result = () => {
     useEffect(() => {
         const fetchTeams = async () => {
             try {
-                const response = await fetch('http://localhost:3002/api/teams');
+                const response = await fetch('/api/teams');
                 const data = await response.json();
                 console.log(data)
                 setTeams(data);
@@ -92,7 +92,7 @@ const Result = () => {
             if (!selectedEventId || !selectedSessionName) return;
 
             try {
-                const response = await fetch(`http://localhost:3002/api/result?eventId=${selectedEventId}&sessionName=${selectedSessionName}&category=${selectedCategory}`);
+                const response = await fetch(`/api/result?eventId=${selectedEventId}&sessionName=${selectedSessionName}&category=${selectedCategory}`);
 
                 const data = await response.json();
                 setResults(data);
