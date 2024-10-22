@@ -10,7 +10,7 @@ const Calendar = () => {
     useEffect(() => {
         const fetchEventData = async () => {
             try {
-                const response = await fetch('http://localhost:3002/api/calendar');
+                const response = await fetch('/api/calendar');
                 const data = await response.json();
                 setEvents(data);
             } catch (error) {

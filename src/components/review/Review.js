@@ -78,10 +78,10 @@ const ReviewPDF = () => {
         const fetchData = async () => {
             try {
                 const [eventsResponse, ridersResponse, riderResultsResponse, sessionsResponse] = await Promise.all([
-                    fetch('http://localhost:3002/api/calendar'),
-                    fetch('http://localhost:3002/api/riders'),
-                    fetch('http://localhost:3002/api/result'),
-                    fetch('http://localhost:3002/api/sessions'),
+                    fetch('/api/calendar'),
+                    fetch('/api/riders'),
+                    fetch('/api/result'),
+                    fetch('/api/sessions'),
                 ]);
 
                 const eventsData = await eventsResponse.json();

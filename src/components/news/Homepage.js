@@ -92,7 +92,7 @@ const Homepage = () => {
   useEffect(() => {
     const fetchNews = async () => {
         try {
-            const response = await fetch('http://localhost:3002/api/scrape');
+            const response = await fetch('/api/scrape');
             const data = await response.json();
             setNews(data);
         } catch (error) {

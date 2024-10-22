@@ -19,7 +19,7 @@ const Accounts = () => {
   useEffect(() => {
     const fetchUsers = async () => {
         try {
-            const response = await fetch('http://localhost:3002/api/users');
+            const response = await fetch('/api/users');
             const data = await response.json();
             setAccounts(data);
         } catch (error) {
@@ -45,20 +45,20 @@ const Accounts = () => {
       for (const account of accounts) {
         if (account.isNew) {
           // If the event is new, POST it to the backend
-          await fetch('http://localhost:3002/api/calendar', {
+          await fetch('/api/calendar', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(account),
           });
         } else if (account.isDeleted) {
           // If the event is deleted, delete it from the backend
-          await fetch(`http://localhost:3002/api/users/${account._id}`, {
+          await fetch(`/api/users/${account._id}`, {
             method: 'DELETE',
           });
         }
         else if (account.isEdited){
           // Otherwise, update the event via PUT using its UUID
-          await fetch(`http://localhost:3002/api/users/${account._id}`, {
+          await fetch(`/api/users/${account._id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(account),
@@ -67,7 +67,7 @@ const Accounts = () => {
       }
 
       // re-fetch the updated list of events from the backend after save
-      const response = await fetch('http://localhost:3002/api/users');
+      const response = await fetch('/api/users');
       const updatedUsers = await response.json();
       setAccounts(updatedUsers);
 

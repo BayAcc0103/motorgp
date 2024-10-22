@@ -160,19 +160,19 @@ const TeamAdmin = () => {
       for (const team of teams) {
         if (team.isNew) {
           // POST new teams to the backend
-          await fetch('http://localhost:3002/api/teams', {
+          await fetch('/api/teams', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(team),
           });
         } else if (team.isDeleted) {
           // DELETE deleted teams from the backend
-          await fetch(`http://localhost:3002/api/teams/${team.id}`, {
+          await fetch(`/api/teams/${team.id}`, {
             method: 'DELETE',
           });
         } else if (team.isEdited) {
           // PUT edited teams to the backend
-          await fetch(`http://localhost:3002/api/teams/${team.id}`, {
+          await fetch(`/api/teams/${team.id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(team),
@@ -181,7 +181,7 @@ const TeamAdmin = () => {
       }
   
       // Re-fetch the updated list of teams only once, after processing all changes
-      const response = await fetch('http://localhost:3002/api/teams');
+      const response = await fetch('/api/teams');
       if (!response.ok) throw new Error('Network response was not ok');
       const updatedTeams = await response.json();
       

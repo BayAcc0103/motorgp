@@ -55,7 +55,7 @@
 //   useEffect(() => {
 //     const fetchTeams = async () => {
 //       try {
-//         const teamsResponse = await fetch('http://localhost:3002/api/teams');
+//         const teamsResponse = await fetch('/api/teams');
 //         const teamsData = await teamsResponse.json(); // Parse the JSON response
 //         setTeams(teamsData); // Update the state with fetched teams
 //       } catch (error) {
@@ -110,7 +110,7 @@ const TeamGrid = () => {
   // useEffect(() => {
   //   const fetchTeams = async () => {
   //     try {
-  //       const teamsResponse = await fetch('http://localhost:3002/api/teams');
+  //       const teamsResponse = await fetch('/api/teams');
   //       if (!teamsResponse.ok) {
   //         throw new Error('Network response was not ok');
   //       }
@@ -128,14 +128,14 @@ const TeamGrid = () => {
   useEffect(() => {
     const fetchRidersAndTeams = async () => {
       try {
-        const ridersResponse = await fetch('http://localhost:3002/api/riders');
+        const ridersResponse = await fetch('/api/riders');
         if (!ridersResponse.ok) {
           throw new Error('Network response was not ok');
         }
         const ridersData = await ridersResponse.json(); // Parse the JSON response
         setRiders(ridersData); // Update the state with fetched riders
 
-        const teamsResponse = await fetch('http://localhost:3002/api/teams');
+        const teamsResponse = await fetch('/api/teams');
         const teamsData = await teamsResponse.json(); // Parse the JSON response
         setTeams(teamsData); // Update the state with fetched teams
       } catch (error) {

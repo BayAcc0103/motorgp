@@ -98,11 +98,11 @@ const ResultAdmin = () => {
         console.log('Fetching data from APIs...');
 
         const [eventsResponse, ridersResponse, riderResultsResponse, sessionsResponse, teamsResponse] = await Promise.all([
-          fetch('http://localhost:3002/api/calendar'),
-          fetch('http://localhost:3002/api/riders'),
-          fetch('http://localhost:3002/api/result'),
-          fetch('http://localhost:3002/api/sessions'),
-          fetch('http://localhost:3002/api/teams'),
+          fetch('/api/calendar'),
+          fetch('/api/riders'),
+          fetch('/api/result'),
+          fetch('/api/sessions'),
+          fetch('/api/teams'),
         
         ]);
 
@@ -233,25 +233,25 @@ const ResultAdmin = () => {
       for (const session of sessions) {
         if (session.isNew) {
           // If the session is new, POST it to the backend
-          await fetch('http://localhost:3002/api/sessions', {
+          await fetch('/api/sessions', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(session),
           });
         } else if (session.isDeleted) {
           // If the session is deleted, delete it from the backend
-          await fetch(`http://localhost:3002/api/sessions/${session.id}`, {
+          await fetch(`/api/sessions/${session.id}`, {
             method: 'DELETE',
           });
         }
         else if (session.isEdited) {
           // Otherwise, update the session via PUT using its UUID
-          await fetch(`http://localhost:3002/api/sessions/${session.id}`, {
+          await fetch(`/api/sessions/${session.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(session),
           });
-          await fetch(`http://localhost:3002/api/updatePoints/${session.id}`, {
+          await fetch(`/api/updatePoints/${session.id}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(session),
@@ -263,7 +263,7 @@ const ResultAdmin = () => {
         setTimeout(() => setShowSaveAlert(false), 3000); // Hide alert after 3 seconds
       }
       // re-fetch the updated list of sessions from the backend after save
-      const response = await fetch('http://localhost:3002/api/sessions');
+      const response = await fetch('/api/sessions');
       const updatedSessions = await response.json();
       setSessions(updatedSessions);
     } catch (error) {
@@ -275,20 +275,20 @@ const ResultAdmin = () => {
       for (const riderResult of riderResults) {
         if (riderResult.isNew) {
           // If the riderResult is new, POST it to the backend
-          await fetch('http://localhost:3002/api/result', {
+          await fetch('/api/result', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(riderResult),
           });
         } else if (riderResult.isDeleted) {
           // If the riderResult is deleted, delete it from the backend
-          await fetch(`http://localhost:3002/api/result/${riderResult.id}`, {
+          await fetch(`/api/result/${riderResult.id}`, {
             method: 'DELETE',
           });
         }
         else if (riderResult.isEdited) {
           // Otherwise, update the riderResult via PUT using its UUID
-          await fetch(`http://localhost:3002/api/result/${riderResult.id}`, {
+          await fetch(`/api/result/${riderResult.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(riderResult),
@@ -296,7 +296,7 @@ const ResultAdmin = () => {
         }
       }
       // re-fetch the updated list of result from the backend after save
-      const response = await fetch('http://localhost:3002/api/result');
+      const response = await fetch('/api/result');
       const updatedRiderResults = await response.json();
       setriderResults(updatedRiderResults)
 
