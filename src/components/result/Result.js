@@ -235,7 +235,7 @@ const Result = () => {
                                     </div>
                                 </div>
                             </td>
-                            <td className={`${styles.table__body_cell} ${styles.table__body_cell__team}`}>{teams.find(each => each._id === result.team).name}</td>
+                            <td className={`${styles.table__body_cell} ${styles.table__body_cell__team}`}>{teams.find(each => each._id === result.team)?.name ?? 'Team not found'}</td>
                             <td className={`${styles.table__body_cell} ${styles.table__body_cell__time}`}>{result.time}</td>
                         </tr>
                     );
