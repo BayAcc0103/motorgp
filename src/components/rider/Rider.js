@@ -75,6 +75,22 @@ const RiderGrid = () => {
     fetchRidersAndTeams(); // Call the function to fetch riders and teams
   }, []); // Empty dependency array means this runs once when the component mounts
 
+  function getRandomGradient() {
+    const getRandomColor = () => {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    };
+  
+    // Generate two random colors for the gradient
+    const color1 = '#000000';
+    const color2 = getRandomColor();
+  
+    return `linear-gradient(450deg, ${color1}, ${color2})`;
+  }
   // Mapping of ISO country codes to full country names
   const countryNames = {
     IT: "Italy",
@@ -100,11 +116,12 @@ const RiderGrid = () => {
           const team = teams.find((team) => team._id === rider.teamId); // Adjust your field names if needed
 
           return (
-            <div className="rider-card" key={rider.id}>
+            <div className="rider-card" key={rider.id} >
               <img
                 className="rider-card__image"
                 src={rider.riderUrl}
                 alt={rider.name}
+                style={{ background: getRandomGradient() }}
               />
               <div className="rider-card__info">
                 <span className="rider-card__id">{rider.driverNb}</span>
